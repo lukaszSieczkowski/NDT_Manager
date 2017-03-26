@@ -10,6 +10,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -18,11 +19,14 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import pl.ndt.manager.model.Document;
+import pl.ndt.manager.repository.DocumentRepository;
 import pl.ndt.manager.repository.UserRepository;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = UserRepository.class)
+@EnableJpaRepositories(basePackageClasses = {UserRepository.class,DocumentRepository.class})
+
 public class DataBaseConfig {
 
 	/**
@@ -65,17 +69,17 @@ public class DataBaseConfig {
 	/**
 	 * DataSource configuration
 	 * 
-	 * @return DataSource object
+	 * @return DriverManagerDataSource object
 	 */
-	@Bean
-	public DataSource createDS() {
-		BasicDataSource ds = new BasicDataSource();
-		ds.setUrl("jdbc:mysql://localhost:3306/ndt_manager?useSSL=false");
-		ds.setUsername("root");
-		ds.setPassword("admin");
-		ds.setDriverClassName("com.mysql.jdbc.Driver");
-		ds.setInitialSize(5);
-		return ds;
+
+	@Bean(name = "dataSource")
+	public DriverManagerDataSource dataSource() {
+		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+		driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/ndt_manager");
+		driverManagerDataSource.setUsername("root");
+		driverManagerDataSource.setPassword("admin");
+		return driverManagerDataSource;
 	}
 
 	/**
