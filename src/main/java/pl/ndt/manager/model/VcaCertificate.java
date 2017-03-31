@@ -1,15 +1,38 @@
 package pl.ndt.manager.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public class VcaCertificate extends Document{
+public class VcaCertificate extends Document {
 
-	@Column(name="document_number")
+	@Column(name = "document_number")
 	private String documentNumber;
-	
-	public VcaCertificate(){
-		
+
+	public VcaCertificate() {
+		super();
 	}
+
+	public VcaCertificate(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
+			Employee employee, String documentNumber) {
+		super(issueDate, expirationDate, issuedBy, fileName, employee);
+		this.documentNumber = documentNumber;
+	}
+
+	public String getDocumentNumber() {
+		return documentNumber;
+	}
+
+	public void setDocumentNumber(String documentNumber) {
+		this.documentNumber = documentNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "VcaCertificate [documentNumber=" + documentNumber + ", id=" + id + ", issueDate=" + issueDate
+				+ ", expirationDate=" + expirationDate + ", issuedBy=" + issuedBy + ", fileName=" + fileName + "]";
+	}
+
 }

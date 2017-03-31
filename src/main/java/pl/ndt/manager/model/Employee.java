@@ -18,36 +18,34 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name="employees")
+@Table(name = "employees")
 public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_employee")
+	@Column(name = "id_employee")
 	private Long id;
-	@Column(name="first_name")
+	@Column(name = "first_name")
 	private String firstName;
-	@Column(name="last_name")
+	@Column(name = "last_name")
 	private String lastName;
-	@Column(name="email")
+	@Column(name = "email")
 	private String email;
-	@Column(name="password")
+	@Column(name = "password")
 	private String password;
-	@OneToMany(mappedBy ="employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Document> documentsList;
-
 
 	public Employee() {
 		super();
 	}
 
-	public Employee(String firstName, String lastName, String email, String password, List<Document> documentsList) {
+	public Employee(String firstName, String lastName, String email, String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.documentsList = documentsList;
 	}
 
 	public Long getId() {
@@ -90,10 +88,18 @@ public class Employee {
 		this.password = password;
 	}
 
+	public List<Document> getDocumentsList() {
+		return documentsList;
+	}
+
+	public void setDocumentsList(List<Document> documentsList) {
+		this.documentsList = documentsList;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + "]";
+		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", documentsList=" + documentsList + "]";
 	}
 
 }

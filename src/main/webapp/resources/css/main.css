@@ -1,41 +1,52 @@
 .ndt_navbar {
-	background: #fff; border-bottom:solid 1px grey; 
-	}
-.ndt_navbar  a { 
+	background: #fff;
+	border-bottom: solid 1px grey;
+}
+
+.ndt_navbar  a {
 	color: #400080;
-	}
-.ndt_navbar  ul a { 
-	color: #400080; 
+}
+
+.ndt_navbar  ul a {
+	color: #400080;
 	border-style: solid;
 	border-width: 0 0 3px 0;
 	border-color: #fff;
-	}
-
-nav.ndt_navbar ul.navbar-nav a:hover,
-nav.ndt_navbar ul.navbar-nav a:visited,
-nav.ndt_navbar ul.navbar-nav a:focus,
-nav.ndt_navbar ul.navbar-nav a:active { 
-	background: #fff; 
-	}
-
-nav.ndt_navbar ul.navbar-nav a:hover { 
-	border-color: #400080; 
-	}
-	
-nav.ndt_navbar ul.dropdown-menu > li > a:hover { 
-	background: #400080;
-	color: #fff; 
-	}
-	
-.nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
-	border-bottom-color: #400080;
-	}
-.navbar-brand{
-	margin-left:20px;
-	color: #400080;	
-	font-weight:bold;
 }
 
+nav.ndt_navbar ul.navbar-nav a:hover, nav.ndt_navbar ul.navbar-nav a:visited,
+	nav.ndt_navbar ul.navbar-nav a:focus, nav.ndt_navbar ul.navbar-nav a:active
+	{
+	background: #fff;
+}
 
+nav.ndt_navbar ul.navbar-nav a:hover {
+	border-color: #400080;
+}
 
+nav.ndt_navbar ul.dropdown-menu>li>a:hover {
+	background: #400080;
+	color: #fff;
+}
 
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+	border-bottom-color: #400080;
+}
+
+.navbar-brand {
+	margin-left: 20px;
+	color: #400080;
+	font-weight: bold;
+}
+
+.navbar-right {
+	margin-right: 40px;
+	color: #400080;
+	margin-top:12px;
+	font-weight: bold;
+}
+
+.glyphicon-log-in {
+	font-size: 20px;
+	margin-left:10px;
+}

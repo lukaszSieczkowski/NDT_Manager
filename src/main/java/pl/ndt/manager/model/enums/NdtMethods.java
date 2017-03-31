@@ -21,7 +21,7 @@ public enum NdtMethods {
 
 	private String value;
 
-	NdtMethods(String value) {
+	private NdtMethods(String value) {
 		this.value = value;
 	}
 

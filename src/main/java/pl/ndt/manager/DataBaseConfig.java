@@ -14,6 +14,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -21,11 +22,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import pl.ndt.manager.model.Document;
 import pl.ndt.manager.repository.DocumentRepository;
-import pl.ndt.manager.repository.UserRepository;
+import pl.ndt.manager.repository.EmployeeRepository;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = {UserRepository.class,DocumentRepository.class})
+@EnableJpaRepositories(basePackageClasses = {EmployeeRepository.class,DocumentRepository.class})
 
 public class DataBaseConfig {
 
@@ -50,6 +51,7 @@ public class DataBaseConfig {
 		emf.setPackagesToScan("pl.ndt.manager.model");
 		return emf;
 	}
+	
 
 	/**
 	 * Configuration JPA provider and type of database
