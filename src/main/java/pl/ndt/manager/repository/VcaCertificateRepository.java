@@ -3,9 +3,9 @@ package pl.ndt.manager.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import pl.ndt.manager.model.Employee;
+import pl.ndt.manager.model.VcaCertificate;
 
 @Repository
-public interface EmployeeRepository extends CrudRepository<Employee, Long> {
-	Employee findByEmail(String email);
+public interface VcaCertificateRepository extends CrudRepository<VcaCertificate, Long> {
+
 }

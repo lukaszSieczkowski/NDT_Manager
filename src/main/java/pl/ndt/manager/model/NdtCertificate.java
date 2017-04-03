@@ -2,13 +2,13 @@ package pl.ndt.manager.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
-import pl.ndt.manager.model.enums.NdtMethods;
+import pl.ndt.manager.model.enums.NdtMethod;
 
 @Entity
+@Table(name = "ndt_certificate")
+@PrimaryKeyJoinColumn(name = "id")
 public class NdtCertificate extends Document {
 
 	@Column(name = "document_number")
@@ -17,14 +17,14 @@ public class NdtCertificate extends Document {
 	private String sector;
 	@Column(name = "ndt_method")
 	@Enumerated
-	private NdtMethods ndtMethod;
+	private NdtMethod ndtMethod;
 
 	public NdtCertificate() {
 
 	}
 
 	public NdtCertificate(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			Employee employee, String documentNumber, String sector, NdtMethods ndtMethod) {
+			Employee employee, String documentNumber, String sector, NdtMethod ndtMethod) {
 		super(issueDate, expirationDate, issuedBy, fileName, employee);
 		this.documentNumber = documentNumber;
 		this.sector = sector;
@@ -47,11 +47,11 @@ public class NdtCertificate extends Document {
 		this.sector = sector;
 	}
 
-	public NdtMethods getNdtMethod() {
+	public NdtMethod getNdtMethod() {
 		return ndtMethod;
 	}
 
-	public void setNdtMethod(NdtMethods ndtMethod) {
+	public void setNdtMethod(NdtMethod ndtMethod) {
 		this.ndtMethod = ndtMethod;
 	}
 

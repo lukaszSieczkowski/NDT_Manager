@@ -2,10 +2,11 @@ package pl.ndt.manager.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "medical_examination")
+@PrimaryKeyJoinColumn(name = "id")
 public class MedicalExamination extends Document {
 
 	@Column(name = "positive_result_test")
@@ -24,7 +25,7 @@ public class MedicalExamination extends Document {
 		this.requirementsDescription = requirementsDescription;
 	}
 
-	public boolean isPositiveResultTest() {
+	public boolean getPositiveResultTest() {
 		return positiveResultTest;
 	}
 

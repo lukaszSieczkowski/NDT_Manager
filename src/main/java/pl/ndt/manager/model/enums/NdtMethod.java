@@ -1,6 +1,6 @@
 package pl.ndt.manager.model.enums;
 
-public enum NdtMethods {
+public enum NdtMethod {
 
 	VT_1("Visual Testing Level 1"), VT_2("Visual Testing Level 2"), VT_3("Visual Testing Level 3"),
 
@@ -21,7 +21,7 @@ public enum NdtMethods {
 
 	private String value;
 
-	private NdtMethods(String value) {
+	private NdtMethod(String value) {
 		this.value = value;
 	}
 

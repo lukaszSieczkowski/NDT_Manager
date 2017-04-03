@@ -8,23 +8,24 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
-import pl.ndt.manager.model.Document;
+import pl.ndt.manager.dto.DocumentDTO;
 
 @Component
 @Scope(scopeName = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class DocumentList {
-	private List<Document> documents;
 	
-	public DocumentList(List<Document> documents){
+	private List<DocumentDTO> documents;
+
+	public DocumentList(List<DocumentDTO> documents) {
 		this.documents = documents;
 	}
 
-	public List<Document> getDocuments() {
+	public List<DocumentDTO> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(List<Document> documents) {
+	public void setDocuments(List<DocumentDTO> documents) {
 		this.documents = documents;
 	}
-	
+
 }

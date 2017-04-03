@@ -32,6 +32,9 @@ nav.ndt_navbar ul.dropdown-menu>li>a:hover {
 .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
 	border-bottom-color: #400080;
 }
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+    background-color: #fff;
+}
 
 .navbar-brand {
 	margin-left: 20px;
@@ -43,10 +46,39 @@ nav.ndt_navbar ul.dropdown-menu>li>a:hover {
 	margin-right: 40px;
 	color: #400080;
 	margin-top:12px;
+	
+}
+.navbar-right .user{
+	margin-top:1px;
 	font-weight: bold;
 }
-
 .glyphicon-log-in {
 	font-size: 20px;
-	margin-left:10px;
+	margin-left:20px;
+}
+.dropdown-submenu {
+    position: relative;
+}
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}
+
+.table-condensed th {
+	background-color: #400080;
+	color:#FFF;
+}
+.table-condensed tr:nth-child(odd) {
+	background-color: #e9dcf7;
+}
+.table-condensed tr{
+	font-size: 12px;
+}
+.table-condensed tr:hover{
+	font-weight: bold;
+}
+h3{
+	margin-top:5px;
+	margin-bottom: 20px;
 }

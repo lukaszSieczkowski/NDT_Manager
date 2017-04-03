@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -14,20 +13,16 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import pl.ndt.manager.model.Document;
-import pl.ndt.manager.repository.DocumentRepository;
 import pl.ndt.manager.repository.EmployeeRepository;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = {EmployeeRepository.class,DocumentRepository.class})
-
+@EnableJpaRepositories(basePackageClasses = { EmployeeRepository.class })
 public class DataBaseConfig {
 
 	/**
@@ -51,7 +46,6 @@ public class DataBaseConfig {
 		emf.setPackagesToScan("pl.ndt.manager.model");
 		return emf;
 	}
-	
 
 	/**
 	 * Configuration JPA provider and type of database

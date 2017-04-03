@@ -1,21 +1,11 @@
 package pl.ndt.manager.model;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import pl.ndt.manager.model.enums.EmployeePossiton;
+import pl.ndt.manager.model.enums.UserRole;
 
 @Entity
 @Table(name = "employees")
@@ -33,6 +23,10 @@ public class Employee {
 	private String email;
 	@Column(name = "password")
 	private String password;
+	@Column(name = "role")
+	private UserRole role;
+	@Column(name = "employee_possition")
+	private EmployeePossiton employeePossition;
 	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Document> documentsList;
 
@@ -40,12 +34,16 @@ public class Employee {
 		super();
 	}
 
-	public Employee(String firstName, String lastName, String email, String password) {
+	public Employee(String firstName, String lastName, String email, String password, UserRole role,
+			EmployeePossiton employeePossition) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.role = role;
+		this.employeePossition = employeePossition;
+
 	}
 
 	public Long getId() {
@@ -88,6 +86,22 @@ public class Employee {
 		this.password = password;
 	}
 
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
+
+	public EmployeePossiton getEmployeePossition() {
+		return employeePossition;
+	}
+
+	public void setEmployeePossition(EmployeePossiton employeePossition) {
+		this.employeePossition = employeePossition;
+	}
+
 	public List<Document> getDocumentsList() {
 		return documentsList;
 	}
@@ -98,8 +112,9 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", documentsList=" + documentsList + "]";
+		return "Employee [ firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password="
+				+ password + ", role=" + role + ", employeePossition=" + employeePossition + ", documentsList="
+				+ documentsList + "]";
 	}
 
 }

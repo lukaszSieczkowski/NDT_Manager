@@ -2,10 +2,11 @@ package pl.ndt.manager.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "vca_certificate")
+@PrimaryKeyJoinColumn(name = "id")
 public class VcaCertificate extends Document {
 
 	@Column(name = "document_number")

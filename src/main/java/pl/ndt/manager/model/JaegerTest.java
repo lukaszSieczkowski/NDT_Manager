@@ -2,12 +2,11 @@ package pl.ndt.manager.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "jaeger_test")
+@PrimaryKeyJoinColumn(name = "id")
 public class JaegerTest extends Document {
 
 	@Column(name = "correct_eye_condition")
@@ -23,7 +22,7 @@ public class JaegerTest extends Document {
 		this.correctEyeCondition = correctEyeCondition;
 	}
 
-	public boolean isCorrectEyeCondition() {
+	public boolean getCorrectEyeCondition() {
 		return correctEyeCondition;
 	}
 
