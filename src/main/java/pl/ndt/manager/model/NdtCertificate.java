@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import pl.ndt.manager.dto.NdtCertificateDTO;
 import pl.ndt.manager.model.enums.NdtMethod;
 
 @Entity
@@ -31,6 +32,7 @@ public class NdtCertificate extends Document {
 		this.ndtMethod = ndtMethod;
 	}
 
+	
 	public String getDocumentNumber() {
 		return documentNumber;
 	}

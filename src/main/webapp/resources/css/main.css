@@ -82,3 +82,98 @@ h3{
 	margin-top:5px;
 	margin-bottom: 20px;
 }
+.ui-datepicker {
+	width: 230px;
+	height: 270px;
+	margin: 5px auto 0;
+	font-size:15px;
+	background-color:white;
+}
+
+.ui-datepicker-header {
+	background-color:#400080;
+	color:#FFF;
+	height:40px;
+	text-align:center;
+	padding-top:3px;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+  	display: inline-block;
+  	width: 40px;
+  	height: 40px;
+  	text-align: center;
+  	cursor: pointer;
+}
+
+.ui-datepicker-title{
+	font-size: 16px;
+	font-style:bold;
+}
+
+.ui-datepicker-prev {
+	margin-top:10px;
+  	float: left;
+  	background-position: center -30px;
+	color:#FFF;
+}
+.ui-datepicker-prev:hover{
+	font-style:underline;
+	color:#FFF;
+	
+}
+
+.ui-datepicker-next {
+	margin-top:10px;
+  	float: right;
+  	background-position: center 0px;
+	color:#FFF;
+}
+.ui-datepicker-next:hover {
+	font-style:underline;
+	color:#FFF;
+}
+
+.ui-state-default{
+	margin:4px;
+	padding:4px;
+}
+
+.ui-datepicker-title{
+	margin-top:10px;
+}
+
+.ui-datepicker td span, .ui-datepicker td a {
+  	display: inline-block;
+  	font-weight: bold;
+  	text-align: center;
+  	width: 25px;
+  	height: 20px;
+  	line-height: 25px;
+  	color: #666666;
+  	text-shadow: 1px 1px 0px #fff;
+  	filter: dropshadow(color=#fff, offx=1, offy=1);
+}
+.action_button{
+	color:#FFF;
+	height: 40px;
+	width: 120px;
+	border: none;
+	padding: 5px;
+	border-radius:10px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#26004d), to(#6600cc));
+	background-image: -webkit-linear-gradient(top, #26004d, #6600cc);
+	background-image: -moz-linear-gradient(top, #26004d, #6600cc);
+	background-image: -ms-linear-gradient(top, #26004d, #6600cc);
+	background-image: -o-linear-gradient(top, #26004d, #6600cc);
+	background-image: linear-gradient(to bottom, #26004d, #6600cc);
+}
+
+.action_button:hover{
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#400080), to(#8000FF));
+	background-image: -webkit-linear-gradient(top, #400080, #8000FF);
+	background-image: -moz-linear-gradient(top, #400080, #8000FF);
+	background-image: -ms-linear-gradient(top, #400080, #8000FF);
+	background-image: -o-linear-gradient(top, #400080, #8000FF);
+	background-image: linear-gradient(to bottom, #400080, #8000FF);
+	}

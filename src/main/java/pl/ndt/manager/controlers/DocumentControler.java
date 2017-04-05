@@ -30,7 +30,7 @@ public class DocumentControler{
 		List<DocumentDTO> documents = documentService.getNdtCertificates();
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
-		return "ndtCertificates";
+		return "personel/show_docs/showNdtCertificates";
 	}
 	
 	
@@ -44,7 +44,7 @@ public class DocumentControler{
 		List<DocumentDTO> documents = documentService.getVcaCertificates();
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
-		return "vcaCertificates";
+		return "personel/show_docs/showVcaCertificates";
 	}
 	
 	/**
@@ -52,12 +52,12 @@ public class DocumentControler{
 	 * @param model
 	 * @return medicalExaminations view
 	 */
-	@RequestMapping("/showMedicalExamination")
+	@RequestMapping("showMedicalExaminations")
 	public String showMedicalExamination(Model model){
 		List<DocumentDTO> documents = documentService.getMedicalExaminations();
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
-		return "medicalExaminations";
+		return "personel/show_docs/showMedicalExaminations";
 	}
 	
 	/**
@@ -71,6 +71,11 @@ public class DocumentControler{
 		List<DocumentDTO> documents = documentService.getJaegerTests();
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
-		return "jaegerTests";
+		return "personel/show_docs/showJaegerTests";
+	}
+	
+	@RequestMapping("/addNdtCertificate")
+	public String addNdtCertificate(Model model){
+		return "personel/add_docs/addNdtCertificate";
 	}
 }

@@ -2,17 +2,17 @@ package pl.ndt.manager.dto;
 
 import pl.ndt.manager.model.enums.UserRole;
 
-public class User {
+public class UserDTO {
 
 	private String firstName;
 	private String lastName;
 	private UserRole role;
 
-	public User() {
+	public UserDTO() {
 		super();
 	}
 
-	public User(String firstName, String lastName, UserRole role) {
+	public UserDTO(String firstName, String lastName, UserRole role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;

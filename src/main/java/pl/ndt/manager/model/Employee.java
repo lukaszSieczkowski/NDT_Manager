@@ -19,29 +19,22 @@ public class Employee {
 	private String firstName;
 	@Column(name = "last_name")
 	private String lastName;
-	@Column(name = "email")
-	private String email;
-	@Column(name = "password")
-	private String password;
-	@Column(name = "role")
-	private UserRole role;
 	@Column(name = "employee_possition")
 	private EmployeePossiton employeePossition;
 	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Document> documentsList;
+	@OneToOne(mappedBy = "employee")
+	private User user;
 
 	public Employee() {
 		super();
 	}
 
-	public Employee(String firstName, String lastName, String email, String password, UserRole role,
+	public Employee(String firstName, String lastName,
 			EmployeePossiton employeePossition) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.role = role;
 		this.employeePossition = employeePossition;
 
 	}
@@ -70,30 +63,7 @@ public class Employee {
 		this.lastName = lastName;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public UserRole getRole() {
-		return role;
-	}
-
-	public void setRole(UserRole role) {
-		this.role = role;
-	}
-
+	
 	public EmployeePossiton getEmployeePossition() {
 		return employeePossition;
 	}
@@ -112,8 +82,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [ firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password="
-				+ password + ", role=" + role + ", employeePossition=" + employeePossition + ", documentsList="
+		return "Employee [ firstName=" + firstName + ", lastName=" + lastName + ", employeePossition=" + employeePossition + ", documentsList="
 				+ documentsList + "]";
 	}
 

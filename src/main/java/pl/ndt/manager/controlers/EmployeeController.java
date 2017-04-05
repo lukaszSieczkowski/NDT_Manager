@@ -26,9 +26,10 @@ public class EmployeeController {
 	@RequestMapping("/showEmployees")
 	public String showAllEmployees(Model model) {
 		ArrayList<Employee> employees = (ArrayList<Employee>) serviceEmployee.showAllEmployees();
+		System.out.println(employees);
 		employeeList.setEmployees(employees);
 		model.addAttribute("employess", employeeList);
-		return "showEmployees";
+		return "personel/showEmployees";
 	}
 
 }

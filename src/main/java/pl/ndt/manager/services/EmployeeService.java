@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pl.ndt.manager.dto.User;
+import pl.ndt.manager.dto.UserDTO;
 import pl.ndt.manager.model.Employee;
 import pl.ndt.manager.repository.EmployeeRepository;
 
@@ -17,27 +17,6 @@ public class EmployeeService {
 	private EmployeeRepository employeeRepository;
 
 	
-
-	/**
-	 * Creates application user
-	 * @param email user's email
-	 * @param password user's password
-	 * @return user
-	 */
-	public User createUser(String email, String password) {
-
-		Employee employee = employeeRepository.findByEmail(email);
-		if (employee.equals(null)) {
-			return null;
-		} else {
-			if (employee.getPassword().equals(password)) {
-				User user = new User(employee.getFirstName(), employee.getLastName(), employee.getRole());
-				return user;
-			} else {
-				return null;
-			}
-		}
-	}
 
 	
 	/**

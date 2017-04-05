@@ -10,15 +10,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
-import pl.ndt.manager.dto.User;
+import pl.ndt.manager.dto.UserDTO;
 import pl.ndt.manager.services.EmployeeService;
+import pl.ndt.manager.services.UserService;
 
 @Controller
 @SessionAttributes("logedEmployee")
 public class LoginController {
 
 	@Autowired
-	private EmployeeService employeeService;
+	private UserService userService;
 
 	/**
 	 * Shows login page
@@ -43,15 +44,15 @@ public class LoginController {
 	 */
 	@PostMapping("/login")
 	public String login(Model model, @RequestParam String email, @RequestParam String password) {
-		User user = null;
+		UserDTO userDto = null;
 		try {
-			user = employeeService.createUser(email, password);
+			userDto = userService.createUser(email, password);
 		} catch (NullPointerException e) {
 			String message = "Incorect email address or password";
 			model.addAttribute("message", message);
 			return "index";
 		}
-		model.addAttribute("logedEmployee", user);
+		model.addAttribute("logedEmployee", userDto);
 		return "main";
 	}
 
