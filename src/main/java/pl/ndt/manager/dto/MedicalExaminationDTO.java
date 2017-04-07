@@ -1,20 +1,22 @@
 package pl.ndt.manager.dto;
 
-import java.time.LocalDateTime;
+import org.springframework.web.multipart.MultipartFile;
 
-public class MedicalExaminationDTO extends DocumentDTO{
-	
+import pl.ndt.manager.model.enums.DocumentIsValid;
+
+public class MedicalExaminationDTO extends DocumentDTO {
+
 	private boolean positiveResultTest;
 	private String requirementsDescription;
-	
+
 	public MedicalExaminationDTO() {
 		super();
 	}
 
-	public MedicalExaminationDTO(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy,
-			String fileName, String ownerFirstName, String ownerLastName,boolean positiveResultTest,
-			String requirementsDescription ) {
-		super(issueDate, expirationDate, issuedBy, fileName, ownerFirstName, ownerLastName);
+	public MedicalExaminationDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
+			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
+			boolean positiveResultTest, String requirementsDescription) {
+		super(issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
 		this.positiveResultTest = positiveResultTest;
 		this.requirementsDescription = requirementsDescription;
 	}
@@ -34,5 +36,5 @@ public class MedicalExaminationDTO extends DocumentDTO{
 	public void setRequirementsDescription(String requirementsDescription) {
 		this.requirementsDescription = requirementsDescription;
 	}
-	
+
 }

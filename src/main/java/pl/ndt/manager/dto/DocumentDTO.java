@@ -1,44 +1,60 @@
 package pl.ndt.manager.dto;
 
-import java.time.LocalDateTime;
+import org.springframework.web.multipart.MultipartFile;
+
+import pl.ndt.manager.model.enums.DocumentIsValid;
 
 public class DocumentDTO {
-	
-	protected LocalDateTime issueDate;
-	protected LocalDateTime expirationDate;
+
+	protected String issueDate;
+
+	protected String expirationDate;
+
 	protected String issuedBy;
-	protected String fileName;
-	protected String ownerFirstName;
-	protected String ownerLastName;
+	protected MultipartFile file;
+	protected String fileDirectory;
+	protected String email;
+	protected String ownersNameAndSurname;
+	protected DocumentIsValid documentIsValid;
 
 	public DocumentDTO() {
 		super();
 	}
 
-	public DocumentDTO(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			String ownerFirstName, String ownerLastName) {
+	public DocumentDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
+			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid) {
 		super();
 		this.issueDate = issueDate;
 		this.expirationDate = expirationDate;
 		this.issuedBy = issuedBy;
-		this.fileName = fileName;
-		this.ownerFirstName = ownerFirstName;
-		this.ownerLastName = ownerLastName;
+		this.file = file;
+		this.fileDirectory = fileDirectory;
+		this.email = email;
+		this.ownersNameAndSurname = ownersNameAndSurname;
+		this.documentIsValid = documentIsValid;
 	}
 
-	public LocalDateTime getIssueDate() {
+	public String getFileDirectory() {
+		return fileDirectory;
+	}
+
+	public void setFileDirectory(String fileDirectory) {
+		this.fileDirectory = fileDirectory;
+	}
+
+	public String getIssueDate() {
 		return issueDate;
 	}
 
-	public void setIssueDate(LocalDateTime issueDate) {
+	public void setIssueDate(String issueDate) {
 		this.issueDate = issueDate;
 	}
 
-	public LocalDateTime getExpirationDate() {
+	public String getExpirationDate() {
 		return expirationDate;
 	}
 
-	public void setExpirationDate(LocalDateTime expirationDate) {
+	public void setExpirationDate(String expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 
@@ -50,28 +66,42 @@ public class DocumentDTO {
 		this.issuedBy = issuedBy;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public String getOwnersNameAndSurname() {
+		return ownersNameAndSurname;
 	}
 
-	public String getOwnerFirstName() {
-		return ownerFirstName;
+	public void setOwnersNameAndSurname(String ownersNameAndSurname) {
+		this.ownersNameAndSurname = ownersNameAndSurname;
 	}
 
-	public void setOwnerFirstName(String ownerFirstName) {
-		this.ownerFirstName = ownerFirstName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getOwnerLastName() {
-		return ownerLastName;
+	public DocumentIsValid getDocumentIsValid() {
+		return documentIsValid;
 	}
 
-	public void setOwnerLastName(String ownerLastName) {
-		this.ownerLastName = ownerLastName;
+	public void setDocumentIsValid(DocumentIsValid documentIsValid) {
+		this.documentIsValid = documentIsValid;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	@Override
+	public String toString() {
+		return "DocumentDTO [issueDate=" + issueDate + ", expirationDate=" + expirationDate + ", issuedBy=" + issuedBy
+				+ ", file=" + file + ", email=" + email + ", ownersNameAndSurname=" + ownersNameAndSurname + "]";
 	}
 
 }

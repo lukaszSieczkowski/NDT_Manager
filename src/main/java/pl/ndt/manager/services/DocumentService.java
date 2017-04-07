@@ -1,29 +1,22 @@
 package pl.ndt.manager.services;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pl.ndt.manager.dto.DocumentDTO;
-import pl.ndt.manager.dto.JaegerTestDTO;
-import pl.ndt.manager.dto.MedicalExaminationDTO;
-import pl.ndt.manager.dto.NdtCertificateDTO;
-import pl.ndt.manager.dto.VcaCertificateDTO;
+import pl.ndt.manager.dto.*;
+import pl.ndt.manager.model.*;
+import pl.ndt.manager.model.enums.DocumentIsValid;
+import pl.ndt.manager.repository.*;
 
-import pl.ndt.manager.model.JaegerTest;
-import pl.ndt.manager.model.MedicalExamination;
-import pl.ndt.manager.model.NdtCertificate;
-import pl.ndt.manager.model.VcaCertificate;
-
-import pl.ndt.manager.repository.JaegerTestRepository;
-import pl.ndt.manager.repository.MedicalExaminationRepository;
-import pl.ndt.manager.repository.NdtCertificateRepository;
-import pl.ndt.manager.repository.VcaCertificateRepository;
+import pl.ndt.manager.utils.DateConverter;
+import pl.ndt.manager.utils.FileTool;
 
 @Service
-public class DocumentService {
+public class DocumentService implements FileDirectory {
 
 	@Autowired
 	private NdtCertificateRepository ndtCertificateRepository;
@@ -33,106 +26,160 @@ public class DocumentService {
 	private MedicalExaminationRepository medicalExaminationRepository;
 	@Autowired
 	private JaegerTestRepository jaegerTestRepository;
+	@Autowired
+	private UserRepository userRepository;
 
+	private DateConverter dateConverter;
 	private List<DocumentDTO> documents;
 
 	/**
-	 * Prepares list of all NDT Certificates
+	 * Creates list of all NDT Certificates
 	 * 
 	 * @return NDT Certificates list
 	 */
 	public List<DocumentDTO> getNdtCertificates() {
 
 		documents = new ArrayList<>();
+		dateConverter = new DateConverter();
 
 		List<NdtCertificate> ndtCertificateList = (List<NdtCertificate>) ndtCertificateRepository.findAll();
 
 		for (NdtCertificate ndtCert : ndtCertificateList) {
 			NdtCertificateDTO ndtCertDto = new NdtCertificateDTO();
-			ndtCertDto.setIssueDate(ndtCert.getIssueDate());
-			ndtCertDto.setExpirationDate(ndtCert.getExpirationDate());
+			ndtCertDto.setIssueDate(dateConverter.createDateToString(ndtCert.getIssueDate()));
+			ndtCertDto.setExpirationDate(dateConverter.createDateToString(ndtCert.getExpirationDate()));
 			ndtCertDto.setIssuedBy(ndtCert.getIssuedBy());
-			ndtCertDto.setFileName(ndtCert.getFileName());
-			ndtCertDto.setOwnerFirstName(ndtCert.getEmployee().getFirstName());
-			ndtCertDto.setOwnerLastName(ndtCert.getEmployee().getLastName());
+			String fileDirectory = UPLOAD_FOLDER + ndtCert.getFileName() + ".pdf";
+			ndtCertDto.setFileDirectory(fileDirectory);
+			ndtCertDto.setOwnersNameAndSurname(
+					ndtCert.getEmployee().getFirstName() + " " + ndtCert.getEmployee().getLastName());
 			ndtCertDto.setDocumentNumber(ndtCert.getDocumentNumber());
 			ndtCertDto.setSector(ndtCert.getSector());
-			ndtCert.setNdtMethod(ndtCert.getNdtMethod());
+			ndtCertDto.setNdtMethod(ndtCert.getNdtMethod());
+			ndtCertDto.setDocumentIsValid(checkDocumentExpiredDate(ndtCert.getExpirationDate()));
 			documents.add(ndtCertDto);
 		}
 		return documents;
 	}
 
 	/**
-	 * Prepares list of all VCA Certificates
+	 * Creates list of all VCA Certificates
 	 * 
 	 * @return VCA Certificates list
 	 */
 	public List<DocumentDTO> getVcaCertificates() {
 		documents = new ArrayList<>();
+		dateConverter = new DateConverter();
 		List<VcaCertificate> vcaCertificatelist = (List<VcaCertificate>) vcaCertificateRepository.findAll();
 
 		for (VcaCertificate vcaCert : vcaCertificatelist) {
 			VcaCertificateDTO vcaCertDto = new VcaCertificateDTO();
-			vcaCertDto.setIssueDate(vcaCert.getIssueDate());
-			vcaCertDto.setExpirationDate(vcaCert.getExpirationDate());
+			vcaCertDto.setIssueDate(dateConverter.createDateToString(vcaCert.getIssueDate()));
+			vcaCertDto.setExpirationDate(dateConverter.createDateToString(vcaCert.getExpirationDate()));
 			vcaCertDto.setIssuedBy(vcaCert.getIssuedBy());
-			vcaCertDto.setFileName(vcaCert.getFileName());
-			vcaCertDto.setOwnerFirstName(vcaCert.getEmployee().getFirstName());
-			vcaCertDto.setOwnerLastName(vcaCert.getEmployee().getLastName());
+
+			vcaCertDto.setOwnersNameAndSurname(
+					vcaCert.getEmployee().getFirstName() + " " + vcaCert.getEmployee().getLastName());
 			vcaCertDto.setDocumentNumber(vcaCert.getDocumentNumber());
+			vcaCertDto.setDocumentIsValid(checkDocumentExpiredDate(vcaCert.getExpirationDate()));
 			documents.add(vcaCertDto);
 		}
 		return documents;
 	}
 
 	/**
-	 * Prepares list of all Medical certificates
+	 * Creates list of all Medical certificates
 	 * 
 	 * @return Medical Certificates list
 	 */
 	public List<DocumentDTO> getMedicalExaminations() {
 		documents = new ArrayList<>();
+		dateConverter = new DateConverter();
 		List<MedicalExamination> medicalCertificateList = (List<MedicalExamination>) medicalExaminationRepository
 				.findAll();
 
 		for (MedicalExamination medCert : medicalCertificateList) {
 			MedicalExaminationDTO medCertDto = new MedicalExaminationDTO();
-			medCertDto.setIssueDate(medCert.getIssueDate());
-			medCertDto.setExpirationDate(medCert.getExpirationDate());
+			medCertDto.setIssueDate(dateConverter.createDateToString(medCert.getIssueDate()));
+			medCertDto.setExpirationDate(dateConverter.createDateToString(medCert.getExpirationDate()));
 			medCertDto.setIssuedBy(medCert.getIssuedBy());
-			medCertDto.setFileName(medCert.getFileName());
-			medCertDto.setOwnerFirstName(medCert.getEmployee().getFirstName());
-			medCertDto.setOwnerLastName(medCert.getEmployee().getLastName());
+
+			medCertDto.setOwnersNameAndSurname(
+					medCert.getEmployee().getFirstName() + " " + medCert.getEmployee().getLastName());
 			medCertDto.setPositiveResultTest(medCert.getPositiveResultTest());
 			medCertDto.setRequirementsDescription(medCert.getRequirementsDescription());
+			medCertDto.setDocumentIsValid(checkDocumentExpiredDate(medCert.getExpirationDate()));
 			documents.add(medCertDto);
 		}
 		return documents;
 	}
 
 	/**
-	 * Prepares list of all Jaeger Tests
+	 * Creates list of all Jaeger Tests
 	 * 
 	 * @return Jaeger Tests list
 	 */
 	public List<DocumentDTO> getJaegerTests() {
 		documents = new ArrayList<>();
-
+		dateConverter = new DateConverter();
 		List<JaegerTest> jaegerTests = (List<JaegerTest>) jaegerTestRepository.findAll();
 
 		for (JaegerTest jaegerTest : jaegerTests) {
 			JaegerTestDTO jaegerTestDto = new JaegerTestDTO();
-			jaegerTestDto.setIssueDate(jaegerTest.getIssueDate());
-			jaegerTestDto.setExpirationDate(jaegerTest.getExpirationDate());
+			jaegerTestDto.setIssueDate(dateConverter.createDateToString(jaegerTest.getIssueDate()));
+			jaegerTestDto.setExpirationDate(dateConverter.createDateToString(jaegerTest.getExpirationDate()));
 			jaegerTestDto.setIssuedBy(jaegerTest.getIssuedBy());
-			jaegerTestDto.setFileName(jaegerTest.getFileName());
-			jaegerTestDto.setOwnerFirstName(jaegerTest.getEmployee().getFirstName());
-			jaegerTestDto.setOwnerLastName(jaegerTest.getEmployee().getLastName());
+
+			jaegerTestDto.setOwnersNameAndSurname(
+					jaegerTest.getEmployee().getFirstName() + " " + jaegerTest.getEmployee().getLastName());
 			jaegerTestDto.setCorrectEyeCondition(jaegerTest.getCorrectEyeCondition());
+			jaegerTestDto.setDocumentIsValid(checkDocumentExpiredDate(jaegerTest.getExpirationDate()));
 			documents.add(jaegerTestDto);
 		}
 		return documents;
+	}
+	
+	/**
+	 * Saves new NDT Certificate in System
+	 * @param ndtCertificateDTO
+	 */
+	public void saveNdtCertificate(NdtCertificateDTO ndtCertificateDTO) {
+
+		dateConverter = new DateConverter();
+		NdtCertificate ndtCertificate = new NdtCertificate();
+		ndtCertificate.setIssueDate(dateConverter.createDateFromString(ndtCertificateDTO.getIssueDate(), 0, 0));
+		ndtCertificate
+				.setExpirationDate(dateConverter.createDateFromString(ndtCertificateDTO.getExpirationDate(), 0, 0));
+		ndtCertificate.setIssuedBy(ndtCertificateDTO.getIssuedBy());
+		ndtCertificate.setDocumentNumber(ndtCertificateDTO.getDocumentNumber());
+		ndtCertificate.setSector(ndtCertificateDTO.getSector());
+		ndtCertificate.setNdtMethod(ndtCertificateDTO.getNdtMethod());
+
+		String userEmail = ndtCertificateDTO.getEmail();
+		User user = userRepository.findByEmail(userEmail);
+		Employee employee = user.getEmployee();
+		ndtCertificate.setEmployee(employee);
+
+		FileTool fileTool = new FileTool();
+		String fileName = fileTool.saveFile(ndtCertificateDTO.getFile(), employee.getLastName());
+
+		ndtCertificate.setFileName(fileName);
+		ndtCertificateRepository.save(ndtCertificate);
+
+	}
+
+	/**
+	 * Checks if document is still valid
+	 * @param expiredDate Document's expiration date
+	 * @return VALID or EXPIRED value
+	 */
+	public DocumentIsValid checkDocumentExpiredDate(LocalDateTime expiredDate) {
+		if (expiredDate.isAfter(LocalDateTime.now())) {
+			return DocumentIsValid.VALID;
+		} else {
+			return DocumentIsValid.EXPIRED;
+		}
+
 	}
 
 }

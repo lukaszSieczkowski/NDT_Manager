@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "medical_examination")
-@PrimaryKeyJoinColumn(name = "id")
+@Table(name = "medical_examinations")
+@PrimaryKeyJoinColumn(name = "document_id")
 public class MedicalExamination extends Document {
 
 	@Column(name = "positive_result_test")

@@ -5,11 +5,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import pl.ndt.manager.dto.DocumentDTO;
-import pl.ndt.manager.model.Employee;
-
+import pl.ndt.manager.dto.EmployeeDTO;
 
 @Configuration
-@ComponentScan(value = "pl.ndt.manager.model")
+@ComponentScan
 public class BeanConfig {
 
 	/**
@@ -19,8 +18,8 @@ public class BeanConfig {
 	 */
 
 	@Bean
-	public Employee getEmployee() {
-		return new Employee();
+	public EmployeeDTO getEmployeeDTO() {
+		return new EmployeeDTO();
 	}
 
 	/**
@@ -32,6 +31,6 @@ public class BeanConfig {
 	@Bean
 	public DocumentDTO getDocumentDTO() {
 		return new DocumentDTO();
-
 	}
+
 }

@@ -75,9 +75,7 @@ nav.ndt_navbar ul.dropdown-menu>li>a:hover {
 .table-condensed tr{
 	font-size: 12px;
 }
-.table-condensed tr:hover{
-	font-weight: bold;
-}
+
 h3{
 	margin-top:5px;
 	margin-bottom: 20px;
@@ -177,3 +175,12 @@ h3{
 	background-image: -o-linear-gradient(top, #400080, #8000FF);
 	background-image: linear-gradient(to bottom, #400080, #8000FF);
 	}
+	
+#valid{
+	color:green;
+	font-weight: bold;
+}
+#expired{
+	color:red;
+	font-weight: bold;
+}

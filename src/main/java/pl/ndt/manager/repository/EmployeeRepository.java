@@ -7,5 +7,5 @@ import pl.ndt.manager.model.Employee;
 
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
-	
+
 }

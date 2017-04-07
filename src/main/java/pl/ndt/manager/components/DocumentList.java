@@ -1,6 +1,5 @@
 package pl.ndt.manager.components;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
@@ -13,7 +12,7 @@ import pl.ndt.manager.dto.DocumentDTO;
 @Component
 @Scope(scopeName = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class DocumentList {
-	
+
 	private List<DocumentDTO> documents;
 
 	public DocumentList(List<DocumentDTO> documents) {

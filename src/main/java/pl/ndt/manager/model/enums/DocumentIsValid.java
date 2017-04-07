@@ -1,11 +1,11 @@
 package pl.ndt.manager.model.enums;
 
-public enum EmployeePossiton {
-	NDT_INSPECTOR("NDT Manager"), NDT_MANAGER("NDT Inspector");
+public enum DocumentIsValid {
+	VALID("Valid"), EXPIRED("Expired");
 
 	private String value;
 
-	private EmployeePossiton(String value) {
+	private DocumentIsValid(String value) {
 		this.value = value;
 	}
 

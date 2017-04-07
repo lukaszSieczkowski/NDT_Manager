@@ -14,26 +14,26 @@
 		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
 			<th:block th:include="fragments/userMenu :: userMenu"></th:block>
 		</p>
+	</div>
+	<h3 class="text-center">Employees</h3>
 
-		<h3 class="text-center">Employees</h3>
+	<div class="col-md-4 col-md-offset-4">
 
-		<div class="col-md-4 col-md-offset-4">
+		<table class="table table-condensed">
+			<tr>
+				<th>No.</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Position</th>
 
-			<table class="table table-condensed">
-				<tr>
-					<th>No.</th>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Position</th>
-
-				</tr>
-				<tr th:each="employee,id : ${employess.getEmployees()}">
-					<td th:text="${id.count}"></td>
-					<td th:text="${employee.firstName}"></td>
-					<td th:text="${employee.lastName}"></td>
-					<td th:text="${employee.employeePossition}"></td>
-				</tr>
-			</table>
-		</div>
+			</tr>
+			<tr th:each="employee,id : ${employess.getEmployees()}">
+				<td th:text="${id.count}"></td>
+				<td th:text="${employee.firstName}"></td>
+				<td th:text="${employee.lastName}"></td>
+				<td th:text="${employee.employeePossiton.getValue()}"></td>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>

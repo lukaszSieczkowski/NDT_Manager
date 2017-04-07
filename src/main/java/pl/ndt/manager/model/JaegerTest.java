@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "jaeger_test")
-@PrimaryKeyJoinColumn(name = "id")
+@Table(name = "jaeger_tests")
+@PrimaryKeyJoinColumn(name = "documnet_id")
 public class JaegerTest extends Document {
 
 	@Column(name = "correct_eye_condition")

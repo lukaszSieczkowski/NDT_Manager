@@ -1,23 +1,25 @@
 package pl.ndt.manager.dto;
 
-import java.time.LocalDateTime;
+import org.springframework.web.multipart.MultipartFile;
 
-import pl.ndt.manager.model.Employee;
+import pl.ndt.manager.model.enums.DocumentIsValid;
 import pl.ndt.manager.model.enums.NdtMethod;
+import pl.ndt.manager.model.enums.Sector;
 
 public class NdtCertificateDTO extends DocumentDTO {
 
 	private String documentNumber;
-	private String sector;
+	private Sector sector;
 	private NdtMethod ndtMethod;
 
 	public NdtCertificateDTO() {
 		super();
 	}
 
-	public NdtCertificateDTO(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			String ownerFirstName, String ownerLastName, String documentNumber, String sector, NdtMethod ndtMethod) {
-		super(issueDate, expirationDate, issuedBy, fileName, ownerFirstName, ownerLastName);
+	public NdtCertificateDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
+			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
+			String documentNumber, Sector sector, NdtMethod ndtMethod) {
+		super(issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
 		this.documentNumber = documentNumber;
 		this.sector = sector;
 		this.ndtMethod = ndtMethod;
@@ -31,11 +33,11 @@ public class NdtCertificateDTO extends DocumentDTO {
 		this.documentNumber = documentNumber;
 	}
 
-	public String getSector() {
+	public Sector getSector() {
 		return sector;
 	}
 
-	public void setSector(String sector) {
+	public void setSector(Sector sector) {
 		this.sector = sector;
 	}
 
@@ -45,6 +47,13 @@ public class NdtCertificateDTO extends DocumentDTO {
 
 	public void setNdtMethod(NdtMethod ndtMethod) {
 		this.ndtMethod = ndtMethod;
+	}
+
+	@Override
+	public String toString() {
+		return "NdtCertificateDTO [documentNumber=" + documentNumber + ", sector=" + sector + ", ndtMethod=" + ndtMethod
+				+ ", issueDate=" + issueDate + ", expirationDate=" + expirationDate + ", issuedBy=" + issuedBy
+				+ ", file=" + file + ", email=" + email + ", ownersNameAndSurname=" + ownersNameAndSurname + "]";
 	}
 
 }

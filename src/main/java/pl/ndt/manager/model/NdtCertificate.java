@@ -6,18 +6,20 @@ import javax.persistence.*;
 
 import pl.ndt.manager.dto.NdtCertificateDTO;
 import pl.ndt.manager.model.enums.NdtMethod;
+import pl.ndt.manager.model.enums.Sector;
 
 @Entity
-@Table(name = "ndt_certificate")
-@PrimaryKeyJoinColumn(name = "id")
+@Table(name = "ndt_certificates")
+@PrimaryKeyJoinColumn(name = "document_id")
 public class NdtCertificate extends Document {
-
-	@Column(name = "document_number")
+	
+	@Column(name = "document_number", length=20)
 	private String documentNumber;
-	@Column(name = "sector")
-	private String sector;
-	@Column(name = "ndt_method")
 	@Enumerated
+	@Column(name = "sector")
+	private Sector sector;
+	@Enumerated
+	@Column(name = "ndt_method")
 	private NdtMethod ndtMethod;
 
 	public NdtCertificate() {
@@ -25,7 +27,7 @@ public class NdtCertificate extends Document {
 	}
 
 	public NdtCertificate(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			Employee employee, String documentNumber, String sector, NdtMethod ndtMethod) {
+			Employee employee, String documentNumber, Sector sector, NdtMethod ndtMethod) {
 		super(issueDate, expirationDate, issuedBy, fileName, employee);
 		this.documentNumber = documentNumber;
 		this.sector = sector;
@@ -41,11 +43,11 @@ public class NdtCertificate extends Document {
 		this.documentNumber = documentNumber;
 	}
 
-	public String getSector() {
+	public Sector getSector() {
 		return sector;
 	}
 
-	public void setSector(String sector) {
+	public void setSector(Sector sector) {
 		this.sector = sector;
 	}
 

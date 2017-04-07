@@ -2,43 +2,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 
-		<title>NDT Manager</title>
-		
-		<link href="resources/css/bootstrap.min.css" rel="stylesheet">
-		<link href ="resources/css/login.css" rel="stylesheet">
-	
-	</head>
-	<body>
-		<div class="container-fluid">
-			<div id="upper_container"></div>
-				<div class="col-sm-4 col-sm-offset-4">
-					<div class="form_background">
-						<form th:action="@{/login}" method="post">
-						<h3>NDT Manager</h3>						
-						<div class="form-group">
-							<label for="email">Email address</label>
-							<input type="text" class="form-control input" name="email" placeholder="Email">
-						</div>
-						<div class="form-group">
-							<label for="password">Password</label>
-							<input type="password" class="form-control input" name="password"  placeholder="Password">
-						</div>
-						<div class="form-group">
-							<p class="help-block text-center"  th:text="${message}"> </p>
-						</div>
-						<input type="submit" class="login_button" value="Login">
-						</form>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>NDT Manager</title>
+
+<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/css/login.css" rel="stylesheet">
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div id="upper_container"></div>
+		<div class="col-sm-4 col-sm-offset-4">
+			<div class="form_background">
+				<form th:action="@{/login}" method="post">
+					<h3>NDT Manager</h3>
+					<div class="form-group">
+						<label for="email">Email address</label> <input type="text"
+							class="form-control input" name="email" placeholder="Email">
 					</div>
-				</div>
+					<div class="form-group">
+						<label for="password">Password</label> <input type="password"
+							class="form-control input" name="password" placeholder="Password">
+					</div>
+					<div class="form-group">
+						<p class="help-block text-center" th:text="${message}"></p>
+					</div>
+					<input type="submit" class="login_button" value="Login">
+				</form>
 			</div>
 		</div>
-	</body>
+	</div>
+
+</body>
 </html>

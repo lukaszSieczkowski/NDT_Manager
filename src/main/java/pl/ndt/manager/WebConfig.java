@@ -1,11 +1,13 @@
 package pl.ndt.manager;
 
-import org.springframework.beans.BeansException;
+import java.io.IOException;
 
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -40,7 +42,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	/**
 	 * Templates configuration
 	 * 
-	 * @return tempelateReslver
+	 * @return  SpringResourceTemplateResolver object
 	 */
 	@Bean
 	public SpringResourceTemplateResolver templateResolver() {
@@ -57,7 +59,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	/**
 	 * Configure Spring Template Engine
 	 * 
-	 * @return templateEngine
+	 * @return SpringTemplateEngine object
 	 */
 	@Bean
 	public SpringTemplateEngine templateEngine() {
@@ -69,9 +71,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 
 	/**
-	 * Configure Thymeleaf View Resolver
+	 *  Thymeleaf Viewresolver configuration
 	 * 
-	 * @return viewResolver
+	 * @return ThymeLeafViewResolver object
 	 */
 	@Bean
 	public ThymeleafViewResolver viewResolver() {
@@ -79,5 +81,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setTemplateEngine(templateEngine());
 		return viewResolver;
 	}
-
+	/**
+	 * Multipartresolver configuration
+	 * @return CommonsMultipartResolver object
+	 * @throws IOException
+	 */
+	@Bean(name = "multipartResolver")
+	public CommonsMultipartResolver getResolver() throws IOException {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setMaxUploadSizePerFile(5242880);
+		return resolver;
+	}
 }

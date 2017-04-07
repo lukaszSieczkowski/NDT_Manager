@@ -14,35 +14,43 @@
 		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
 			<th:block th:include="fragments/userMenu :: userMenu"></th:block>
 		</p>
-		<div>
+	</div>
 
-			<h3 class="text-center">Medical Examinations</h3>
+	<h3 class="text-center">Medical Examinations</h3>
 
-			<div class="col-md-10 col-md-offset-1">
+	<div class="col-md-10 col-md-offset-1">
 
-				<table class="table table-condensed">
-					<tr>
-						<th>No.</th>
-						<th>Issue Date</th>
-						<th>Expiration Date</th>
-						<th>Issued By</th>
-						<th>Owner</th>
-						<th>Requirements</th>
-						<th>Result Test</th>
-						<th>Show document</th>
-					</tr>
-					<tr th:each="document,id : ${documents.getDocuments()}">
-						<td th:text="${id.count}"></td>
-						<td th:text="${document.issueDate}"></td>
-						<td th:text="${document.expirationDate}"></td>
-						<td th:text="${document.issuedBy}"></td>
-						<td><span th:text="${document.ownerFirstName}"></span> <span
-							th:text="${document.ownerLastName}"></span></td>
-						<td th:text="${document.requirementsDescription}"></td>
-						<td th:text="${document.positiveResultTest}"></td>
-						<td th:text="${document.fileName}"></td>
-					</tr>
-				</table>
-			</div>
+		<table class="table table-condensed">
+			<tr>
+				<th>No.</th>
+				<th>Issue Date</th>
+				<th>Expiration Date</th>
+				<th>Issued By</th>
+				<th>Owner</th>
+				<th>Requirements</th>
+				<th>Result Test</th>
+				<th>Document is Valid
+				<th>
+				<th>Show document</th>
+			</tr>
+			<tr th:each="document,id : ${documents.getDocuments()}">
+				<td th:text="${id.count}"></td>
+				<td th:text="${document.issueDate}"></td>
+				<td th:text="${document.expirationDate}"></td>
+				<td th:text="${document.issuedBy}"></td>
+				<td th:text="${document.ownersNameAndSurname}"></td>
+				<td th:text="${document.requirementsDescription}"></td>
+				<td th:text="${document.positiveResultTest}"></td>
+				<td th:switch="${document.documentIsValid}">
+					<p th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}"
+						id="valid">Valid</p>
+					<p
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}"
+						id="expired">Expired</p>
+				</td>
+				<td th:text="${document.file}"></td>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>

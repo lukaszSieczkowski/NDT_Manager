@@ -11,7 +11,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 import pl.ndt.manager.dto.UserDTO;
-import pl.ndt.manager.services.EmployeeService;
+
 import pl.ndt.manager.services.UserService;
 
 @Controller
@@ -44,15 +44,15 @@ public class LoginController {
 	 */
 	@PostMapping("/login")
 	public String login(Model model, @RequestParam String email, @RequestParam String password) {
-		UserDTO userDto = null;
+		UserDTO userDTO = null;
 		try {
-			userDto = userService.createUser(email, password);
+			userDTO = userService.createUser(email, password);
 		} catch (NullPointerException e) {
 			String message = "Incorect email address or password";
 			model.addAttribute("message", message);
 			return "index";
 		}
-		model.addAttribute("logedEmployee", userDto);
+		model.addAttribute("logedEmployee", userDTO);
 		return "main";
 	}
 

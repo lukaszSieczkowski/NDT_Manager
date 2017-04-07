@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "vca_certificate")
-@PrimaryKeyJoinColumn(name = "id")
+@Table(name = "vca_certificates")
+@PrimaryKeyJoinColumn(name = "document_id")
 public class VcaCertificate extends Document {
 
 	@Column(name = "document_number")

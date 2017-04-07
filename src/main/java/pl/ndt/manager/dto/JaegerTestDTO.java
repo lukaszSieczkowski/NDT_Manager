@@ -1,20 +1,23 @@
 package pl.ndt.manager.dto;
 
-import java.time.LocalDateTime;
+import org.springframework.web.multipart.MultipartFile;
 
-public class JaegerTestDTO extends DocumentDTO{
-	
+import pl.ndt.manager.model.enums.DocumentIsValid;
+
+public class JaegerTestDTO extends DocumentDTO {
+
 	private boolean correctEyeCondition;
 
 	public JaegerTestDTO() {
 		super();
 	}
 
-	public JaegerTestDTO(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			String ownerFirstName, String ownerLastName, boolean correctEyeCondition) {
-		super(issueDate, expirationDate, issuedBy, fileName, ownerFirstName, ownerLastName);
-		
-		this.correctEyeCondition= correctEyeCondition;
+	public JaegerTestDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
+			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
+			boolean correctEyeCondition) {
+		super(issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
+
+		this.correctEyeCondition = correctEyeCondition;
 	}
 
 	public boolean getCorrectEyeCondition() {
@@ -24,5 +27,5 @@ public class JaegerTestDTO extends DocumentDTO{
 	public void setCorrectEyeCondition(boolean correctEyeCondition) {
 		this.correctEyeCondition = correctEyeCondition;
 	}
-	
+
 }

@@ -6,23 +6,30 @@ import org.springframework.stereotype.Component;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.context.WebApplicationContext;
-import pl.ndt.manager.model.Employee;
+
+import pl.ndt.manager.dto.EmployeeDTO;
 
 @Component
 @Scope(scopeName = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class EmployeeList {
 
-	private List<Employee> employees;
+	private List<EmployeeDTO> employees;
 
-	public EmployeeList(List<Employee> employees) {
+	public EmployeeList() {
+		super();
+	}
+
+	public EmployeeList(List<EmployeeDTO> employees) {
+		super();
 		this.employees = employees;
 	}
 
-	public List<Employee> getEmployees() {
+	public List<EmployeeDTO> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(List<Employee> employees) {
+	public void setEmployees(List<EmployeeDTO> employees) {
 		this.employees = employees;
 	}
+
 }

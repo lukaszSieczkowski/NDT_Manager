@@ -3,7 +3,6 @@ package pl.ndt.manager.dto;
 import pl.ndt.manager.model.enums.UserRole;
 
 public class UserDTO {
-
 	private String firstName;
 	private String lastName;
 	private UserRole role;

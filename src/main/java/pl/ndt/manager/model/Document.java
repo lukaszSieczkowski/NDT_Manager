@@ -6,18 +6,18 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "document")
+@Table(name = "documents")
 public class Document {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_document")
 	protected long id;
 	@Column(name = "issue_date")
 	protected LocalDateTime issueDate;
 	@Column(name = "expiration_date")
 	protected LocalDateTime expirationDate;
-	@Column(name = "issued_by")
+	@Column(name = "issued_by", length=50)
 	protected String issuedBy;
 	@Column(name = "file_name")
 	protected String fileName;

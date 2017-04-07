@@ -1,12 +1,13 @@
 package pl.ndt.manager.services;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pl.ndt.manager.dto.UserDTO;
+import pl.ndt.manager.dto.EmployeeDTO;
 import pl.ndt.manager.model.Employee;
 import pl.ndt.manager.repository.EmployeeRepository;
 
@@ -17,17 +18,18 @@ public class EmployeeService {
 	private EmployeeRepository employeeRepository;
 
 	
-
-	
 	/**
 	 * Prepares list of all employees
 	 * @return Employees list
 	 */
 	
-	public List<Employee> showAllEmployees() {
+	public List<EmployeeDTO> getAllEmployees() {
 		List<Employee> employees = (List<Employee>) employeeRepository.findAll();
-
-		return employees;
+		List<EmployeeDTO> employessDTO = new ArrayList<>();
+		for(Employee employee: employees){
+			employessDTO.add(new EmployeeDTO(employee.getFirstName(), employee.getLastName(),employee.getUser().getEmail() ,employee.getEmployeePossition()));
+		}
+		return employessDTO;
 	}
 
 }

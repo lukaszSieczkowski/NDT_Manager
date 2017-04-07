@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.*;
 
 import pl.ndt.manager.model.enums.EmployeePossiton;
-import pl.ndt.manager.model.enums.UserRole;
 
 @Entity
 @Table(name = "employees")
@@ -19,6 +18,7 @@ public class Employee {
 	private String firstName;
 	@Column(name = "last_name")
 	private String lastName;
+	@Enumerated
 	@Column(name = "employee_possition")
 	private EmployeePossiton employeePossition;
 	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -78,6 +78,16 @@ public class Employee {
 
 	public void setDocumentsList(List<Document> documentsList) {
 		this.documentsList = documentsList;
+	}
+	
+	
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

@@ -22,106 +22,67 @@
 	<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
 		<th:block th:include="fragments/userMenu :: userMenu"></th:block>
 	</p>
-	<h3 class="text-center">Add NDT Certificate</h3>
+</div>
+<h3 class="text-center">Add NDT Certificate</h3>
 
-	<div class="col-md-8 col-md-offset-2">
+<div class="col-md-8 col-md-offset-2">
 
-		<form>
-			<div class="date form-group col-md-6 ">
-				<label for="issueDate">Issue Date</label> <input type="text"
-					class="form-control" id="issueDate" name="issueDate"
-					placeholder="dd-mm-yyyy">
-			</div>
-			<div class="date form-group col-md-6">
-				<label for="expirationDate">Expiration Date</label> <input
-					type="text" class="form-control" id="expirationDate"
-					placeholder="dd-mm-yyyy">
-			</div>
-			<div class="form-group col-md-6">
-				<label for="issuedBy">Issued By</label> <input type="text"
-					class="form-control" id="issuedBy"
-					placeholder="Organization issuing the certificate">
-			</div>
-			<div class="form-group col-md-6">
-				<label for="documentNumber">Document Number</label> <input
-					type="text" class="form-control" id="documentNumber"
-					placeholder="Document Number">
-			</div>
+	<form th:action="@{saveNdtCertificate}" th:object="${ndtCertificateDTO}" method ="post" enctype="multipart/form-data">
+		<div class="date form-group col-md-6 ">
+			<label for="issueDate">Issue Date</label> <input type="text"
+				class="form-control" id="issueDate" th:field="*{issueDate}"
+				placeholder="dd-mm-yyyy">
+		</div>
+		<div class="date form-group col-md-6">
+			<label for="expirationDate">Expiration Date</label> <input
+				type="text" class="form-control" id="expirationDate" th:field="*{expirationDate}"
+				placeholder="dd-mm-yyyy">
+		</div>
+		<div class="form-group col-md-6">
+			<label for="issuedBy">Issued By</label> <input type="text"
+				class="form-control" id="issuedBy" th:field="*{issuedBy}"
+				placeholder="Organization issuing a certificate">
+		</div>
+		<div class="form-group col-md-6">
+			<label for="documentNumber">Document Number</label> <input
+				type="text" class="form-control" id="documentNumber"  th:field="*{documentNumber}"
+				placeholder="Document Number">
+		</div>
 
-			<div class="form-group col-md-4">
-				<label for="owner">Document Owner</label> <select
-					class="form-control">
-					<option>--- Select NDT Inspector ---</option>
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>5</option>
+		<div class="form-group col-md-4">
+			<label for="owner">Document Owner</label>
+			 <select class="form-control" th:field="*{email}" >
+				<option  th:each="employee : ${employess.getEmployees()}"
+				th:value="${employee.email}" th:text="${employee.firstName+' '+employee.lastName}" ></option>
+			</select>
+		</div>
+
+
+		<div class="form-group col-md-4">
+			<label for="owner">MDT Method</label>
+			 <select class="form-control" th:field="*{ndtMethod}">
+				<option  th:each="ndtMethod: ${T(pl.ndt.manager.model.enums.NdtMethod).values()}"
+				 th:value="${ndtMethod}" th:text="${ndtMethod.getValue()}"></option>
+			</select>
+		</div>
+
+		<div class="form-group col-md-4">
+			<label for="owner">Sector</label> <select class="form-control"  th:field="*{sector}">
+			
+				<option th:each="sector: ${T(pl.ndt.manager.model.enums.Sector).values()}" 
+				th:value="${sector}" th:text="${sector.getValue()}"></option>
 				</select>
-			</div>
+		</div>
+		<div class="form-group col-md-5">
+			<label for="file">File input</label> <input type="file"  th:field="*{file}"
+				id="file">
+			<p class="help-block">Example block-level help text here.</p>
+		</div>
 
-
-			<div class="form-group col-md-4">
-				<label for="owner">MDT Method</label> <select class="form-control">
-					<option>--- Select NDT Method ---</option>
-					<option value="VT_1">"Visual Testing Level 1"</option>
-					<option value="VT_2">"Visual Testing Level 2"</option>
-					<option value="VT_3">"Visual Testing Level 3"</option>
-					<option value="PT_1">"Penetrant Testing Level 1"</option>
-					<option value="PT_2">"Penetrant Testing Level 2"</option>
-					<option value="PT_3">"Penetrant Testing Level 3"</option>
-					<option value="MT_1">"Magnetic Testing Level 1"</option>
-					<option value="MT_2">"Magnetic Testing Level 2"</option>
-					<option value="MT_3">"Magnetic Testing Level 3"</option>
-					<option value="UT_1">"Ultrasonic Testing Level 1"</option>
-					<option value="UT_2">"Ultrasonic Testing Level 2"</option>
-					<option value="UT_3">"Ultrasonic Testing Level 3"</option>
-					<option value="RT_1">"Radiographic Testing Level 1"</option>
-					<option value="RT_2">"Radiographic Testing Level 2"</option>
-					<option value="RT_3">"Radiographic Testing Level 3"</option>
-					<option value="ET_1">"Eddy Current Testing Level 1"</option>
-					<option value="ET_2">"Eddy Current Testing Level 2"</option>
-					<option value="ET_3">"Eddy Current Testing Level 3"</option>
-					<option value="PA_1">"Phased Array Testing Level 1"</option>
-					<option value="PA_2">"Phased Array Testing Level 2"</option>
-					<option value="PA_3">"Phased Array Testing Level 3"</option>
-					<option value="PA_3">"Phased Array Testing Level 3"</option>
-					<option value="TOFD_1">"Time of Flight Diffraction Level
-						1"</option>
-					<option value="TOFD_2">"Time of Flight Diffraction Level
-						2"</option>
-					<option value="TOFD_3">"Time of Flight Diffraction Level
-						3"</option>
-				</select>
-			</div>
-
-			<div class="form-group col-md-4">
-				<label for="owner">Sector</label> <select class="form-control">
-					<option>--- Select Sector ---</option>
-					<option value="CASTINGS">Sector 1 (Castings)</option>
-					<option value="FORGINGS">Sector 2 (Forgings)</option>
-					<option value="WELDED_PRODUCTS">Sector 3 (Welded Products)</option>
-					<option value="TUBES">Sector 4 (Tubes and Pipes)</option>
-					<option value="WROUGHT">Sector 5 (Wrought Products)</option>
-					<option value="METAL_MANUFACTURING">Sector 6 (Metal
-						Manufacturing)</option>
-					<option value=" PRE_AND_IN_SERVICE">Sector 7 (Pre and
-						In-Service)</option>
-					<option value="RAILWAY">Sector 8 (Railway Maintenance)</option>
-					<option value="AREOSPACE">Sector 9 (Areospace)</option>
-					<option value="METL_PRE_AND_IN_SERVICE">Sector 6,7(Metal
-						Manufacturing, Pre and In-Service)</option>
-				</select>
-			</div>
-			<div class="form-group col-md-5">
-				<label for="exampleInputFile">File input</label> <input type="file"
-					id="exampleInputFile">
-				<p class="help-block">Example block-level help text here.</p>
-			</div>
-			<div class="col-md-8 ">
-				<input type="submit" class="action_button " value="Save">
-			</div>
-		</form>
-	</div>
-	</body>
+		<div class="col-md-8 ">
+			<input type="submit" class="action_button " value="Save">
+		</div>
+	</form>
+</div>
+</body>
 </html>
