@@ -16,6 +16,7 @@ import pl.ndt.manager.components.DocumentList;
 import pl.ndt.manager.components.EmployeeList;
 import pl.ndt.manager.dto.DocumentDTO;
 import pl.ndt.manager.dto.JaegerTestDTO;
+import pl.ndt.manager.dto.MedicalExaminationDTO;
 import pl.ndt.manager.dto.NdtCertificateDTO;
 import pl.ndt.manager.dto.VcaCertificateDTO;
 import pl.ndt.manager.model.VcaCertificate;
@@ -37,22 +38,6 @@ public class DocumentControler {
 	@Autowired
 	private EmployeeService employeeService;
 
-	/**
-	 * Shows list of valid NDT Certificates
-	 * 
-	 * @param model
-	 *            Holder for attributes
-	 * @return showNdtCertificates view
-	 */
-	@RequestMapping("/showValidNdtCertificates")
-	public String showValidNdtCertificates(Model model) {
-		List<DocumentDTO> documents = documentService.getNdtCertificates();
-		documents = documents.stream().filter(a -> (a.getDocumentIsValid() != DocumentIsValid.EXPIRED))
-				.collect(Collectors.toList());
-		documentList.setDocuments(documents);
-		model.addAttribute("documents", documentList);
-		return "personel/show_docs/showNdtCertificates";
-	}
 
 	/**
 	 * Shows list of all NDT Certificates saved in system
@@ -87,6 +72,27 @@ public class DocumentControler {
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showVcaCertificates";
 	}
+	
+	/**
+	 * Show list of all Jaeger Test saved in system
+	 * 
+	 * @param model
+	 *            Holder for attributes
+	 * @return showJaegerTests view
+	 */
+
+	@RequestMapping("/showAllJaegerTests")
+	public String showAllJaegerTests(Model model) {
+		List<DocumentDTO> documents = documentService.getJaegerTests();
+		documents = documents.stream().sorted((a, b) -> (a.getDocumentIsValid()).compareTo(b.getDocumentIsValid()))
+				.collect(Collectors.toList());
+		documentList.setDocuments(documents);
+		model.addAttribute("documents", documentList);
+		return "personel/show_docs/showJaegerTests";
+	}
+
+
+
 
 	/**
 	 * Shows list of Medical Examinations
@@ -95,9 +101,11 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return showMedicalExaminations view
 	 */
-	@RequestMapping("showMedicalExaminations")
+	@RequestMapping("showAllMedicalExaminations")
 	public String showMedicalExamination(Model model) {
 		List<DocumentDTO> documents = documentService.getMedicalExaminations();
+		documents = documents.stream().sorted((a, b) -> (a.getDocumentIsValid().compareTo(b.getDocumentIsValid())))
+				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showMedicalExaminations";
@@ -121,6 +129,26 @@ public class DocumentControler {
 		return "personel/show_docs/showJaegerTests";
 	}
 	
+
+	/**
+	 * Shows list of valid Medical  Examinations
+	 * 
+	 * @param model
+	 *            Holder for attributes
+	 * @return showMedicalExaminations view
+	 */
+	
+	@RequestMapping("/showValidMedicalExaminations")
+	public String showValidMedicalExaminations(Model model) {
+		List<DocumentDTO> documents = documentService.getMedicalExaminations();
+		documents = documents.stream().filter(a -> (a.getDocumentIsValid() != DocumentIsValid.EXPIRED))
+				.collect(Collectors.toList());
+		documentList.setDocuments(documents);
+		model.addAttribute("documents", documentList);
+		return "personel/show_docs/showMedicalExaminations";
+	}
+
+	
 	/**
 	 * Shows list of valid VCA Certificates
 	 * 
@@ -139,26 +167,25 @@ public class DocumentControler {
 		return "personel/show_docs/showVcaCertificates";
 	}
 
+
 	/**
-	 * Show list of all Jaeger Test saved in system
+	 * Shows list of valid NDT Certificates
 	 * 
 	 * @param model
 	 *            Holder for attributes
-	 * @return showJaegerTests view
+	 * @return showNdtCertificates view
 	 */
-
-	@RequestMapping("/showAllJaegerTests")
-	public String showAllJaegerTests(Model model) {
-		List<DocumentDTO> documents = documentService.getJaegerTests();
-		documents = documents.stream().sorted((a, b) -> (a.getDocumentIsValid()).compareTo(b.getDocumentIsValid()))
+	@RequestMapping("/showValidNdtCertificates")
+	public String showValidNdtCertificates(Model model) {
+		List<DocumentDTO> documents = documentService.getNdtCertificates();
+		documents = documents.stream().filter(a -> (a.getDocumentIsValid() != DocumentIsValid.EXPIRED))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
-		return "personel/show_docs/showJaegerTests";
+		return "personel/show_docs/showNdtCertificates";
 	}
-
-
-
+	
+	
 	/**
 	 * Shows form to save NDT Certificate in system
 	 * 
@@ -205,6 +232,23 @@ public class DocumentControler {
 		model.addAttribute("employess", employeeList);
 		return "personel/add_docs/addVcaCertificate";
 	}
+	
+
+	/**
+	 * Shows form to save Medical Examination in system
+	 * 
+	 * @param model
+	 *            Holed for attributes
+	 * @return addMedicalEcamination view
+	 */
+
+	@RequestMapping("/addMedicalExamination")
+	public String addVMedicalExamination(Model model) {
+		model.addAttribute("medicalExaminationDTO", new MedicalExaminationDTO());
+		employeeList.setEmployees(employeeService.getAllEmployees());
+		model.addAttribute("employess", employeeList);
+		return "personel/add_docs/addMedicalExamination";
+	}
 
 	/**
 	 * Saves new NDT Certificate in System
@@ -245,7 +289,7 @@ public class DocumentControler {
 	/**
 	 * Saves new VCA Certifice in System
 	 * 
-	 * @param jaegerTestDTO
+	 * @param vcaCertificateDTO
 	 *            Transfer object with values transfered from input form into
 	 *            the database
 	 * @param model
@@ -258,6 +302,24 @@ public class DocumentControler {
 		documentService.saveVcaCertificate(vcaCertificateDTO);
 		model.addAttribute("employess", employeeList);
 		return "personel/add_docs/addVcaCertificate";
+	}
+	
+	/**
+	 * Saves new Medical examination in System
+	 * 
+	 * @param vcaCertificateDTO
+	 *            Transfer object with values transfered from input form into
+	 *            the database
+	 * @param model
+	 *            Holder for attributes
+	 * @return addMedicalEcamination view
+	 */
+
+	@PostMapping("/saveMedicalExamination")
+	public String saveMedicalExamination(@ModelAttribute MedicalExaminationDTO medicalExaminationDTO, Model model) {
+		documentService.saveMedicalExamination(medicalExaminationDTO);
+		model.addAttribute("employess", employeeList);
+		return "personel/add_docs/addMedicalExamination";
 	}
 
 }

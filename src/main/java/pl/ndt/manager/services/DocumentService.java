@@ -109,9 +109,11 @@ public class DocumentService implements FileDirectory {
 
 			medCertDto.setOwnersNameAndSurname(
 					medCert.getEmployee().getFirstName() + " " + medCert.getEmployee().getLastName());
-			medCertDto.setPositiveResultTest(medCert.getPositiveResultTest());
+
 			medCertDto.setRequirementsDescription(medCert.getRequirementsDescription());
+			medCertDto.setRequirementsFullFilled(medCert.getRequirementsFullFilled());
 			medCertDto.setDocumentIsValid(checkDocumentExpiredDate(medCert.getExpirationDate()));
+
 			documents.add(medCertDto);
 		}
 		return documents;
@@ -169,44 +171,84 @@ public class DocumentService implements FileDirectory {
 		ndtCertificateRepository.save(ndtCertificate);
 
 	}
+
+	/**
+	 * Saves new Jaeger Test in System
+	 * 
+	 * @param ndtCertificateDTO
+	 */
 	public void saveJaegerTest(JaegerTestDTO jaegerTestDTO) {
 		dateConverter = new DateConverter();
 		JaegerTest jaegerTest = new JaegerTest();
 		jaegerTest.setIssueDate(dateConverter.createDateFromString(jaegerTestDTO.getIssueDate(), 0, 0));
 		jaegerTest.setExpirationDate(dateConverter.createDateFromString(jaegerTestDTO.getExpirationDate(), 0, 0));
 		jaegerTest.setIssuedBy(jaegerTestDTO.getIssuedBy());
-		
+
 		Employee employee = createEmployeeByEmail(jaegerTestDTO.getEmail());
 		jaegerTest.setEmployee(employee);
-		
+
 		jaegerTest.setCorerctlyEyeCondition(jaegerTestDTO.getCorerctlyEyeCondition());
-		
+
 		FileTool fileTool = new FileTool();
 		String fileName = fileTool.saveFile(jaegerTestDTO.getFile(), employee.getLastName());
 		jaegerTest.setFileName(fileName);
-		
+
 		jaegerTestRepository.save(jaegerTest);
-		
+
 	}
-	
+
+	/**
+	 * Saves VCA Certifcate in System
+	 * 
+	 * @param vcaCertificateDTO
+	 */
 	public void saveVcaCertificate(VcaCertificateDTO vcaCertificateDTO) {
 		dateConverter = new DateConverter();
 		VcaCertificate vcaCertificate = new VcaCertificate();
 		vcaCertificate.setIssueDate(dateConverter.createDateFromString(vcaCertificateDTO.getIssueDate(), 0, 0));
-		vcaCertificate.setExpirationDate(dateConverter.createDateFromString(vcaCertificateDTO.getExpirationDate(), 0, 0));
+		vcaCertificate
+				.setExpirationDate(dateConverter.createDateFromString(vcaCertificateDTO.getExpirationDate(), 0, 0));
 		vcaCertificate.setDocumentNumber(vcaCertificateDTO.getDocumentNumber());
 		vcaCertificate.setIssuedBy(vcaCertificateDTO.getIssuedBy());
-		
+
 		Employee employee = createEmployeeByEmail(vcaCertificateDTO.getEmail());
 		vcaCertificate.setEmployee(employee);
-		
+
 		FileTool fileTool = new FileTool();
 		String fileName = fileTool.saveFile(vcaCertificateDTO.getFile(), employee.getLastName());
 		vcaCertificate.setFileName(fileName);
-		
+
 		vcaCertificateRepository.save(vcaCertificate);
 	}
 
+	/**
+	 * Saves Medical Examination in system
+	 * 
+	 * @param medicalExaminationDTO
+	 */
+
+	public void saveMedicalExamination(MedicalExaminationDTO medicalExaminationDTO) {
+		dateConverter = new DateConverter();
+
+		MedicalExamination medicalExamination = new MedicalExamination();
+		medicalExamination.setIssueDate(dateConverter.createDateFromString(medicalExaminationDTO.getIssueDate(), 0, 0));
+		medicalExamination
+				.setExpirationDate(dateConverter.createDateFromString(medicalExaminationDTO.getExpirationDate(), 0, 0));
+		medicalExamination.setIssuedBy(medicalExaminationDTO.getIssuedBy());
+
+		Employee employee = createEmployeeByEmail(medicalExaminationDTO.getEmail());
+		medicalExamination.setEmployee(employee);
+
+		medicalExamination.setRequirementsDescription(medicalExaminationDTO.getRequirementsDescription());
+		medicalExamination.setRequirementsFullFilled(medicalExaminationDTO.getRequirementsFullFilled());
+
+		FileTool fileTool = new FileTool();
+		String fileName = fileTool.saveFile(medicalExaminationDTO.getFile(), employee.getLastName());
+		medicalExamination.setFileName(fileName);
+
+		medicalExaminationRepository.save(medicalExamination);
+
+	}
 
 	/**
 	 * Checks if document is still valid
@@ -217,7 +259,6 @@ public class DocumentService implements FileDirectory {
 	 */
 	public DocumentIsValid checkDocumentExpiredDate(LocalDateTime expiredDate) {
 
-		
 		if (expiredDate.isAfter(LocalDateTime.now())) {
 			return DocumentIsValid.VALID;
 		} else {
@@ -225,14 +266,19 @@ public class DocumentService implements FileDirectory {
 		}
 
 	}
-	
-	public Employee createEmployeeByEmail(String email){
+
+	/**
+	 * Creates Employee by email
+	 * 
+	 * @param email
+	 *            User's email
+	 * @return employee
+	 */
+
+	public Employee createEmployeeByEmail(String email) {
 		User user = userRepository.findByEmail(email);
 		Employee employee = user.getEmployee();
 		return employee;
 	}
 
-	
-
-	
 }

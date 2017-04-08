@@ -6,8 +6,10 @@ import pl.ndt.manager.model.enums.DocumentIsValid;
 
 public class MedicalExaminationDTO extends DocumentDTO {
 
-	private boolean positiveResultTest;
+	
 	private String requirementsDescription;
+	
+	private String requirementsFullFilled;
 
 	public MedicalExaminationDTO() {
 		super();
@@ -15,18 +17,19 @@ public class MedicalExaminationDTO extends DocumentDTO {
 
 	public MedicalExaminationDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
 			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
-			boolean positiveResultTest, String requirementsDescription) {
+			 String requirementsFullFilled, String requirementsDescription) {
 		super(issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
-		this.positiveResultTest = positiveResultTest;
+		this.requirementsFullFilled = requirementsFullFilled;
 		this.requirementsDescription = requirementsDescription;
 	}
 
-	public boolean isPositiveResultTest() {
-		return positiveResultTest;
+	
+	public String getRequirementsFullFilled() {
+		return requirementsFullFilled;
 	}
 
-	public void setPositiveResultTest(boolean positiveResultTest) {
-		this.positiveResultTest = positiveResultTest;
+	public void setRequirementsFullFilled(String requirementsFullFilled) {
+		this.requirementsFullFilled = requirementsFullFilled;
 	}
 
 	public String getRequirementsDescription() {

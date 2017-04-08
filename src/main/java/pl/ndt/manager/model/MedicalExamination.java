@@ -9,29 +9,23 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name = "document_id")
 public class MedicalExamination extends Document {
 
-	@Column(name = "positive_result_test")
-	private boolean positiveResultTest;
+	
 	@Column(name = "requirements_description")
 	private String requirementsDescription;
-
+	@Column(name = "requirements_full_filled")
+	private String requirementsFullFilled;
+	
 	public MedicalExamination() {
 		super();
 	}
 
 	public MedicalExamination(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			Employee employee, boolean positiveResultTest, String requirementsDescription) {
+			Employee employee, String requirementsFullFilled, String requirementsDescription) {
 		super(issueDate, expirationDate, issuedBy, fileName, employee);
-		this.positiveResultTest = positiveResultTest;
+		this.requirementsFullFilled = requirementsFullFilled;
 		this.requirementsDescription = requirementsDescription;
 	}
 
-	public boolean getPositiveResultTest() {
-		return positiveResultTest;
-	}
-
-	public void setPositiveResultTest(boolean positiveResultTest) {
-		this.positiveResultTest = positiveResultTest;
-	}
 
 	public String getRequirementsDescription() {
 		return requirementsDescription;
@@ -40,10 +34,19 @@ public class MedicalExamination extends Document {
 	public void setRequirementsDescription(String requirementsDescription) {
 		this.requirementsDescription = requirementsDescription;
 	}
+	
+
+	public String getRequirementsFullFilled() {
+		return requirementsFullFilled;
+	}
+
+	public void setRequirementsFullFilled(String requirementsFullFilled) {
+		this.requirementsFullFilled = requirementsFullFilled;
+	}
 
 	@Override
 	public String toString() {
-		return "MedicalExamination [positiveResultTest=" + positiveResultTest + ", requirementsDescription="
+		return "MedicalExamination [positiveResultTest=" +  requirementsFullFilled + ", requirementsDescription="
 				+ requirementsDescription + ", id=" + id + ", issueDate=" + issueDate + ", expirationDate="
 				+ expirationDate + ", issuedBy=" + issuedBy + ", fileName=" + fileName + "]";
 	}

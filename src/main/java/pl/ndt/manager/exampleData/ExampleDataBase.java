@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import pl.ndt.manager.model.Document;
 import pl.ndt.manager.model.Employee;
 import pl.ndt.manager.model.JaegerTest;
+import pl.ndt.manager.model.MedicalExamination;
 import pl.ndt.manager.model.NdtCertificate;
 import pl.ndt.manager.model.User;
 import pl.ndt.manager.model.VcaCertificate;
@@ -20,6 +21,7 @@ import pl.ndt.manager.model.enums.Sector;
 import pl.ndt.manager.model.enums.UserRole;
 import pl.ndt.manager.repository.EmployeeRepository;
 import pl.ndt.manager.repository.JaegerTestRepository;
+import pl.ndt.manager.repository.MedicalExaminationRepository;
 import pl.ndt.manager.repository.NdtCertificateRepository;
 import pl.ndt.manager.repository.UserRepository;
 import pl.ndt.manager.repository.VcaCertificateRepository;
@@ -35,6 +37,8 @@ public class ExampleDataBase {
 	private JaegerTestRepository jaegerTestRepository;
 	@Autowired
 	private VcaCertificateRepository vcaCertificateRepository;
+	@Autowired
+	private  MedicalExaminationRepository medicalExaminationRepository;
 
 	public void prepareDataBase() {
 		List<Document> documentsList1 = new ArrayList<>();
@@ -289,6 +293,51 @@ public class ExampleDataBase {
 		vcaCertificate5.setDocumentNumber("Doc-5");
 		vcaCertificate5.setFileName("eeee");
 		
+		MedicalExamination medicalExamination1 =new MedicalExamination();
+		medicalExamination1.setIssueDate(LocalDateTime.of(2015, 10, 3, 0, 0));
+		medicalExamination1.setExpirationDate(LocalDateTime.of(2015, 10, 3, 0, 0).plusYears(2));
+		medicalExamination1.setIssuedBy("Med");
+		medicalExamination1.setEmployee(employee1);
+		medicalExamination1.setRequirementsDescription("Working at height");
+		medicalExamination1.setRequirementsFullFilled("Working at height - positive");
+		medicalExamination1.setFileName("aaaaa");
+		
+		MedicalExamination medicalExamination2 =new MedicalExamination();
+		medicalExamination2.setIssueDate(LocalDateTime.of(2014, 3, 3, 0, 0));
+		medicalExamination2.setExpirationDate(LocalDateTime.of(2014, 3, 3, 0, 0).plusYears(3));
+		medicalExamination2.setIssuedBy("Med");
+		medicalExamination2.setEmployee(employee2);
+		medicalExamination2.setRequirementsDescription("Working at height");
+		medicalExamination2.setRequirementsFullFilled("Working at height - positive");
+		medicalExamination2.setFileName("bbbbb");
+		
+		MedicalExamination medicalExamination3 =new MedicalExamination();
+		medicalExamination3.setIssueDate(LocalDateTime.of(2015, 3, 3, 0, 0));
+		medicalExamination3.setExpirationDate(LocalDateTime.of(2015, 3, 3, 0, 0).plusYears(3));
+		medicalExamination3.setIssuedBy("Med");
+		medicalExamination3.setEmployee(employee3);
+		medicalExamination3.setRequirementsDescription("Working at height");
+		medicalExamination3.setRequirementsFullFilled("Working at height - positive");
+		medicalExamination3.setFileName("ccccc");
+		
+		MedicalExamination medicalExamination4 =new MedicalExamination();
+		medicalExamination4.setIssueDate(LocalDateTime.of(2017, 3, 3, 0, 0));
+		medicalExamination4.setExpirationDate(LocalDateTime.of(2017, 3, 3, 0, 0).plusYears(1));
+		medicalExamination4.setIssuedBy("Med");
+		medicalExamination4.setEmployee(employee4);
+		medicalExamination4.setRequirementsDescription("Working at height");
+		medicalExamination4.setRequirementsFullFilled("Working at height - positive");
+		medicalExamination4.setFileName("ddddd");
+		
+		MedicalExamination medicalExamination5 =new MedicalExamination();
+		medicalExamination5.setIssueDate(LocalDateTime.of(2016, 3, 3, 0, 0));
+		medicalExamination5.setExpirationDate(LocalDateTime.of(2016, 3, 3, 0, 0).plusYears(2));
+		medicalExamination5.setIssuedBy("Med");
+		medicalExamination5.setEmployee(employee4);
+		medicalExamination5.setRequirementsDescription("Working at height");
+		medicalExamination5.setRequirementsFullFilled("Working at height - positive");
+		medicalExamination5.setFileName("eeeee");
+		
 		
 		
 		userRepository.save(user1);
@@ -319,5 +368,11 @@ public class ExampleDataBase {
 		vcaCertificateRepository.save(vcaCertificate3);
 		vcaCertificateRepository.save(vcaCertificate4);
 		vcaCertificateRepository.save(vcaCertificate5);
+		
+		medicalExaminationRepository.save(medicalExamination1);
+		medicalExaminationRepository.save(medicalExamination2);
+		medicalExaminationRepository.save(medicalExamination3);
+		medicalExaminationRepository.save(medicalExamination4);
+		medicalExaminationRepository.save(medicalExamination5);
 	}
 }
