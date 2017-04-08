@@ -4,13 +4,18 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import pl.ndt.manager.components.DocumentList;
 import pl.ndt.manager.components.EmployeeList;
@@ -25,6 +30,7 @@ import pl.ndt.manager.services.DocumentService;
 import pl.ndt.manager.services.EmployeeService;
 
 @Controller
+@SessionAttributes("employess")
 public class DocumentControler {
 
 	@Autowired
@@ -37,7 +43,6 @@ public class DocumentControler {
 
 	@Autowired
 	private EmployeeService employeeService;
-
 
 	/**
 	 * Shows list of all NDT Certificates saved in system
@@ -72,7 +77,7 @@ public class DocumentControler {
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showVcaCertificates";
 	}
-	
+
 	/**
 	 * Show list of all Jaeger Test saved in system
 	 * 
@@ -90,9 +95,6 @@ public class DocumentControler {
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showJaegerTests";
 	}
-
-
-
 
 	/**
 	 * Shows list of Medical Examinations
@@ -128,16 +130,15 @@ public class DocumentControler {
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showJaegerTests";
 	}
-	
 
 	/**
-	 * Shows list of valid Medical  Examinations
+	 * Shows list of valid Medical Examinations
 	 * 
 	 * @param model
 	 *            Holder for attributes
 	 * @return showMedicalExaminations view
 	 */
-	
+
 	@RequestMapping("/showValidMedicalExaminations")
 	public String showValidMedicalExaminations(Model model) {
 		List<DocumentDTO> documents = documentService.getMedicalExaminations();
@@ -148,7 +149,6 @@ public class DocumentControler {
 		return "personel/show_docs/showMedicalExaminations";
 	}
 
-	
 	/**
 	 * Shows list of valid VCA Certificates
 	 * 
@@ -167,7 +167,6 @@ public class DocumentControler {
 		return "personel/show_docs/showVcaCertificates";
 	}
 
-
 	/**
 	 * Shows list of valid NDT Certificates
 	 * 
@@ -184,8 +183,7 @@ public class DocumentControler {
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showNdtCertificates";
 	}
-	
-	
+
 	/**
 	 * Shows form to save NDT Certificate in system
 	 * 
@@ -232,7 +230,6 @@ public class DocumentControler {
 		model.addAttribute("employess", employeeList);
 		return "personel/add_docs/addVcaCertificate";
 	}
-	
 
 	/**
 	 * Shows form to save Medical Examination in system
@@ -261,9 +258,11 @@ public class DocumentControler {
 	 * @return addNdtCertificate view
 	 */
 	@PostMapping("/saveNdtCertificate")
-	public String saveNdtCertificate(@ModelAttribute NdtCertificateDTO ndtCertificateDTO, Model model) {
-		documentService.saveNdtCertificate(ndtCertificateDTO);
-		model.addAttribute("employess", employeeList);
+	public String saveNdtCertificate(@Valid @ModelAttribute NdtCertificateDTO ndtCertificateDTO, BindingResult result,
+			Model model) {
+		if (!result.hasErrors()) {
+			documentService.saveNdtCertificate(ndtCertificateDTO);
+		}
 		return "personel/add_docs/addNdtCertificate";
 	}
 
@@ -279,10 +278,11 @@ public class DocumentControler {
 	 */
 
 	@PostMapping("/saveJaegerTest")
-	public String saveJaegerCertificate(@ModelAttribute JaegerTestDTO jaegerTestDTO, Model model) {
-		System.out.println(jaegerTestDTO);
-		documentService.saveJaegerTest(jaegerTestDTO);
-		model.addAttribute("employess", employeeList);
+	public String saveJaegerCertificate(@Valid @ModelAttribute JaegerTestDTO jaegerTestDTO, BindingResult result,
+			Model model) {
+		if (!result.hasErrors()) {
+			documentService.saveJaegerTest(jaegerTestDTO);
+		}
 		return "personel/add_docs/addJaegerTest";
 	}
 
@@ -298,12 +298,14 @@ public class DocumentControler {
 	 */
 
 	@PostMapping("/saveVcaCertificate")
-	public String saveJaegerCertificate(@ModelAttribute VcaCertificateDTO vcaCertificateDTO, Model model) {
-		documentService.saveVcaCertificate(vcaCertificateDTO);
-		model.addAttribute("employess", employeeList);
+	public String saveJaegerCertificate(@Valid @ModelAttribute VcaCertificateDTO vcaCertificateDTO,
+			BindingResult result, Model model) {
+		if (!result.hasErrors()) {
+			documentService.saveVcaCertificate(vcaCertificateDTO);
+		}
 		return "personel/add_docs/addVcaCertificate";
 	}
-	
+
 	/**
 	 * Saves new Medical examination in System
 	 * 
@@ -316,9 +318,11 @@ public class DocumentControler {
 	 */
 
 	@PostMapping("/saveMedicalExamination")
-	public String saveMedicalExamination(@ModelAttribute MedicalExaminationDTO medicalExaminationDTO, Model model) {
-		documentService.saveMedicalExamination(medicalExaminationDTO);
-		model.addAttribute("employess", employeeList);
+	public String saveMedicalExamination(@Valid @ModelAttribute MedicalExaminationDTO medicalExaminationDTO,
+			BindingResult result, Model model) {
+		if (!result.hasErrors()) {
+			documentService.saveMedicalExamination(medicalExaminationDTO);
+		}
 		return "personel/add_docs/addMedicalExamination";
 	}
 

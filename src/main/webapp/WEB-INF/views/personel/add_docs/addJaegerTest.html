@@ -28,43 +28,49 @@
 <div class="col-md-8 col-md-offset-2">
 
 	<form th:action="@{saveJaegerTest}" th:object="${jaegerTestDTO}" method ="post" enctype="multipart/form-data">
-		<div class="date form-group col-md-6 ">
-			<label for="issueDate">Issue Date</label> <input type="text"
-				class="form-control" id="issueDate" th:field="*{issueDate}"
-				placeholder="dd-mm-yyyy">
+		<div class="col-md-12">
+			<div class="date form-group col-md-6 ">
+				<label for="issueDate">Issue Date</label> 
+				<input type="text" class="form-control" id="issueDate" th:field="*{issueDate}" placeholder="dd-mm-yyyy">
+				<p class="text-center alert" th:if="${#fields.hasErrors('issueDate')}" th:errors="*{issueDate}"></p>	
+			</div>
+			<div class="date form-group col-md-6">
+				<label for="expirationDate">Expiration Date</label>
+				<input type="text" class="form-control" id="expirationDate" th:field="*{expirationDate}" placeholder="dd-mm-yyyy">
+				<p class="text-center alert" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}"></p>
+			</div>
 		</div>
-		<div class="date form-group col-md-6">
-			<label for="expirationDate">Expiration Date</label> <input
-				type="text" class="form-control" id="expirationDate" th:field="*{expirationDate}"
-				placeholder="dd-mm-yyyy">
-		</div>
-		<div class="form-group col-md-6">
-			<label for="issuedBy">Issued By</label> <input type="text"
-				class="form-control" id="issuedBy" th:field="*{issuedBy}"
-				placeholder="Organization issuing a certificate">
-		</div>
-	
-		<div class="form-group col-md-6">
-			<label for="owner">Document Owner</label>
-			 <select class="form-control" th:field="*{email}" >
-				<option  th:each="employee : ${employess.getEmployees()}"
-				th:value="${employee.email}" th:text="${employee.firstName+' '+employee.lastName}" ></option>
-			</select>
-		</div>
-
-		<div class="form-group col-md-6">
-			<label for="owner">Correctly Eye condition</label> <select class="form-control"  th:field="*{corerctlyEyeCondition}">
-			
-				<option th:each="eyeCondition: ${T(pl.ndt.manager.model.enums.CorerctlyEyeCondition).values()}" 
-				th:value="${eyeCondition}" th:text="${eyeCondition.getValue()}"></option>
+		<div class="col-md-12">
+			<div class="form-group col-md-6">
+				<label for="issuedBy">Issued By</label>
+				<input type="text" class="form-control" id="issuedBy" th:field="*{issuedBy}" placeholder="Organization issuing a certificate">
+				<p class="text-center alert" th:if="${#fields.hasErrors('issuedBy')}" th:errors="*{issuedBy}"></p>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="owner">Document Owner</label>
+			 	<select class="form-control" th:field="*{email}" >
+			 		<option value="">----  Select Employee  ----</option>
+					<option  th:each="employee : ${employess.getEmployees()}"
+						th:value="${employee.email}" th:text="${employee.firstName+' '+employee.lastName}" ></option>
 				</select>
+				<p class="text-center alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+			</div>
 		</div>
-		<div class="form-group col-md-6">
-			<label for="file">File input</label> <input type="file"  th:field="*{file}"
-				id="file">
-			<p class="help-block">Example block-level help text here.</p>
+		<div class="col-md-12">
+			<div class="form-group col-md-6">
+				<label for="owner">Correctly Eye condition</label> 
+				<select class="form-control"  th:field="*{corerctlyEyeCondition}">
+				<option value="">----  Select Option  ----</option>
+				<option th:each="eyeCondition: ${T(pl.ndt.manager.model.enums.CorerctlyEyeCondition).values()}" 
+						th:value="${eyeCondition}" th:text="${eyeCondition.getValue()}"></option>
+				</select>
+				<p class="text-center alert" th:if="${#fields.hasErrors('corerctlyEyeCondition')}" th:errors="*{corerctlyEyeCondition}"></p>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="file">File input</label> <input type="file"  th:field="*{file}" id="file">
+				<p class="help-block">Select Jaeger Test to upload(5 MB max, pdf file)</p>
+			</div>
 		</div>
-
 		<div class="col-md-8 ">
 			<input type="submit" class="action_button " value="Save">
 		</div>

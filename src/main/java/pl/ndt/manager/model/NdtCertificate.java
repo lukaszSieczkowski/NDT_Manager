@@ -13,7 +13,7 @@ import pl.ndt.manager.model.enums.Sector;
 @PrimaryKeyJoinColumn(name = "document_id")
 public class NdtCertificate extends Document {
 	
-	@Column(name = "document_number", length=20)
+	@Column(name = "document_number", length=40)
 	private String documentNumber;
 	@Enumerated
 	@Column(name = "sector")

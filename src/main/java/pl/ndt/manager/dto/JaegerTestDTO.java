@@ -1,12 +1,15 @@
 package pl.ndt.manager.dto;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import pl.ndt.manager.model.enums.CorerctlyEyeCondition;
 import pl.ndt.manager.model.enums.DocumentIsValid;
 
 public class JaegerTestDTO extends DocumentDTO {
-
+	
+	@NotNull(message = "Select Value")
 	private CorerctlyEyeCondition corerctlyEyeCondition;
 
 	public JaegerTestDTO() {

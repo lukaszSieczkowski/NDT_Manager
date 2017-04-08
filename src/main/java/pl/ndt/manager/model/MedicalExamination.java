@@ -9,10 +9,9 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name = "document_id")
 public class MedicalExamination extends Document {
 
-	
-	@Column(name = "requirements_description")
+	@Column(name = "requirements_description",length=500)
 	private String requirementsDescription;
-	@Column(name = "requirements_full_filled")
+	@Column(name = "requirements_full_filled",length=200)
 	private String requirementsFullFilled;
 	
 	public MedicalExamination() {

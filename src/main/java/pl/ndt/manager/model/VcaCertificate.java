@@ -9,7 +9,7 @@ import javax.persistence.*;
 @PrimaryKeyJoinColumn(name = "document_id")
 public class VcaCertificate extends Document {
 
-	@Column(name = "document_number")
+	@Column(name = "document_number" ,length=40)
 	private String documentNumber;
 
 	public VcaCertificate() {

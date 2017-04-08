@@ -19,7 +19,7 @@ public class JaegerTest extends Document {
 	}
 
 	public JaegerTest(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			Employee employee, CorerctlyEyeCondition corerctlyEyeConditio) {
+			Employee employee, CorerctlyEyeCondition corerctlyEyeCondition) {
 		super(issueDate, expirationDate, issuedBy, fileName, employee);
 		this.corerctlyEyeCondition = corerctlyEyeCondition;
 	}
