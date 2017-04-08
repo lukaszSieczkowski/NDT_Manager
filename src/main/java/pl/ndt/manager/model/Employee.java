@@ -4,14 +4,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import pl.ndt.manager.model.enums.EmployeePossiton;
+import pl.ndt.manager.model.enums.EmployeePositon;
 
 @Entity
 @Table(name = "employees")
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_employee")
 	private Long id;
 	@Column(name = "first_name")
@@ -20,7 +20,7 @@ public class Employee {
 	private String lastName;
 	@Enumerated
 	@Column(name = "employee_possition")
-	private EmployeePossiton employeePossition;
+	private EmployeePositon employeePosition;
 	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Document> documentsList;
 	@OneToOne(mappedBy = "employee")
@@ -30,14 +30,17 @@ public class Employee {
 		super();
 	}
 
-	public Employee(String firstName, String lastName,
-			EmployeePossiton employeePossition) {
+	public Employee(String firstName, String lastName, EmployeePositon employeePossition, List<Document> documentsList,
+			User user) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.employeePossition = employeePossition;
-
+		this.employeePosition = employeePossition;
+		this.documentsList = documentsList;
+		this.user = user;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -64,12 +67,12 @@ public class Employee {
 	}
 
 	
-	public EmployeePossiton getEmployeePossition() {
-		return employeePossition;
+	public EmployeePositon getEmployeePosition() {
+		return employeePosition;
 	}
 
-	public void setEmployeePossition(EmployeePossiton employeePossition) {
-		this.employeePossition = employeePossition;
+	public void setEmployeePosition(EmployeePositon employeePosition) {
+		this.employeePosition = employeePosition;
 	}
 
 	public List<Document> getDocumentsList() {
@@ -92,7 +95,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [ firstName=" + firstName + ", lastName=" + lastName + ", employeePossition=" + employeePossition + ", documentsList="
+		return "Employee [ firstName=" + firstName + ", lastName=" + lastName + ", employeePossition=" + employeePosition + ", documentsList="
 				+ documentsList + "]";
 	}
 

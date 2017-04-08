@@ -1,5 +1,6 @@
 package pl.ndt.manager;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.BeansException;
@@ -37,6 +38,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+	
 	}
 
 	/**
@@ -79,6 +81,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public ThymeleafViewResolver viewResolver() {
 		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 		viewResolver.setTemplateEngine(templateEngine());
+		viewResolver.setCharacterEncoding("UTF-8");
 		return viewResolver;
 	}
 	/**

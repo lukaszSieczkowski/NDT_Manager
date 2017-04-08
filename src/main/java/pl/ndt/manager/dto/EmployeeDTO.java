@@ -1,24 +1,24 @@
 package pl.ndt.manager.dto;
 
-import pl.ndt.manager.model.enums.EmployeePossiton;
+import pl.ndt.manager.model.enums.EmployeePositon;
 
 public class EmployeeDTO {
 
 	private String firstName;
 	private String lastName;
 	private String email;
-	private EmployeePossiton employeePossiton;
+	private EmployeePositon employeePositon;
 
 	public EmployeeDTO() {
 		super();
 	}
 
-	public EmployeeDTO(String firstName, String lastName, String email, EmployeePossiton employeePossiton) {
+	public EmployeeDTO(String firstName, String lastName, String email, EmployeePositon employeePossiton) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.employeePossiton = employeePossiton;
+		this.employeePositon = employeePossiton;
 	}
 
 	public String getFirstName() {
@@ -45,18 +45,18 @@ public class EmployeeDTO {
 		this.email = email;
 	}
 
-	public EmployeePossiton getEmployeePossiton() {
-		return employeePossiton;
+	public EmployeePositon getEmployeePositon() {
+		return employeePositon;
 	}
 
-	public void setEmployeePossiton(EmployeePossiton employeePossiton) {
-		this.employeePossiton = employeePossiton;
+	public void setEmployeePositon(EmployeePositon employeePositon) {
+		this.employeePositon = employeePositon;
 	}
 
 	@Override
 	public String toString() {
 		return "EmployeeDTO [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", employeePossiton=" + employeePossiton + "]";
+				+ ", employeePossiton=" + employeePositon + "]";
 	}
 
 }

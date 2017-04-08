@@ -30,7 +30,7 @@
       				<th>Document No.</th>
       				<th>Sector</th>
       				<th>NDT Method</th>
-      				<th>Show document</th>
+      				<th>Download document</th>
       				<th>Document is Valid<th>
       			</tr>
       			<tr th:each="document,id : ${documents.getDocuments()}">
@@ -42,14 +42,18 @@
        				<td th:text="${document.documentNumber}"></td>
        				<td th:text="${document.sector.getValue()}"></td>
        				<td th:text="${document.ndtMethod.getValue()}"></td>
-       				<td><a th:href="@{${document.fileDirectory}}">Download Document</a></td>
+       				<td><a id="document_dawnload" th:href="@{${document.fileDirectory}}">Download</a></td> 
        				<td th:switch="${document.documentIsValid}">
-  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}" id="valid" >Valid</div>
-  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}" id="expired" >Expired</div>
+  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}" class="valid" >Valid</div>
+  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).SIXTY_DAYS}" class="sixty_days" >Less than 60 days</div>
+						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).THIRTY_DAYS}" class="thirty_days" > Less than 30 days</div>
+  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}" class="expired" >Expired</div>
 					</td>
-       				
       			</tr>
     		</table>
+    		<div class="col-md-8 ">
+				<a href="showAllNdtCertificates"><input type="submit"  class="action_button action_button1" value="Show history"></a>
+			</div>
 		</div>
 	</body>
 </html>

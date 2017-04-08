@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.ndt.manager.dto.*;
 import pl.ndt.manager.model.*;
@@ -132,15 +135,16 @@ public class DocumentService implements FileDirectory {
 
 			jaegerTestDto.setOwnersNameAndSurname(
 					jaegerTest.getEmployee().getFirstName() + " " + jaegerTest.getEmployee().getLastName());
-			jaegerTestDto.setCorrectEyeCondition(jaegerTest.getCorrectEyeCondition());
+			jaegerTestDto.setCorerctlyEyeCondition(jaegerTest.getCorerctlyEyeCondition());
 			jaegerTestDto.setDocumentIsValid(checkDocumentExpiredDate(jaegerTest.getExpirationDate()));
 			documents.add(jaegerTestDto);
 		}
 		return documents;
 	}
-	
+
 	/**
 	 * Saves new NDT Certificate in System
+	 * 
 	 * @param ndtCertificateDTO
 	 */
 	public void saveNdtCertificate(NdtCertificateDTO ndtCertificateDTO) {
@@ -155,9 +159,7 @@ public class DocumentService implements FileDirectory {
 		ndtCertificate.setSector(ndtCertificateDTO.getSector());
 		ndtCertificate.setNdtMethod(ndtCertificateDTO.getNdtMethod());
 
-		String userEmail = ndtCertificateDTO.getEmail();
-		User user = userRepository.findByEmail(userEmail);
-		Employee employee = user.getEmployee();
+		Employee employee = createEmployeeByEmail(ndtCertificateDTO.getEmail());
 		ndtCertificate.setEmployee(employee);
 
 		FileTool fileTool = new FileTool();
@@ -167,13 +169,37 @@ public class DocumentService implements FileDirectory {
 		ndtCertificateRepository.save(ndtCertificate);
 
 	}
+	public void saveJaegerTest(JaegerTestDTO jaegerTestDTO) {
+		JaegerTest jaegerTest = new JaegerTest();
+		jaegerTest.setIssueDate(dateConverter.createDateFromString(jaegerTestDTO.getIssueDate(), 0, 0));
+		jaegerTest.setExpirationDate(dateConverter.createDateFromString(jaegerTestDTO.getExpirationDate(), 0, 0));
+		jaegerTest.setIssuedBy(jaegerTestDTO.getIssuedBy());
+		
+		Employee employee = createEmployeeByEmail(jaegerTestDTO.getEmail());
+		jaegerTest.setEmployee(employee);
+		
+		jaegerTest.setCorerctlyEyeCondition(jaegerTestDTO.getCorerctlyEyeCondition());
+		
+		FileTool fileTool = new FileTool();
+		String fileName = fileTool.saveFile(jaegerTestDTO.getFile(), employee.getLastName());
+
+		jaegerTest.setFileName(fileName);
+		
+		jaegerTestRepository.save(jaegerTest);
+		
+	}
+
 
 	/**
 	 * Checks if document is still valid
-	 * @param expiredDate Document's expiration date
+	 * 
+	 * @param expiredDate
+	 *            Document's expiration date
 	 * @return VALID or EXPIRED value
 	 */
 	public DocumentIsValid checkDocumentExpiredDate(LocalDateTime expiredDate) {
+
+		
 		if (expiredDate.isAfter(LocalDateTime.now())) {
 			return DocumentIsValid.VALID;
 		} else {
@@ -181,5 +207,12 @@ public class DocumentService implements FileDirectory {
 		}
 
 	}
+	
+	public Employee createEmployeeByEmail(String email){
+		User user = userRepository.findByEmail(email);
+		Employee employee = user.getEmployee();
+		return employee;
+	}
 
+	
 }

@@ -175,12 +175,28 @@ h3{
 	background-image: -o-linear-gradient(top, #400080, #8000FF);
 	background-image: linear-gradient(to bottom, #400080, #8000FF);
 	}
+ .action_button1{
+	height: 30px;
+	width: 100px;
+}
 	
-#valid{
+.valid{
 	color:green;
 	font-weight: bold;
 }
-#expired{
+.thirty_days{
+	color:#f4d742;
+	font-weight: bold;
+}
+.sixty_days{
+	color:#ff9900;
+	font-weight: bold;
+}
+
+.expired{
 	color:red;
 	font-weight: bold;
+}
+#document_dawnload{
+	color:#400080;
 }

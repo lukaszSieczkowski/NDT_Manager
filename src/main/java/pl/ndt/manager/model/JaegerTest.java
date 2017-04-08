@@ -4,35 +4,38 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import pl.ndt.manager.model.enums.CorerctlyEyeCondition;
+
 @Entity
 @Table(name = "jaeger_tests")
 @PrimaryKeyJoinColumn(name = "documnet_id")
 public class JaegerTest extends Document {
 
 	@Column(name = "correct_eye_condition")
-	private boolean correctEyeCondition;
+	private CorerctlyEyeCondition corerctlyEyeCondition;
 
 	public JaegerTest() {
 		super();
 	}
 
 	public JaegerTest(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			Employee employee, boolean correctEyeCondition) {
+			Employee employee, CorerctlyEyeCondition corerctlyEyeConditio) {
 		super(issueDate, expirationDate, issuedBy, fileName, employee);
-		this.correctEyeCondition = correctEyeCondition;
+		this.corerctlyEyeCondition = corerctlyEyeCondition;
 	}
 
-	public boolean getCorrectEyeCondition() {
-		return correctEyeCondition;
+
+	public CorerctlyEyeCondition getCorerctlyEyeCondition() {
+		return corerctlyEyeCondition;
 	}
 
-	public void setCorrectEyeCondition(boolean correctEyeCondition) {
-		this.correctEyeCondition = correctEyeCondition;
+	public void setCorerctlyEyeCondition(CorerctlyEyeCondition corerctlyEyeCondition) {
+		this.corerctlyEyeCondition = corerctlyEyeCondition;
 	}
 
 	@Override
 	public String toString() {
-		return "JaegerTest [correctEyeCondition=" + correctEyeCondition + ", id=" + id + ", issueDate=" + issueDate
+		return "JaegerTest [correctEyeCondition=" + corerctlyEyeCondition + ", id=" + id + ", issueDate=" + issueDate
 				+ ", expirationDate=" + expirationDate + ", issuedBy=" + issuedBy + ", fileName=" + fileName + "]";
 	}
 

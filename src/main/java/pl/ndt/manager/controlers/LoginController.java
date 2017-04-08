@@ -11,7 +11,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 import pl.ndt.manager.dto.UserDTO;
-
+import pl.ndt.manager.exampleData.ExampleDataBase;
 import pl.ndt.manager.services.UserService;
 
 @Controller
@@ -21,6 +21,8 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private ExampleDataBase exampleDataBase;
 	/**
 	 * Shows login page
 	 * 
@@ -28,6 +30,8 @@ public class LoginController {
 	 */
 	@RequestMapping("/")
 	public String showLoginPage() {
+		
+		
 		return "index";
 	}
 
@@ -44,6 +48,13 @@ public class LoginController {
 	 */
 	@PostMapping("/login")
 	public String login(Model model, @RequestParam String email, @RequestParam String password) {
+		
+		//*********Prepares example Database***********//
+		
+		//exampleDataBase.prepareDataBase();
+		
+		//*********************************************//
+		
 		UserDTO userDTO = null;
 		try {
 			userDTO = userService.createUser(email, password);

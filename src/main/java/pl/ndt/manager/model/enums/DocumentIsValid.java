@@ -1,7 +1,7 @@
 package pl.ndt.manager.model.enums;
 
 public enum DocumentIsValid {
-	VALID("Valid"), EXPIRED("Expired");
+	VALID("Valid"), SIXTY_DAYS("Valid less than 60 days"),THIRTY_DAYS("Valid less than 30 days"),EXPIRED("Expired");
 
 	private String value;
 

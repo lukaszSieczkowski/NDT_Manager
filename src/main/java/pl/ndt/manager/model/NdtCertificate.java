@@ -35,6 +35,7 @@ public class NdtCertificate extends Document {
 	}
 
 	
+	
 	public String getDocumentNumber() {
 		return documentNumber;
 	}
