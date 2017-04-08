@@ -12,6 +12,7 @@ import pl.ndt.manager.model.Employee;
 import pl.ndt.manager.model.JaegerTest;
 import pl.ndt.manager.model.NdtCertificate;
 import pl.ndt.manager.model.User;
+import pl.ndt.manager.model.VcaCertificate;
 import pl.ndt.manager.model.enums.CorerctlyEyeCondition;
 import pl.ndt.manager.model.enums.EmployeePositon;
 import pl.ndt.manager.model.enums.NdtMethod;
@@ -21,6 +22,7 @@ import pl.ndt.manager.repository.EmployeeRepository;
 import pl.ndt.manager.repository.JaegerTestRepository;
 import pl.ndt.manager.repository.NdtCertificateRepository;
 import pl.ndt.manager.repository.UserRepository;
+import pl.ndt.manager.repository.VcaCertificateRepository;
 
 @Service
 public class ExampleDataBase {
@@ -31,7 +33,8 @@ public class ExampleDataBase {
 	private NdtCertificateRepository ndtCertificateRepository;
 	@Autowired
 	private JaegerTestRepository jaegerTestRepository;
-
+	@Autowired
+	private VcaCertificateRepository vcaCertificateRepository;
 
 	public void prepareDataBase() {
 		List<Document> documentsList1 = new ArrayList<>();
@@ -243,9 +246,50 @@ public class ExampleDataBase {
 		jaegerTest5.setExpirationDate(LocalDateTime.of(2017, 10, 3, 0, 0));
 		jaegerTest5.setEmployee(employee5);
 		jaegerTest5.setIssuedBy("Doctor");
-		jaegerTest5.setFileName("aaa");
+		jaegerTest5.setFileName("eee");
 		jaegerTest5.setCorerctlyEyeCondition(CorerctlyEyeCondition.POSIVE);
 	
+		VcaCertificate vcaCertificate1= new VcaCertificate();
+		vcaCertificate1.setIssueDate(LocalDateTime.of(2010, 10, 3, 0, 0));
+		vcaCertificate1.setExpirationDate(LocalDateTime.of(2010, 10, 3, 0, 0).plusYears(10));
+		vcaCertificate1.setIssuedBy("Het");
+		vcaCertificate1.setEmployee(employee1);
+		vcaCertificate1.setDocumentNumber("Doc-1");
+		vcaCertificate1.setFileName("aaaa");
+		
+		VcaCertificate vcaCertificate2= new VcaCertificate();
+		vcaCertificate2.setIssueDate(LocalDateTime.of(2005, 10, 3, 0, 0));
+		vcaCertificate2.setExpirationDate(LocalDateTime.of(2005, 10, 3, 0, 0).plusYears(10));
+		vcaCertificate2.setIssuedBy("Het");
+		vcaCertificate2.setEmployee(employee2);
+		vcaCertificate2.setDocumentNumber("Doc-2");
+		vcaCertificate2.setFileName("bbbb");
+	
+		VcaCertificate vcaCertificate3= new VcaCertificate();
+		vcaCertificate3.setIssueDate(LocalDateTime.of(2007, 10, 3, 0, 0));
+		vcaCertificate3.setExpirationDate(LocalDateTime.of(2007, 10, 3, 0, 0).plusYears(10));
+		vcaCertificate3.setIssuedBy("Het");
+		vcaCertificate3.setEmployee(employee3);
+		vcaCertificate3.setDocumentNumber("Doc-3");
+		vcaCertificate3.setFileName("cccc");
+		
+		VcaCertificate vcaCertificate4= new VcaCertificate();
+		vcaCertificate4.setIssueDate(LocalDateTime.of(2010, 10, 3, 0, 0));
+		vcaCertificate4.setExpirationDate(LocalDateTime.of(2010, 10, 3, 0, 0).plusYears(10));
+		vcaCertificate4.setIssuedBy("Het");
+		vcaCertificate4.setEmployee(employee4);
+		vcaCertificate4.setDocumentNumber("Doc-4");
+		vcaCertificate4.setFileName("dddd");
+		
+		VcaCertificate vcaCertificate5= new VcaCertificate();
+		vcaCertificate5.setIssueDate(LocalDateTime.of(2008, 10, 3, 0, 0));
+		vcaCertificate5.setExpirationDate(LocalDateTime.of(2008, 10, 3, 0, 0).plusYears(10));
+		vcaCertificate5.setIssuedBy("Het");
+		vcaCertificate5.setEmployee(employee5);
+		vcaCertificate5.setDocumentNumber("Doc-5");
+		vcaCertificate5.setFileName("eeee");
+		
+		
 		
 		userRepository.save(user1);
 		userRepository.save(user2);
@@ -269,6 +313,11 @@ public class ExampleDataBase {
 		jaegerTestRepository.save(jaegerTest3);
 		jaegerTestRepository.save(jaegerTest4);
 		jaegerTestRepository.save(jaegerTest5);
-
+		
+		vcaCertificateRepository.save(vcaCertificate1);
+		vcaCertificateRepository.save(vcaCertificate2);
+		vcaCertificateRepository.save(vcaCertificate3);
+		vcaCertificateRepository.save(vcaCertificate4);
+		vcaCertificateRepository.save(vcaCertificate5);
 	}
 }

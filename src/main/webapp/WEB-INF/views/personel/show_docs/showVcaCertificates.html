@@ -28,9 +28,9 @@
 				<th>Issued By</th>
 				<th>Owner</th>
 				<th>Document No.</th>
-				<th>Document is Valid
-				<th>
 				<th>Show document</th>
+				<th>Document is Valid<th>
+				
 			</tr>
 			<tr th:each="document,id : ${documents.getDocuments()}">
 				<td th:text="${id.count}"></td>
@@ -39,16 +39,18 @@
 				<td th:text="${document.issuedBy}"></td>
 				<td th:text="${document.ownersNameAndSurname}"></td>
 				<td th:text="${document.documentNumber}"></td>
+				<td><a id="document_dawnload" th:href="@{${document.fileDirectory}}">Download</a></td> 
 				<td th:switch="${document.documentIsValid}">
-					<p th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}"
-						id="valid">Valid</p>
-					<p
-						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}"
-						id="expired">Expired</p>
+  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}" class="valid" >Valid</div>
+  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).SIXTY_DAYS}" class="sixty_days" >Less than 60 days</div>
+						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).THIRTY_DAYS}" class="thirty_days" > Less than 30 days</div>
+  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}" class="expired" >Expired</div>
 				</td>
-				<td th:text="${document.file}"></td>
 			</tr>
 		</table>
+		<div class="col-md-8 ">
+				<a href="showAllVcaCertificates"><input type="submit"  class="action_button action_button1" value="Show history"></a>
+			</div>
 	</div>
 </body>
 </html>

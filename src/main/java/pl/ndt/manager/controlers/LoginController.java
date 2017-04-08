@@ -49,7 +49,7 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(Model model, @RequestParam String email, @RequestParam String password) {
 		
-		//*********Prepares example Database***********//
+		//********* Example Database***********//
 		
 		//exampleDataBase.prepareDataBase();
 		

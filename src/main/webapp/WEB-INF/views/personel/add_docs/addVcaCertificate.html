@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="jquery.timepicker.js"></script>
+
+<script src="resources/js/datepicker.js">
+	
+</script>
+
+</head>
+</head>
+</body>
+<div th:switch="${session.logedEmployee.role}">
+	<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+		<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+	</p>
+	<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+		<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+	</p>
+</div>
+<h3 class="text-center">Add VCA Certificate</h3>
+
+<div class="col-md-8 col-md-offset-2">
+
+	<form th:action="@{saveVcaCertificate}" th:object="${vcaCertificateDTO}" method ="post" enctype="multipart/form-data">
+		<div class="date form-group col-md-6 ">
+			<label for="issueDate">Issue Date</label> <input type="text"
+				class="form-control" id="issueDate" th:field="*{issueDate}"
+				placeholder="dd-mm-yyyy">
+		</div>
+		<div class="date form-group col-md-6">
+			<label for="expirationDate">Expiration Date</label> <input
+				type="text" class="form-control" id="expirationDate" th:field="*{expirationDate}"
+				placeholder="dd-mm-yyyy">
+		</div>
+		<div class="form-group col-md-6">
+			<label for="issuedBy">Issued By</label> <input type="text"
+				class="form-control" id="issuedBy" th:field="*{issuedBy}"
+				placeholder="Organization issuing a certificate">
+		</div>
+		<div class="form-group col-md-6">
+			<label for="documentNumber">Document Number</label> <input
+				type="text" class="form-control" id="documentNumber"  th:field="*{documentNumber}"
+				placeholder="Document Number">
+		</div>
+
+		<div class="form-group col-md-6">
+			<label for="owner">Document Owner</label>
+			 <select class="form-control" th:field="*{email}" >
+				<option  th:each="employee : ${employess.getEmployees()}"
+				th:value="${employee.email}" th:text="${employee.firstName+' '+employee.lastName}" ></option>
+			</select>
+		</div>
+
+
+		
+		<div class="form-group col-md-5">
+			<label for="file">File input</label> <input type="file"  th:field="*{file}"
+				id="file">
+			<p class="help-block">Example block-level help text here.</p>
+		</div>
+
+		<div class="col-md-8 ">
+			<input type="submit" class="action_button " value="Save">
+		</div>
+	</form>
+</div>
+</body>
+</html>

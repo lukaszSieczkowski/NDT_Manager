@@ -17,6 +17,8 @@ import pl.ndt.manager.components.EmployeeList;
 import pl.ndt.manager.dto.DocumentDTO;
 import pl.ndt.manager.dto.JaegerTestDTO;
 import pl.ndt.manager.dto.NdtCertificateDTO;
+import pl.ndt.manager.dto.VcaCertificateDTO;
+import pl.ndt.manager.model.VcaCertificate;
 import pl.ndt.manager.model.enums.DocumentIsValid;
 import pl.ndt.manager.services.DocumentService;
 import pl.ndt.manager.services.EmployeeService;
@@ -76,9 +78,11 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return showVcaCertificates view
 	 */
-	@RequestMapping("/showVcaCertificates")
-	public String showVcaCertificates(Model model) {
+	@RequestMapping("/showAllVcaCertificates")
+	public String showAllVcaCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getVcaCertificates();
+		documents = documents.stream().sorted((a, b) -> (a.getDocumentIsValid().compareTo(b.getDocumentIsValid())))
+				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showVcaCertificates";
@@ -116,6 +120,24 @@ public class DocumentControler {
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showJaegerTests";
 	}
+	
+	/**
+	 * Shows list of valid VCA Certificates
+	 * 
+	 * @param model
+	 *            Holder for attributes
+	 * @return showVcaCertificate view
+	 */
+
+	@RequestMapping("/showValidVcaCertificates")
+	public String showValidVcaCertificates(Model model) {
+		List<DocumentDTO> documents = documentService.getVcaCertificates();
+		documents = documents.stream().filter(a -> (a.getDocumentIsValid() != DocumentIsValid.EXPIRED))
+				.collect(Collectors.toList());
+		documentList.setDocuments(documents);
+		model.addAttribute("documents", documentList);
+		return "personel/show_docs/showVcaCertificates";
+	}
 
 	/**
 	 * Show list of all Jaeger Test saved in system
@@ -134,6 +156,8 @@ public class DocumentControler {
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showJaegerTests";
 	}
+
+
 
 	/**
 	 * Shows form to save NDT Certificate in system
@@ -167,6 +191,22 @@ public class DocumentControler {
 	}
 
 	/**
+	 * Shows form to save VCA Certificate in system
+	 * 
+	 * @param model
+	 *            Holed for attributes
+	 * @return addVcaCertificate view
+	 */
+
+	@RequestMapping("/addVcaCertificate")
+	public String addVcaCertificate(Model model) {
+		model.addAttribute("vcaCertificateDTO", new VcaCertificateDTO());
+		employeeList.setEmployees(employeeService.getAllEmployees());
+		model.addAttribute("employess", employeeList);
+		return "personel/add_docs/addVcaCertificate";
+	}
+
+	/**
 	 * Saves new NDT Certificate in System
 	 * 
 	 * @param ndtCertificateDTO
@@ -178,7 +218,6 @@ public class DocumentControler {
 	 */
 	@PostMapping("/saveNdtCertificate")
 	public String saveNdtCertificate(@ModelAttribute NdtCertificateDTO ndtCertificateDTO, Model model) {
-		System.out.println(ndtCertificateDTO);
 		documentService.saveNdtCertificate(ndtCertificateDTO);
 		model.addAttribute("employess", employeeList);
 		return "personel/add_docs/addNdtCertificate";
@@ -201,6 +240,24 @@ public class DocumentControler {
 		documentService.saveJaegerTest(jaegerTestDTO);
 		model.addAttribute("employess", employeeList);
 		return "personel/add_docs/addJaegerTest";
+	}
+
+	/**
+	 * Saves new VCA Certifice in System
+	 * 
+	 * @param jaegerTestDTO
+	 *            Transfer object with values transfered from input form into
+	 *            the database
+	 * @param model
+	 *            Holder for attributes
+	 * @return addVcaCertificate view
+	 */
+
+	@PostMapping("/saveVcaCertificate")
+	public String saveJaegerCertificate(@ModelAttribute VcaCertificateDTO vcaCertificateDTO, Model model) {
+		documentService.saveVcaCertificate(vcaCertificateDTO);
+		model.addAttribute("employess", employeeList);
+		return "personel/add_docs/addVcaCertificate";
 	}
 
 }

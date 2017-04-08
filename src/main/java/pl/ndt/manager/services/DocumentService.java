@@ -170,6 +170,7 @@ public class DocumentService implements FileDirectory {
 
 	}
 	public void saveJaegerTest(JaegerTestDTO jaegerTestDTO) {
+		dateConverter = new DateConverter();
 		JaegerTest jaegerTest = new JaegerTest();
 		jaegerTest.setIssueDate(dateConverter.createDateFromString(jaegerTestDTO.getIssueDate(), 0, 0));
 		jaegerTest.setExpirationDate(dateConverter.createDateFromString(jaegerTestDTO.getExpirationDate(), 0, 0));
@@ -182,11 +183,28 @@ public class DocumentService implements FileDirectory {
 		
 		FileTool fileTool = new FileTool();
 		String fileName = fileTool.saveFile(jaegerTestDTO.getFile(), employee.getLastName());
-
 		jaegerTest.setFileName(fileName);
 		
 		jaegerTestRepository.save(jaegerTest);
 		
+	}
+	
+	public void saveVcaCertificate(VcaCertificateDTO vcaCertificateDTO) {
+		dateConverter = new DateConverter();
+		VcaCertificate vcaCertificate = new VcaCertificate();
+		vcaCertificate.setIssueDate(dateConverter.createDateFromString(vcaCertificateDTO.getIssueDate(), 0, 0));
+		vcaCertificate.setExpirationDate(dateConverter.createDateFromString(vcaCertificateDTO.getExpirationDate(), 0, 0));
+		vcaCertificate.setDocumentNumber(vcaCertificateDTO.getDocumentNumber());
+		vcaCertificate.setIssuedBy(vcaCertificateDTO.getIssuedBy());
+		
+		Employee employee = createEmployeeByEmail(vcaCertificateDTO.getEmail());
+		vcaCertificate.setEmployee(employee);
+		
+		FileTool fileTool = new FileTool();
+		String fileName = fileTool.saveFile(vcaCertificateDTO.getFile(), employee.getLastName());
+		vcaCertificate.setFileName(fileName);
+		
+		vcaCertificateRepository.save(vcaCertificate);
 	}
 
 
@@ -213,6 +231,8 @@ public class DocumentService implements FileDirectory {
 		Employee employee = user.getEmployee();
 		return employee;
 	}
+
+	
 
 	
 }
