@@ -23,10 +23,10 @@ public class NdtCertificateDTO extends DocumentDTO {
 		super();
 	}
 
-	public NdtCertificateDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
+	public NdtCertificateDTO(Long id,String issueDate, String expirationDate, String issuedBy, MultipartFile file,
 			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
 			String documentNumber, Sector sector, NdtMethod ndtMethod) {
-		super(issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
+		super(id,issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
 		this.documentNumber = documentNumber;
 		this.sector = sector;
 		this.ndtMethod = ndtMethod;
@@ -59,8 +59,16 @@ public class NdtCertificateDTO extends DocumentDTO {
 	@Override
 	public String toString() {
 		return "NdtCertificateDTO [documentNumber=" + documentNumber + ", sector=" + sector + ", ndtMethod=" + ndtMethod
-				+ ", issueDate=" + issueDate + ", expirationDate=" + expirationDate + ", issuedBy=" + issuedBy
-				+ ", file=" + file + ", email=" + email + ", ownersNameAndSurname=" + ownersNameAndSurname + "]";
+				+ ", id=" + id + ", issueDate=" + issueDate + ", expirationDate=" + expirationDate + ", issuedBy="
+				+ issuedBy + ", file=" + file + ", fileDirectory=" + fileDirectory + ", email=" + email
+				+ ", ownersNameAndSurname=" + ownersNameAndSurname + ", documentIsValid=" + documentIsValid + "]";
 	}
+
+	
+
+	
+	
+	
+	
 
 }

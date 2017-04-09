@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	th:fragment="vcaCertificateForm">
+<head>
+
+</head>
+
+<body>
+		<div class="col-md-12">
+			<div class="date form-group col-md-6 ">
+				<label for="issueDate">Issue Date</label>
+			 		<input type="text" class="form-control" id="issueDate" th:field="*{issueDate}" placeholder="dd-mm-yyyy">
+					<p class="text-center alert" th:if="${#fields.hasErrors('issueDate')}" th:errors="*{issueDate}"></p>	
+			</div>
+			<div class="date form-group col-md-6">
+				<label for="expirationDate">Expiration Date</label> 
+				<input type="text" class="form-control" id="expirationDate" th:field="*{expirationDate}" placeholder="dd-mm-yyyy">
+				<p class="text-center alert" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}"></p>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group col-md-6">
+				<label for="issuedBy">Issued By</label>
+				<input type="text" class="form-control" id="issuedBy" th:field="*{issuedBy}"  placeholder="Organization issuing a certificate">
+				<p class="text-center alert" th:if="${#fields.hasErrors('issuedBy')}" th:errors="*{issuedBy}"></p>
+			</div>
+			<div class="form-group col-md-6">
+			<label for="documentNumber">Document Number</label>
+				<input type="text" class="form-control" id="documentNumber"  th:field="*{documentNumber}" placeholder="Document Number">
+				<p class="text-center alert" th:if="${#fields.hasErrors('documentNumber')}" th:errors="*{documentNumber}"></p>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group col-md-6">
+				<label for="owner">Document Owner</label>
+			 	<select class="form-control" th:field="*{email}" >
+			 		<option value="">----  Select Employee  ----</option>
+					<option  th:each="employee : ${session.employess.getEmployees()}"
+							th:value="${employee.email}" th:text="${employee.firstName+' '+employee.lastName}" ></option>
+					</select>
+					<p class="text-center alert" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+			</div>
+			<div class="form-group col-md-5">
+				<label for="file">File input</label> <input type="file"  th:field="*{file}" id="file">
+				<p class="help-block">Select VCA Certificate to upload(5 MB max, pdf file)</p>
+			</div>
+		</div>
+	
+</body>
+</html>

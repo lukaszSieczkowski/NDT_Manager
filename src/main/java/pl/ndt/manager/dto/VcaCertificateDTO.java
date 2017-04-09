@@ -19,10 +19,10 @@ public class VcaCertificateDTO extends DocumentDTO {
 		super();
 	}
 
-	public VcaCertificateDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
+	public VcaCertificateDTO(Long id,String issueDate, String expirationDate, String issuedBy, MultipartFile file,
 			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
 			String documentNumber) {
-		super(issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
+		super(id,issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
 		this.documentNumber = documentNumber;
 	}
 

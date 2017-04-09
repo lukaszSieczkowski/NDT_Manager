@@ -39,7 +39,7 @@ public class LoginController {
 	 * Shows login or main page according to present login data
 	 * 
 	 * @param model
-	 *            Holder or atributes
+	 *            Holder or attributes
 	 * @param email
 	 *            user's email
 	 * @param password
@@ -51,7 +51,7 @@ public class LoginController {
 		
 		//********* Example Database***********//
 		
-		//exampleDataBase.prepareDataBase();
+		// exampleDataBase.prepareDataBase();
 		
 		//*********************************************//
 		

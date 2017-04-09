@@ -92,4 +92,58 @@ public class Document {
 				+ issuedBy + ", fileName=" + fileName + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((employee == null) ? 0 : employee.hashCode());
+		result = prime * result + ((expirationDate == null) ? 0 : expirationDate.hashCode());
+		result = prime * result + ((fileName == null) ? 0 : fileName.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((issueDate == null) ? 0 : issueDate.hashCode());
+		result = prime * result + ((issuedBy == null) ? 0 : issuedBy.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Document other = (Document) obj;
+		if (employee == null) {
+			if (other.employee != null)
+				return false;
+		} else if (!employee.equals(other.employee))
+			return false;
+		if (expirationDate == null) {
+			if (other.expirationDate != null)
+				return false;
+		} else if (!expirationDate.equals(other.expirationDate))
+			return false;
+		if (fileName == null) {
+			if (other.fileName != null)
+				return false;
+		} else if (!fileName.equals(other.fileName))
+			return false;
+		if (id != other.id)
+			return false;
+		if (issueDate == null) {
+			if (other.issueDate != null)
+				return false;
+		} else if (!issueDate.equals(other.issueDate))
+			return false;
+		if (issuedBy == null) {
+			if (other.issuedBy != null)
+				return false;
+		} else if (!issuedBy.equals(other.issuedBy))
+			return false;
+		return true;
+	}
+
+	
+
 }

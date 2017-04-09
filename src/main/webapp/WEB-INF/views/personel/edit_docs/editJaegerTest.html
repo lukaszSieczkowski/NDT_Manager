@@ -23,15 +23,15 @@
 		<th:block th:include="fragments/userMenu :: userMenu"></th:block>
 	</p>
 </div>
-<h3 class="text-center">Add Medical Examination</h3>
+<h3 class="text-center">Update Jaeger Test</h3>
 
 <div class="col-md-8 col-md-offset-2">
 
-	<form th:action="@{saveMedicalExamination}" th:object="${medicalExaminationDTO}" method ="post" enctype="multipart/form-data">
-		<th:block th:include="fragments/medicalExaminationForm ::medicalExaminationForm"></th:block>
+	<form th:object="${jaegerTestDTO}" th:action="@{updateJaegerTest(id=${jaegerTestDTO.id})}"  method ="post" enctype="multipart/form-data">
+		<th:block th:include="fragments/jaegerTestForm :: jaegerTestForm"></th:block>
 		<div class="col-md-8 ">
 			<div class="col-md-8 ">
-				<input type="submit" class="action_button " value="Save">
+				<input type="submit" class="action_button " value="Update">
 			</div>
 		</div>
 	</form>

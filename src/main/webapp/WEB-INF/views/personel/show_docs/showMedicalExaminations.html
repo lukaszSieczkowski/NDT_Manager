@@ -1,9 +1,7 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-
 
 </head>
 <body>
@@ -30,8 +28,9 @@
 				<th>Requirements</th>
 				<th>Result Test</th>
 				<th>Show document</th>
-				<th>Document is Valid<th>
-				
+				<th>Edit</th>
+				<th>Validity
+				<th>
 			</tr>
 			<tr th:each="document,id : ${documents.getDocuments()}">
 				<td th:text="${id.count}"></td>
@@ -41,18 +40,30 @@
 				<td th:text="${document.ownersNameAndSurname}"></td>
 				<td th:text="${document.requirementsDescription}"></td>
 				<td th:text="${document.requirementsFullFilled}"></td>
-					<td><a id="document_dawnload" th:href="@{${document.fileDirectory}}">Download</a></td> 
+				<td><a id="document_dawnload"
+					th:href="@{${document.fileDirectory}}">Download</a></td>
+				<td><a th:href="@{/editMedicalExamination(id=${document.id})}">Update</a>
+				</td>
 				<td th:switch="${document.documentIsValid}">
-  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}" class="valid" >Valid</div>
-  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).SIXTY_DAYS}" class="sixty_days" >Less than 60 days</div>
-						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).THIRTY_DAYS}" class="thirty_days" > Less than 30 days</div>
-  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}" class="expired" >Expired</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}"
+						class="valid">Valid</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).SIXTY_DAYS}"
+						class="sixty_days">Less than 60 days</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).THIRTY_DAYS}"
+						class="thirty_days">Less than 30 days</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}"
+						class="expired">Expired</div>
 				</td>
 			</tr>
 		</table>
 		<div class="col-md-8 ">
-				<a href="showAllMedicalExaminations"><input type="submit"  class="action_button action_button1" value="Show history"></a>
-			</div>
+			<a href="showAllMedicalExaminations"><input type="submit"
+				class="action_button action_button1" value="Show history"></a>
+		</div>
 	</div>
 </body>
 </html>

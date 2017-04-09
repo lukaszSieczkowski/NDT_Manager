@@ -49,6 +49,7 @@ public class DocumentService implements FileDirectory {
 
 		for (NdtCertificate ndtCert : ndtCertificateList) {
 			NdtCertificateDTO ndtCertDto = new NdtCertificateDTO();
+			ndtCertDto.setId(ndtCert.getId());
 			ndtCertDto.setIssueDate(dateConverter.createDateToString(ndtCert.getIssueDate()));
 			ndtCertDto.setExpirationDate(dateConverter.createDateToString(ndtCert.getExpirationDate()));
 			ndtCertDto.setIssuedBy(ndtCert.getIssuedBy());
@@ -77,6 +78,7 @@ public class DocumentService implements FileDirectory {
 
 		for (VcaCertificate vcaCert : vcaCertificatelist) {
 			VcaCertificateDTO vcaCertDto = new VcaCertificateDTO();
+			vcaCertDto.setId(vcaCert.getId());
 			vcaCertDto.setIssueDate(dateConverter.createDateToString(vcaCert.getIssueDate()));
 			vcaCertDto.setExpirationDate(dateConverter.createDateToString(vcaCert.getExpirationDate()));
 			vcaCertDto.setIssuedBy(vcaCert.getIssuedBy());
@@ -103,6 +105,7 @@ public class DocumentService implements FileDirectory {
 
 		for (MedicalExamination medCert : medicalCertificateList) {
 			MedicalExaminationDTO medCertDto = new MedicalExaminationDTO();
+			medCertDto.setId(medCertDto.getId());
 			medCertDto.setIssueDate(dateConverter.createDateToString(medCert.getIssueDate()));
 			medCertDto.setExpirationDate(dateConverter.createDateToString(medCert.getExpirationDate()));
 			medCertDto.setIssuedBy(medCert.getIssuedBy());
@@ -131,10 +134,10 @@ public class DocumentService implements FileDirectory {
 
 		for (JaegerTest jaegerTest : jaegerTests) {
 			JaegerTestDTO jaegerTestDto = new JaegerTestDTO();
-			jaegerTestDto.setIssueDate(dateConverter.createDateToString(jaegerTest.getIssueDate()));
+			jaegerTestDto.setId(jaegerTest.getId());
 			jaegerTestDto.setExpirationDate(dateConverter.createDateToString(jaegerTest.getExpirationDate()));
+			jaegerTestDto.setIssueDate(dateConverter.createDateToString(jaegerTest.getIssueDate()));
 			jaegerTestDto.setIssuedBy(jaegerTest.getIssuedBy());
-
 			jaegerTestDto.setOwnersNameAndSurname(
 					jaegerTest.getEmployee().getFirstName() + " " + jaegerTest.getEmployee().getLastName());
 			jaegerTestDto.setCorerctlyEyeCondition(jaegerTest.getCorerctlyEyeCondition());
@@ -151,8 +154,52 @@ public class DocumentService implements FileDirectory {
 	 */
 	public void saveNdtCertificate(NdtCertificateDTO ndtCertificateDTO) {
 
+		NdtCertificate ndtCertificate = conventDTOtoNDTCertificate(ndtCertificateDTO);
+
+		FileTool fileTool = new FileTool();
+		String fileName = fileTool.prepareFileName();
+		ndtCertificate.setFileName(fileName);
+
+		fileTool.saveFile(ndtCertificateDTO.getFile(), fileName);
+
+		ndtCertificateRepository.save(ndtCertificate);
+
+	}
+
+	/**
+	 * Updates NDT Certificate
+	 * 
+	 * @param ndtCertificateDTO
+	 */
+
+	public void updateNdtCertificate(NdtCertificateDTO ndtCertificateDTO) {
+
+		NdtCertificate ndtCertificate = conventDTOtoNDTCertificate(ndtCertificateDTO);
+
+		Long id = ndtCertificateDTO.getId();
+		NdtCertificate tempNdtCert = ndtCertificateRepository.findOne(id);
+
+		String fileName = tempNdtCert.getFileName();
+		ndtCertificate.setFileName(fileName);
+
+		FileTool fileTool = new FileTool();
+		fileTool.saveFile(ndtCertificateDTO.getFile(), fileName);
+
+		ndtCertificateRepository.save(ndtCertificate);
+
+	}
+
+	/**
+	 * Convents ndtCertificateDTO to ndtCertificate(Entity)
+	 * 
+	 * @param ndtCertificateDTO
+	 * @return ndtCertificate
+	 */
+
+	public NdtCertificate conventDTOtoNDTCertificate(NdtCertificateDTO ndtCertificateDTO) {
 		dateConverter = new DateConverter();
 		NdtCertificate ndtCertificate = new NdtCertificate();
+		ndtCertificate.setId(ndtCertificate.getId());
 		ndtCertificate.setIssueDate(dateConverter.createDateFromString(ndtCertificateDTO.getIssueDate(), 0, 0));
 		ndtCertificate
 				.setExpirationDate(dateConverter.createDateFromString(ndtCertificateDTO.getExpirationDate(), 0, 0));
@@ -164,22 +211,61 @@ public class DocumentService implements FileDirectory {
 		Employee employee = createEmployeeByEmail(ndtCertificateDTO.getEmail());
 		ndtCertificate.setEmployee(employee);
 
-		FileTool fileTool = new FileTool();
-		String fileName = fileTool.saveFile(ndtCertificateDTO.getFile(), employee.getLastName());
-
-		ndtCertificate.setFileName(fileName);
-		ndtCertificateRepository.save(ndtCertificate);
-
+		return ndtCertificate;
 	}
 
 	/**
-	 * Saves new Jaeger Test in System
+	 * Saves new Jaeger Test in database
 	 * 
 	 * @param ndtCertificateDTO
 	 */
 	public void saveJaegerTest(JaegerTestDTO jaegerTestDTO) {
+
+		JaegerTest jaegerTest = conventDTOtoJaegerTest(jaegerTestDTO);
+
+		FileTool fileTool = new FileTool();
+		String fileName = fileTool.prepareFileName();
+		jaegerTest.setFileName(fileName);
+
+		fileTool.saveFile(jaegerTestDTO.getFile(), fileName);
+
+		jaegerTestRepository.save(jaegerTest);
+
+	}
+
+	/**
+	 * Updates Jaegert Test in database
+	 * 
+	 * @param jaegerTestDTO
+	 */
+
+	public void updateJaegerTest(JaegerTestDTO jaegerTestDTO) {
+		JaegerTest jaegerTest = conventDTOtoJaegerTest(jaegerTestDTO);
+
+		Long id = jaegerTestDTO.getId();
+		JaegerTest tempJaegerTest = jaegerTestRepository.findOne(id);
+
+		String fileName = tempJaegerTest.getFileName();
+		jaegerTest.setFileName(fileName);
+
+		FileTool fileTool = new FileTool();
+		fileTool.saveFile(jaegerTestDTO.getFile(), fileName);
+
+		jaegerTestRepository.save(jaegerTest);
+
+	}
+
+	/**
+	 * Convents jaegerTestDTO into jaegerTest(Entity)
+	 * 
+	 * @param jaegerTestDTO
+	 * @return jaegerTest
+	 */
+
+	public JaegerTest conventDTOtoJaegerTest(JaegerTestDTO jaegerTestDTO) {
 		dateConverter = new DateConverter();
 		JaegerTest jaegerTest = new JaegerTest();
+		jaegerTest.setId(jaegerTestDTO.getId());
 		jaegerTest.setIssueDate(dateConverter.createDateFromString(jaegerTestDTO.getIssueDate(), 0, 0));
 		jaegerTest.setExpirationDate(dateConverter.createDateFromString(jaegerTestDTO.getExpirationDate(), 0, 0));
 		jaegerTest.setIssuedBy(jaegerTestDTO.getIssuedBy());
@@ -188,23 +274,61 @@ public class DocumentService implements FileDirectory {
 		jaegerTest.setEmployee(employee);
 
 		jaegerTest.setCorerctlyEyeCondition(jaegerTestDTO.getCorerctlyEyeCondition());
-
-		FileTool fileTool = new FileTool();
-		String fileName = fileTool.saveFile(jaegerTestDTO.getFile(), employee.getLastName());
-		jaegerTest.setFileName(fileName);
-
-		jaegerTestRepository.save(jaegerTest);
+		return jaegerTest;
 
 	}
 
 	/**
-	 * Saves VCA Certifcate in System
+	 * Saves VCA Certificate in System
 	 * 
 	 * @param vcaCertificateDTO
 	 */
 	public void saveVcaCertificate(VcaCertificateDTO vcaCertificateDTO) {
+		VcaCertificate vcaCertificate = conventDTOtoVcaCertificate(vcaCertificateDTO);
+
+		FileTool fileTool = new FileTool();
+		String fileName = fileTool.prepareFileName();
+		vcaCertificate.setFileName(fileName);
+
+		fileTool.saveFile(vcaCertificateDTO.getFile(), fileName);
+
+		vcaCertificateRepository.save(vcaCertificate);
+	}
+	
+	/**
+	 * Updates VCA Certificate in database
+	 * 
+	 * @param vcaCertificateDTO
+	 */
+
+	public void updateVcaCertificate(VcaCertificateDTO vcaCertificateDTO) {
+		VcaCertificate vcaCertificate = conventDTOtoVcaCertificate(vcaCertificateDTO);
+
+		Long id = vcaCertificateDTO.getId();
+		VcaCertificate tempVcaCert = vcaCertificateRepository.findOne(id);
+
+		String fileName = tempVcaCert.getFileName();
+		vcaCertificate.setFileName(fileName);
+
+		FileTool fileTool = new FileTool();
+		fileTool.saveFile(vcaCertificateDTO.getFile(), fileName);
+
+		vcaCertificateRepository.save(vcaCertificate);
+
+	}
+
+	/**
+	 * Convents vcaCertificateDTO into vcaCertificate(Entity)
+	 * 
+	 * @param vcaCertificateDTO
+	 * @return vcaCertificat
+	 */
+
+	public VcaCertificate conventDTOtoVcaCertificate(VcaCertificateDTO vcaCertificateDTO) {
 		dateConverter = new DateConverter();
 		VcaCertificate vcaCertificate = new VcaCertificate();
+
+		vcaCertificate.setId(vcaCertificateDTO.getId());
 		vcaCertificate.setIssueDate(dateConverter.createDateFromString(vcaCertificateDTO.getIssueDate(), 0, 0));
 		vcaCertificate
 				.setExpirationDate(dateConverter.createDateFromString(vcaCertificateDTO.getExpirationDate(), 0, 0));
@@ -213,12 +337,7 @@ public class DocumentService implements FileDirectory {
 
 		Employee employee = createEmployeeByEmail(vcaCertificateDTO.getEmail());
 		vcaCertificate.setEmployee(employee);
-
-		FileTool fileTool = new FileTool();
-		String fileName = fileTool.saveFile(vcaCertificateDTO.getFile(), employee.getLastName());
-		vcaCertificate.setFileName(fileName);
-
-		vcaCertificateRepository.save(vcaCertificate);
+		return vcaCertificate;
 	}
 
 	/**
@@ -228,9 +347,52 @@ public class DocumentService implements FileDirectory {
 	 */
 
 	public void saveMedicalExamination(MedicalExaminationDTO medicalExaminationDTO) {
+
+		MedicalExamination medicalExamination = conventDTOtoMedicalExamination(medicalExaminationDTO);
+
+		FileTool fileTool = new FileTool();
+		String fileName = fileTool.prepareFileName();
+		medicalExamination.setFileName(fileName);
+
+		fileTool.saveFile(medicalExaminationDTO.getFile(), fileName);
+		medicalExaminationRepository.save(medicalExamination);
+
+	}
+	
+	/**
+	 * Updates Medical Examination in database
+	 * 
+	 * @param medicalExaminationtDTO
+	 */
+
+	public void updateMedicalExamination(MedicalExaminationDTO medicalExaminationDTO) {
+		MedicalExamination medicalExamination = conventDTOtoMedicalExamination(medicalExaminationDTO);
+
+		Long id = medicalExaminationDTO.getId();
+		MedicalExamination tempMedCert = medicalExaminationRepository.findOne(id);
+
+		String fileName = tempMedCert.getFileName();
+		medicalExamination.setFileName(fileName);
+
+		FileTool fileTool = new FileTool();
+		fileTool.saveFile(medicalExaminationDTO.getFile(), fileName);
+
+		medicalExaminationRepository.save(medicalExamination);
+
+	}
+
+	/**
+	 * Convents medicalExaminationDTO into medicalExamination(Entity)
+	 * 
+	 * @param medicalExaminationDTO
+	 * @return medicalExamination
+	 */
+
+	public MedicalExamination conventDTOtoMedicalExamination(MedicalExaminationDTO medicalExaminationDTO) {
 		dateConverter = new DateConverter();
 
 		MedicalExamination medicalExamination = new MedicalExamination();
+		medicalExamination.setId(medicalExaminationDTO.getId());
 		medicalExamination.setIssueDate(dateConverter.createDateFromString(medicalExaminationDTO.getIssueDate(), 0, 0));
 		medicalExamination
 				.setExpirationDate(dateConverter.createDateFromString(medicalExaminationDTO.getExpirationDate(), 0, 0));
@@ -241,12 +403,7 @@ public class DocumentService implements FileDirectory {
 
 		medicalExamination.setRequirementsDescription(medicalExaminationDTO.getRequirementsDescription());
 		medicalExamination.setRequirementsFullFilled(medicalExaminationDTO.getRequirementsFullFilled());
-
-		FileTool fileTool = new FileTool();
-		String fileName = fileTool.saveFile(medicalExaminationDTO.getFile(), employee.getLastName());
-		medicalExamination.setFileName(fileName);
-
-		medicalExaminationRepository.save(medicalExamination);
+		return medicalExamination;
 
 	}
 

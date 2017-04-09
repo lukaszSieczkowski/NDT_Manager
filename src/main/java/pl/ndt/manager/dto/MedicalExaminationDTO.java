@@ -21,10 +21,10 @@ public class MedicalExaminationDTO extends DocumentDTO {
 		super();
 	}
 
-	public MedicalExaminationDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
+	public MedicalExaminationDTO(Long id,String issueDate, String expirationDate, String issuedBy, MultipartFile file,
 			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
 			 String requirementsFullFilled, String requirementsDescription) {
-		super(issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
+		super(id,issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
 		this.requirementsFullFilled = requirementsFullFilled;
 		this.requirementsDescription = requirementsDescription;
 	}

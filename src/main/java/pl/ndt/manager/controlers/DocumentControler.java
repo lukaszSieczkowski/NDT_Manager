@@ -1,7 +1,7 @@
 package pl.ndt.manager.controlers;
 
 import java.util.List;
-import java.util.stream.Collector;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +23,12 @@ import pl.ndt.manager.dto.JaegerTestDTO;
 import pl.ndt.manager.dto.MedicalExaminationDTO;
 import pl.ndt.manager.dto.NdtCertificateDTO;
 import pl.ndt.manager.dto.VcaCertificateDTO;
-import pl.ndt.manager.model.VcaCertificate;
 import pl.ndt.manager.model.enums.DocumentIsValid;
 import pl.ndt.manager.services.DocumentService;
 import pl.ndt.manager.services.EmployeeService;
 
 @Controller
-@SessionAttributes("employess")
+@SessionAttributes({ "employess", "documents" })
 public class DocumentControler {
 
 	@Autowired
@@ -326,4 +324,170 @@ public class DocumentControler {
 		return "personel/add_docs/addMedicalExamination";
 	}
 
+	/**
+	 * Shows form for editing NDT Certificate
+	 * 
+	 * @param id
+	 *            NDT Certificate id
+	 * @param model
+	 *            Holder for attributes
+	 * @return editNdtCertificate view
+	 */
+	@RequestMapping("/editNdtCertificate")
+	public String editNdtCertificate(@RequestParam("id") Long id, Model model) {
+		List<DocumentDTO> documents = documentService.getNdtCertificates();
+		Optional<DocumentDTO> optionalNdtCertificateDTO = documents.stream().filter(a -> (a.getId() == id)).findAny();
+		NdtCertificateDTO ndtCertificateDTO = (NdtCertificateDTO) optionalNdtCertificateDTO.get();
+
+		model.addAttribute("ndtCertificateDTO", ndtCertificateDTO);
+		employeeList.setEmployees(employeeService.getAllEmployees());
+		model.addAttribute("employess", employeeList);
+		return "personel/edit_docs/editNdtCertificate";
+	}
+	/**
+	 * Updates NDT Certificate  
+	 * @param ndtCertificateDTO Transfer object with values transfered from input form into
+	 *            the database
+	 * @param result Holder for errors
+	 * @param model Holder for attributes
+	 * @return editNdtCertificate view
+	 */
+
+	@RequestMapping("/updateNdtCertificate")
+	public String updateNdtCartificate(@Valid @ModelAttribute NdtCertificateDTO ndtCertificateDTO, BindingResult result,
+			Model model) {
+
+		if (!result.hasErrors()) {
+			documentService.updateNdtCertificate(ndtCertificateDTO);
+		}
+
+		return "personel/edit_docs/editNdtCertificate";
+	}
+
+	/**
+	 * Shows form for editing Jaeger Test
+	 * 
+	 * @param id
+	 *            Jaeger Test id
+	 * @param model
+	 *            Holder for attributes
+	 * @return editJaegerTest view
+	 */
+	@RequestMapping("/editJaegerTest")
+	public String editJaegerTest(@RequestParam("id") Long id, Model model) {
+
+		List<DocumentDTO> documents = documentService.getJaegerTests();
+		Optional<DocumentDTO> optionalJaegerTestDTO = documents.stream().filter(a -> (a.getId() == id)).findAny();
+		JaegerTestDTO jaegerTestDTO = (JaegerTestDTO) optionalJaegerTestDTO.get();
+
+		model.addAttribute("jaegerTestDTO", jaegerTestDTO);
+		employeeList.setEmployees(employeeService.getAllEmployees());
+		model.addAttribute("employess", employeeList);
+		return "personel/edit_docs/editJaegerTest";
+	}
+
+	/**
+	 * Updates Jaeger Test 
+	 * @param jaegerTestDTO Transfer object with values transfered from input form into
+	 *            the database
+	 * @param result Holder for errors
+	 * @param model Holder for attributes
+	 * @return editJaegerTest view
+	 */
+	@RequestMapping("/updateJaegerTest")
+	public String updateJaegerTest(@Valid @ModelAttribute JaegerTestDTO jaegerTestDTO, BindingResult result,
+			Model model) {
+
+		if (!result.hasErrors()) {
+			documentService.updateJaegerTest(jaegerTestDTO);
+		}
+
+		return "personel/edit_docs/editJaegerTest";
+	}
+
+	/**
+	 * Shows form for editing VCA Certificate
+	 * 
+	 * @param id
+	 *            VCA Certificate id
+	 * @param model
+	 *            Holder for attributes
+	 * @return editVcaCertificate view
+	 */
+	@RequestMapping("/editVcaCertificate")
+	public String editVcaCertificate(@RequestParam("id") Long id, Model model) {
+
+		List<DocumentDTO> documents = documentService.getVcaCertificates();
+		Optional<DocumentDTO> optionalVcaCertificateDTO = documents.stream().filter(a -> (a.getId() == id)).findAny();
+		VcaCertificateDTO vcaCertificateDTO = (VcaCertificateDTO) optionalVcaCertificateDTO.get();
+
+		model.addAttribute("vcaCertificateDTO", vcaCertificateDTO);
+		employeeList.setEmployees(employeeService.getAllEmployees());
+		model.addAttribute("employess", employeeList);
+		return "personel/edit_docs/editVcaCertificate";
+	}
+	
+
+	/**
+	 * Updates VCA Certificate 
+	 * @param vcaCertificateDTO Transfer object with values transfered from input form into
+	 *            the database
+	 * @param result Holder for errors
+	 * @param model Holder for attributes
+	 * @return editVcaCertificate view
+	 */
+
+	@RequestMapping("/updateVcaCertificate")
+	public String updateVcaCertificate(@Valid @ModelAttribute VcaCertificateDTO vcaCertificateDTO, BindingResult result,
+			Model model) {
+
+		if (!result.hasErrors()) {
+			documentService.updateVcaCertificate(vcaCertificateDTO);
+		}
+
+		return "personel/edit_docs/editVcaCertificate";
+	}
+
+	/**
+	 * Shows form for editing Medical Examination
+	 * 
+	 * @param id
+	 *            Medical Examination id
+	 * @param model
+	 *            Holder for attributes
+	 * @return editMedicalExaminationview
+	 */
+
+	@RequestMapping("/editMedicalExamination")
+	public String editMedicalExamination(@RequestParam("id") Long id, Model model) {
+
+		List<DocumentDTO> documents = documentService.getMedicalExaminations();
+		Optional<DocumentDTO> optionalMedicalExaminationDTO = documents.stream().filter(a -> (a.getId() == id))
+				.findAny();
+		MedicalExaminationDTO medicalExaminationDTO = (MedicalExaminationDTO) optionalMedicalExaminationDTO.get();
+
+		model.addAttribute("medicalExaminationDTO", medicalExaminationDTO);
+		employeeList.setEmployees(employeeService.getAllEmployees());
+		model.addAttribute("employess", employeeList);
+		return "personel/edit_docs/editMedicalExamination";
+	}
+	/**
+	 * Updates Medical Examination 
+	 * @param medicalExaminationDTO Transfer object with values transfered from input form into
+	 *            the database
+	 * @param result Holder for errors
+	 * @param model Holder for attributes
+	 * @return editVcaCertificate view
+	 */
+
+	@RequestMapping("/updateMedicalExamination")
+	public String updateMedicalExamination(@Valid @ModelAttribute MedicalExaminationDTO medicalExaminationDTO,
+			BindingResult result, Model model) {
+
+		if (!result.hasErrors()) {
+			documentService.updateMedicalExamination(medicalExaminationDTO);
+		}
+
+		return "personel/edit_docs/editMedicalExamination";
+	}
 }

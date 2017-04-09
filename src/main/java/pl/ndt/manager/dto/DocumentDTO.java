@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.ndt.manager.model.enums.DocumentIsValid;
 
 public class DocumentDTO {
+	protected long id;
 	@NotBlank(message = "This field may not be empty")
 	@Size(max=10,min=10, message="Incorect date format")
 	protected String issueDate;
@@ -32,9 +33,10 @@ public class DocumentDTO {
 		super();
 	}
 
-	public DocumentDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
+	public DocumentDTO(Long id,String issueDate, String expirationDate, String issuedBy, MultipartFile file,
 			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid) {
 		super();
+		this.id=id;
 		this.issueDate = issueDate;
 		this.expirationDate = expirationDate;
 		this.issuedBy = issuedBy;
@@ -43,6 +45,16 @@ public class DocumentDTO {
 		this.email = email;
 		this.ownersNameAndSurname = ownersNameAndSurname;
 		this.documentIsValid = documentIsValid;
+	}
+	
+	
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getFileDirectory() {
@@ -111,8 +123,10 @@ public class DocumentDTO {
 
 	@Override
 	public String toString() {
-		return "DocumentDTO [issueDate=" + issueDate + ", expirationDate=" + expirationDate + ", issuedBy=" + issuedBy
-				+ ", file=" + file + ", email=" + email + ", ownersNameAndSurname=" + ownersNameAndSurname + "]";
+		return "DocumentDTO [id=" + id + ", issueDate=" + issueDate + ", expirationDate=" + expirationDate
+				+ ", issuedBy=" + issuedBy + ", file=" + file + ", fileDirectory=" + fileDirectory + ", email=" + email
+				+ ", ownersNameAndSurname=" + ownersNameAndSurname + ", documentIsValid=" + documentIsValid + "]";
 	}
 
+	
 }

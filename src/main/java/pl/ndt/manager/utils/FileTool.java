@@ -13,13 +13,11 @@ public class FileTool {
 	/**
 	 * Saves file in server directory
 	 * @param file Saved file
-	 * @param ownerNameAndSurname Files owner surname
+	
 	 * @return file name;
 	 */
-	public String saveFile(MultipartFile file,String ownerNameAndSurname) {
-		String fileName= String.valueOf(System.currentTimeMillis())+"_"+ownerNameAndSurname;
-		System.out.println("FileName = "+ fileName);
-
+	public void saveFile(MultipartFile file,String fileName) {
+		
 		try {
 			String fileDirectory = System.getProperty("catalina.home") +
 	                  File.separator + "NDT_MANAGER_FILES" + File.separator + fileName+".pdf";
@@ -32,8 +30,12 @@ public class FileTool {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return fileName;
+		
 	}
 	
+	public String prepareFileName(){
+		String fileName= String.valueOf(System.currentTimeMillis());
+		return fileName;
+	}
 	
 }

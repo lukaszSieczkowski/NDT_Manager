@@ -1,56 +1,66 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
 
-	<head>
-		
-	
-	</head>
-	<body>
-		<div th:switch="${session.logedEmployee.role}">
-  			<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
-  				<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
-  			</p>
-  			<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
-  				<th:block th:include="fragments/userMenu :: userMenu"></th:block>
-  			</p>
+</head>
+<body>
+	<div th:switch="${session.logedEmployee.role}">
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+			<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+		</p>
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+			<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+		</p>
+	</div>
+
+	<h3 class="text-center">Jaeger Tests</h3>
+
+	<div class="col-md-10 col-md-offset-1">
+
+		<table class="table table-condensed">
+			<tr>
+				<th>No.</th>
+				<th>Issue Date</th>
+				<th>Expiration Date</th>
+				<th>Issued By</th>
+				<th>Owner</th>
+				<th>Result Test</th>
+				<th>Show document</th>
+				<th>Edit</th>
+				<th>Validity
+				<th>
+			</tr>
+			<tr th:each="document,id : ${documents.getDocuments()}">
+				<td th:text="${id.count}"></td>
+				<td th:text="${document.issueDate}"></td>
+				<td th:text="${document.expirationDate}"></td>
+				<td th:text="${document.issuedBy}"></td>
+				<td th:text="${document.ownersNameAndSurname}"></td>
+				<td th:text="${document.corerctlyEyeCondition.getValue()}"></td>
+				<td><a id="document_dawnload"
+					th:href="@{${document.fileDirectory}}">Download</a></td>
+				<td><a th:href="@{/editJaegerTest(id=${document.id})}">Update</a>
+				</td>
+				<td th:switch="${document.documentIsValid}">
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}"
+						class="valid">Valid</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).SIXTY_DAYS}"
+						class="sixty_days">Less than 60 days</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).THIRTY_DAYS}"
+						class="thirty_days">Less than 30 days</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}"
+						class="expired">Expired</div>
+				</td>
+			</tr>
+		</table>
+		<div class="col-md-8 ">
+			<a href="showAllJaegerTests"><input type="submit"
+				class="action_button action_button1" value="Show history"></a>
 		</div>
-		
-		<h3 class="text-center">Jaeger Tests</h3>
-		
-		<div class="col-md-10 col-md-offset-1">
-			
-			<table class="table table-condensed">
-      			<tr>
-      				<th>No.</th>
-      				<th>Issue Date</th>
-      				<th>Expiration Date</th>
-      				<th>Issued By</th>
-      				<th>Owner</th>
-      				<th>Result Test</th>
-      				<th>Show document</th>
-      				<th>Document is Valid<th>
-      				
-      			</tr>
-      			<tr th:each="document,id : ${documents.getDocuments()}">
-      				<td th:text="${id.count}"></td>
-        			<td th:text="${document.issueDate}"></td>
-       				<td th:text="${document.expirationDate}"></td>
-       				<td th:text="${document.issuedBy}"></td>
-       				<td th:text="${document.ownersNameAndSurname}"></td>  
-       				<td th:text="${document.corerctlyEyeCondition.getValue()}"></td>
-       				<td><a id="document_dawnload" th:href="@{${document.fileDirectory}}">Download</a></td> 
-       				<td th:switch="${document.documentIsValid}">
-  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}" class="valid" >Valid</div>
-  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).SIXTY_DAYS}" class="sixty_days" >Less than 60 days</div>
-						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).THIRTY_DAYS}" class="thirty_days" > Less than 30 days</div>
-  						<div th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}" class="expired" >Expired</div>
-					</td>
-      			</tr>
-    		</table>
-    		<div class="col-md-8 ">
-				<a href="showAllJaegerTests"><input type="submit"  class="action_button action_button1" value="Show history"></a>
-			</div>
-		</div>
-	</body>
+	</div>
+</body>
 </html>

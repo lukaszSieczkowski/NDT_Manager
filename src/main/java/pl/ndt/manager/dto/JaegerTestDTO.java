@@ -16,10 +16,10 @@ public class JaegerTestDTO extends DocumentDTO {
 		super();
 	}
 
-	public JaegerTestDTO(String issueDate, String expirationDate, String issuedBy, MultipartFile file,
+	public JaegerTestDTO(Long id,String issueDate, String expirationDate, String issuedBy, MultipartFile file,
 			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
 			CorerctlyEyeCondition corerctlyEyeCondition) {
-		super(issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
+		super(id,issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
 
 		this.corerctlyEyeCondition = corerctlyEyeCondition;
 	}

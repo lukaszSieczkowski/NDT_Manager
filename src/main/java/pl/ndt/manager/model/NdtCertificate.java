@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import pl.ndt.manager.dto.NdtCertificateDTO;
 import pl.ndt.manager.model.enums.NdtMethod;
 import pl.ndt.manager.model.enums.Sector;
 
@@ -12,8 +11,8 @@ import pl.ndt.manager.model.enums.Sector;
 @Table(name = "ndt_certificates")
 @PrimaryKeyJoinColumn(name = "document_id")
 public class NdtCertificate extends Document {
-	
-	@Column(name = "document_number", length=40)
+
+	@Column(name = "document_number", length = 40)
 	private String documentNumber;
 	@Enumerated
 	@Column(name = "sector")
@@ -34,8 +33,6 @@ public class NdtCertificate extends Document {
 		this.ndtMethod = ndtMethod;
 	}
 
-	
-	
 	public String getDocumentNumber() {
 		return documentNumber;
 	}
@@ -65,6 +62,37 @@ public class NdtCertificate extends Document {
 		return "NdtCertificate [documentNumber=" + documentNumber + ", sector=" + sector + ", ndtMethod=" + ndtMethod
 				+ ", id=" + id + ", issueDate=" + issueDate + ", expirationDate=" + expirationDate + ", issuedBy="
 				+ issuedBy + ", fileName=" + fileName + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((documentNumber == null) ? 0 : documentNumber.hashCode());
+		result = prime * result + ((ndtMethod == null) ? 0 : ndtMethod.hashCode());
+		result = prime * result + ((sector == null) ? 0 : sector.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NdtCertificate other = (NdtCertificate) obj;
+		if (documentNumber == null) {
+			if (other.documentNumber != null)
+				return false;
+		} else if (!documentNumber.equals(other.documentNumber))
+			return false;
+		if (ndtMethod != other.ndtMethod)
+			return false;
+		if (sector != other.sector)
+			return false;
+		return true;
 	}
 
 }
