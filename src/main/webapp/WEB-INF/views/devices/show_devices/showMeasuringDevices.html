@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+</head>
+<body>
+	<div th:switch="${session.logedEmployee.role}">
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+			<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+		</p>
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+			<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+		</p>
+	</div>
+
+	<h3 class="text-center">Equipment</h3>
+
+	<div class="col-md-10 col-md-offset-1">
+
+		<table class="table table-condensed">
+			<tr>
+				<th>No.</th>
+				<th>Code</th>
+				<th>Name</th>
+				<th>Producer</th>
+				<th>Production Year</th>
+				<th>Model</th>
+				<th>Serial No.</th>
+				<th>Start of use</th>
+				
+			</tr>
+			<tr th:each="device,id : ${devices.getDevices()}">
+				<td th:text="${id.count}"></td>
+				<td th:text="${device.deviceCode}"></td>
+				<td th:text="${device.name}"></td>
+				<td th:text="${device.producer}"></td>
+				<td th:text="${device.productionYear}"></td>
+				<td th:text="${device.model}"></td>
+				<td th:text="${device.serialNumber}"></td>
+				<td th:text="${device.startOfUse}"></td>
+				
+		</table>
+		
+	</div>
+</body>
+</html>
