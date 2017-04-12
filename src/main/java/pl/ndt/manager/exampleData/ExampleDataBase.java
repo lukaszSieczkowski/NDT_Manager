@@ -7,9 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pl.ndt.manager.model.Address;
 import pl.ndt.manager.model.Document;
 import pl.ndt.manager.model.Employee;
 import pl.ndt.manager.model.JaegerTest;
+import pl.ndt.manager.model.Location;
 import pl.ndt.manager.model.MedicalExamination;
 import pl.ndt.manager.model.NdtCertificate;
 import pl.ndt.manager.model.User;
@@ -19,8 +21,8 @@ import pl.ndt.manager.model.enums.EmployeePositon;
 import pl.ndt.manager.model.enums.NdtMethod;
 import pl.ndt.manager.model.enums.Sector;
 import pl.ndt.manager.model.enums.UserRole;
-import pl.ndt.manager.repository.EmployeeRepository;
 import pl.ndt.manager.repository.JaegerTestRepository;
+import pl.ndt.manager.repository.LocationRepository;
 import pl.ndt.manager.repository.MedicalExaminationRepository;
 import pl.ndt.manager.repository.NdtCertificateRepository;
 import pl.ndt.manager.repository.UserRepository;
@@ -39,6 +41,9 @@ public class ExampleDataBase {
 	private VcaCertificateRepository vcaCertificateRepository;
 	@Autowired
 	private  MedicalExaminationRepository medicalExaminationRepository;
+	@Autowired
+	private LocationRepository locationRepository;
+
 
 	public void prepareDataBase() {
 		List<Document> documentsList1 = new ArrayList<>();
@@ -338,6 +343,30 @@ public class ExampleDataBase {
 		medicalExamination5.setRequirementsFullFilled("Working at height - positive");
 		medicalExamination5.setFileName("eeeee");
 		
+		Address address1 = new Address();
+		Location location1 = new Location();
+		address1.setStreet("Przemys³owa");
+		address1.setHouseNumber(12);
+		address1.setLocalNumber(0);
+		address1.setCity("Katowice");
+		address1.setZipCode("41-000");
+		
+		location1.setInstitutionName("Business Unit No.1");
+		address1.setLocaton(location1);
+		location1.setAddress(address1);
+		
+		Address address2 = new Address();
+		Location location2 = new Location();
+		address2.setStreet("Industrialna");
+		address2.setHouseNumber(3);
+		address2.setLocalNumber(12);
+		address2.setCity("Gliwice");
+		address2.setZipCode("41-100");
+		
+		location2.setInstitutionName("Business Unit No.2");
+		address2.setLocaton(location2);
+		location2.setAddress(address2);
+		
 		
 		
 		userRepository.save(user1);
@@ -374,5 +403,10 @@ public class ExampleDataBase {
 		medicalExaminationRepository.save(medicalExamination3);
 		medicalExaminationRepository.save(medicalExamination4);
 		medicalExaminationRepository.save(medicalExamination5);
+		
+		
+		locationRepository.save(location1);
+		locationRepository.save(location2);
+		
 	}
 }

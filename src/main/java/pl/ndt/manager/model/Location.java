@@ -1,10 +1,16 @@
 package pl.ndt.manager.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 @Entity
@@ -13,18 +19,13 @@ public class Location {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="institution_name")
+	@Column(name="institution_name",length=60)
 	private String institutionName;
-	@Column(name="street")
-	private String street;
-	@Column(name="number")
-	private Integer number;
-	@Column(name="city")
-	private String city;
-	@Column(name="zip_code")
-	private String zipCode;
-	@OneToOne(mappedBy = "location")
-	private Device device;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id")
+	private Address address;
+	@OneToMany(mappedBy = "location" , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Device> devices;
 	
 	public Location() {
 		super();
@@ -46,51 +47,17 @@ public class Location {
 		this.institutionName = institutionName;
 	}
 
-	public String getStreet() {
-		return street;
+	
+
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
-	public Integer getNumber() {
-		return number;
-	}
-
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
-
-	public Device getDevice() {
-		return device;
-	}
-
-	public void setDevice(Device device) {
-		this.device = device;
-	}
-
-	@Override
-	public String toString() {
-		return "Location [id=" + id + ", institutionName=" + institutionName + ", street=" + street + ", number="
-				+ number + ", city=" + city + ", zipCode=" + zipCode + ", device=" + device + "]";
-	}
+	
 	
 
 }

@@ -28,7 +28,7 @@ public class EquipmentVerification {
 	@Column(name = "certificate_number")
 	private String certificateNumber;
 	@ManyToOne
-	@JoinColumn(name = "device_id")
+	@JoinColumn(name = "equipment_id")
 	private Device device;
 	public EquipmentVerification() {
 		super();

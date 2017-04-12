@@ -7,15 +7,16 @@ import org.springframework.context.annotation.Configuration;
 import pl.ndt.manager.dto.DeviceDTO;
 import pl.ndt.manager.dto.DocumentDTO;
 import pl.ndt.manager.dto.EmployeeDTO;
+import pl.ndt.manager.dto.LocationDTO;
 
 @Configuration
 @ComponentScan
 public class BeanConfig {
 
 	/**
-	 * Registers Employee bean in Spring Container
+	 * Registers EmployeeDTO bean in Spring Container
 	 * 
-	 * @return employee
+	 * @return employeeDTO
 	 */
 
 	@Bean
@@ -24,9 +25,9 @@ public class BeanConfig {
 	}
 
 	/**
-	 * Registers Document bean in Spring Container
+	 * Registers DocumentDTO bean in Spring Container
 	 * 
-	 * @return document
+	 * @return documentDTO
 	 */
 
 	@Bean
@@ -34,9 +35,26 @@ public class BeanConfig {
 		return new DocumentDTO();
 	}
 	
+	/**
+	 * Registers DeviceDTO bean in Spring Container
+	 * 
+	 * @return deviceDTO;
+	 */
+	
 	@Bean
 	public DeviceDTO getDeviceDTO(){
 		return new DeviceDTO();
+	}
+	
+	/**
+	 * Registers LocationDTO bean in Spring Container
+	 * 
+	 * @return locationDTO;
+	 */
+	
+	@Bean
+	public LocationDTO getLocationDTO(){
+		return new LocationDTO();
 	}
 
 }

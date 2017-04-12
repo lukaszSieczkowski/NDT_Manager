@@ -26,8 +26,8 @@ public class MeasuringEquipment extends Device {
 	@CollectionTable(name = "types_of_testing")
 	@Column(name = "type")
 	private List<TypeOfTesting> typeOfTestingList;
-	@OneToMany(mappedBy = "device", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<EquipmentVerification> equipmentVerificationList;
+	//@OneToMany(mappedBy = "measuring_equipment", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	private List<EquipmentVerification> equipmentVerificationList;
 	
 	public MeasuringEquipment() {
 		super();
@@ -41,7 +41,7 @@ public class MeasuringEquipment extends Device {
 		this.deviceCode = deviceCode;
 		this.ferquencyOfVerification = ferquencyOfVerification;
 		this.typeOfTestingList = typeOfTestingList;
-		this.equipmentVerificationList = equipmentVerificationList;
+	//	this.equipmentVerificationList = equipmentVerificationList;
 	}
 
 
@@ -69,19 +69,11 @@ public class MeasuringEquipment extends Device {
 		this.typeOfTestingList = typeOfTestingList;
 	}
 
-	public List<EquipmentVerification> getEquipmentVerificationList() {
-		return equipmentVerificationList;
-	}
-
-	public void setEquipmentVerificationList(List<EquipmentVerification> equipmentVerificationList) {
-		this.equipmentVerificationList = equipmentVerificationList;
-	}
 
 	@Override
 	public String toString() {
 		return "MeasuringEquipment [deviceCode=" + deviceCode + ", ferquencyOfVerification=" + ferquencyOfVerification
-				+ ", typeOfTestingList=" + typeOfTestingList + ", equipmentVerificationList="
-				+ equipmentVerificationList + ", id=" + id + ", name=" + name + ", producer=" + producer
+				+ ", typeOfTestingList=" + typeOfTestingList +  ", id=" + id + ", name=" + name + ", producer=" + producer
 				+ ", productionYear=" + productionYear + ", model=" + model + ", serialNumber=" + serialNumber
 				+ ", startOfUse=" + startOfUse + ", location=" + location + "]";
 	}
