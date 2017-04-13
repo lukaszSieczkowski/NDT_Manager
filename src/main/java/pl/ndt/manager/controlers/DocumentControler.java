@@ -22,6 +22,7 @@ import pl.ndt.manager.dto.DocumentDTO;
 import pl.ndt.manager.dto.JaegerTestDTO;
 import pl.ndt.manager.dto.MedicalExaminationDTO;
 import pl.ndt.manager.dto.NdtCertificateDTO;
+import pl.ndt.manager.dto.PersonalDocumentDTO;
 import pl.ndt.manager.dto.VcaCertificateDTO;
 import pl.ndt.manager.model.enums.DocumentIsValid;
 import pl.ndt.manager.services.DocumentService;
@@ -52,7 +53,10 @@ public class DocumentControler {
 	@RequestMapping("/showAllNdtCertificates")
 	public String showAllNdtCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getNdtCertificates();
-		documents = documents.stream().sorted((a, b) -> (a.getDocumentIsValid().compareTo(b.getDocumentIsValid())))
+		documents = documents.stream()
+				.sorted((a,
+						b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
+								.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -69,7 +73,10 @@ public class DocumentControler {
 	@RequestMapping("/showAllVcaCertificates")
 	public String showAllVcaCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getVcaCertificates();
-		documents = documents.stream().sorted((a, b) -> (a.getDocumentIsValid().compareTo(b.getDocumentIsValid())))
+		documents = documents.stream()
+				.sorted((a,
+						b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
+								.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -87,8 +94,8 @@ public class DocumentControler {
 	@RequestMapping("/showAllJaegerTests")
 	public String showAllJaegerTests(Model model) {
 		List<DocumentDTO> documents = documentService.getJaegerTests();
-		documents = documents.stream().sorted((a, b) -> (a.getDocumentIsValid()).compareTo(b.getDocumentIsValid()))
-				.collect(Collectors.toList());
+		documents = documents.stream().sorted((a, b) -> (((PersonalDocumentDTO) a).getDocumentIsValid())
+				.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())).collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
 		return "personel/show_docs/showJaegerTests";
@@ -104,7 +111,10 @@ public class DocumentControler {
 	@RequestMapping("showAllMedicalExaminations")
 	public String showMedicalExamination(Model model) {
 		List<DocumentDTO> documents = documentService.getMedicalExaminations();
-		documents = documents.stream().sorted((a, b) -> (a.getDocumentIsValid().compareTo(b.getDocumentIsValid())))
+		documents = documents.stream()
+				.sorted((a,
+						b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
+								.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -122,7 +132,8 @@ public class DocumentControler {
 	@RequestMapping("/showValidJaegerTests")
 	public String showValidJaegerTests(Model model) {
 		List<DocumentDTO> documents = documentService.getJaegerTests();
-		documents = documents.stream().filter(a -> (a.getDocumentIsValid() != DocumentIsValid.EXPIRED))
+		documents = documents.stream()
+				.filter(a -> (((PersonalDocumentDTO) a).getDocumentIsValid() != DocumentIsValid.EXPIRED))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -140,7 +151,8 @@ public class DocumentControler {
 	@RequestMapping("/showValidMedicalExaminations")
 	public String showValidMedicalExaminations(Model model) {
 		List<DocumentDTO> documents = documentService.getMedicalExaminations();
-		documents = documents.stream().filter(a -> (a.getDocumentIsValid() != DocumentIsValid.EXPIRED))
+		documents = documents.stream()
+				.filter(a -> (((PersonalDocumentDTO) a).getDocumentIsValid() != DocumentIsValid.EXPIRED))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -158,7 +170,8 @@ public class DocumentControler {
 	@RequestMapping("/showValidVcaCertificates")
 	public String showValidVcaCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getVcaCertificates();
-		documents = documents.stream().filter(a -> (a.getDocumentIsValid() != DocumentIsValid.EXPIRED))
+		documents = documents.stream()
+				.filter(a -> (((PersonalDocumentDTO) a).getDocumentIsValid() != DocumentIsValid.EXPIRED))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -175,7 +188,8 @@ public class DocumentControler {
 	@RequestMapping("/showValidNdtCertificates")
 	public String showValidNdtCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getNdtCertificates();
-		documents = documents.stream().filter(a -> (a.getDocumentIsValid() != DocumentIsValid.EXPIRED))
+		documents = documents.stream()
+				.filter(a -> (((PersonalDocumentDTO) a).getDocumentIsValid() != DocumentIsValid.EXPIRED))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -258,9 +272,17 @@ public class DocumentControler {
 	@PostMapping("/saveNdtCertificate")
 	public String saveNdtCertificate(@Valid @ModelAttribute NdtCertificateDTO ndtCertificateDTO, BindingResult result,
 			Model model) {
-		if (!result.hasErrors()) {
+		String alert = null;
+		try {
 			documentService.saveNdtCertificate(ndtCertificateDTO);
+		} catch (Exception e) {
+			alert = "Something went wrong. NDT Certificate wasn't saved successfully";
+			model.addAttribute("alert", alert);
+			return "personel/add_docs/addNdtCertificate";
 		}
+		alert = "NDT Certificate was saved successfully";
+		model.addAttribute("alert", alert);
+
 		return "personel/add_docs/addNdtCertificate";
 	}
 
@@ -278,9 +300,16 @@ public class DocumentControler {
 	@PostMapping("/saveJaegerTest")
 	public String saveJaegerCertificate(@Valid @ModelAttribute JaegerTestDTO jaegerTestDTO, BindingResult result,
 			Model model) {
-		if (!result.hasErrors()) {
+		String alert = null;
+		try {
 			documentService.saveJaegerTest(jaegerTestDTO);
+		} catch (Exception e) {
+			alert = "Something went wrong. Jaeger Test wasn't saved successfully";
+			model.addAttribute("alert", alert);
+			return "personel/add_docs/addJaegerTest";
 		}
+		alert = "Jaeger Test was saved successfully";
+		model.addAttribute("alert", alert);
 		return "personel/add_docs/addJaegerTest";
 	}
 
@@ -298,9 +327,17 @@ public class DocumentControler {
 	@PostMapping("/saveVcaCertificate")
 	public String saveJaegerCertificate(@Valid @ModelAttribute VcaCertificateDTO vcaCertificateDTO,
 			BindingResult result, Model model) {
-		if (!result.hasErrors()) {
+		String alert = null;
+		try {
 			documentService.saveVcaCertificate(vcaCertificateDTO);
+		} catch (Exception e) {
+			alert = "Something went wrong. VCA Certificate wasn't saved successfully";
+			model.addAttribute("alert", alert);
+			return "personel/add_docs/addVcaCertificate";
 		}
+		alert = "VCA Certificate was saved successfully";
+		model.addAttribute("alert", alert);
+
 		return "personel/add_docs/addVcaCertificate";
 	}
 
@@ -318,9 +355,18 @@ public class DocumentControler {
 	@PostMapping("/saveMedicalExamination")
 	public String saveMedicalExamination(@Valid @ModelAttribute MedicalExaminationDTO medicalExaminationDTO,
 			BindingResult result, Model model) {
-		if (!result.hasErrors()) {
+
+		String alert = null;
+		try {
 			documentService.saveMedicalExamination(medicalExaminationDTO);
+		} catch (Exception e) {
+			alert = "Something went wrong. Medical Examination wasn't saved successfully";
+			model.addAttribute("alert", alert);
+			return "personel/add_docs/addMedicalExamination";
 		}
+		alert = "Medical Examination was saved successfully";
+		model.addAttribute("alert", alert);
+
 		return "personel/add_docs/addMedicalExamination";
 	}
 
@@ -333,6 +379,7 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return editNdtCertificate view
 	 */
+
 	@RequestMapping("/editNdtCertificate")
 	public String editNdtCertificate(@RequestParam("id") Long id, Model model) {
 		List<DocumentDTO> documents = documentService.getNdtCertificates();
@@ -344,23 +391,36 @@ public class DocumentControler {
 		model.addAttribute("employess", employeeList);
 		return "personel/edit_docs/editNdtCertificate";
 	}
+
 	/**
-	 * Updates NDT Certificate  
-	 * @param ndtCertificateDTO Transfer object with values transfered from input form into
+	 * Updates NDT Certificate
+	 * 
+	 * @param ndtCertificateDTO
+	 *            Transfer object with values transfered from input form into
 	 *            the database
-	 * @param result Holder for errors
-	 * @param model Holder for attributes
+	 * @param result
+	 *            Holder for errors
+	 * @param model
+	 *            Holder for attributes
 	 * @return editNdtCertificate view
 	 */
 
 	@RequestMapping("/updateNdtCertificate")
 	public String updateNdtCartificate(@Valid @ModelAttribute NdtCertificateDTO ndtCertificateDTO, BindingResult result,
-			Model model) {
-
+			@RequestParam("id") Long id, Model model) {
 		if (!result.hasErrors()) {
-			documentService.updateNdtCertificate(ndtCertificateDTO);
+			String alert = null;
+			ndtCertificateDTO.setId(id);
+			try {
+				documentService.updateNdtCertificate(ndtCertificateDTO);
+			} catch (Exception e) {
+				alert = "Something went wrong. Location wasn't updated successfully";
+				model.addAttribute("alert", alert);
+				return "personel/edit_docs/editNdtCertificate";
+			}
+			alert = "Location was updated successfully";
+			model.addAttribute("alert", alert);
 		}
-
 		return "personel/edit_docs/editNdtCertificate";
 	}
 
@@ -387,19 +447,33 @@ public class DocumentControler {
 	}
 
 	/**
-	 * Updates Jaeger Test 
-	 * @param jaegerTestDTO Transfer object with values transfered from input form into
+	 * Updates Jaeger Test
+	 * 
+	 * @param jaegerTestDTO
+	 *            Transfer object with values transfered from input form into
 	 *            the database
-	 * @param result Holder for errors
-	 * @param model Holder for attributes
+	 * @param result
+	 *            Holder for errors
+	 * @param model
+	 *            Holder for attributes
 	 * @return editJaegerTest view
 	 */
 	@RequestMapping("/updateJaegerTest")
 	public String updateJaegerTest(@Valid @ModelAttribute JaegerTestDTO jaegerTestDTO, BindingResult result,
-			Model model) {
+			@RequestParam("id") Long id, Model model) {
 
 		if (!result.hasErrors()) {
-			documentService.updateJaegerTest(jaegerTestDTO);
+			String alert = null;
+			jaegerTestDTO.setId(id);
+			try {
+				documentService.updateJaegerTest(jaegerTestDTO);
+			} catch (Exception e) {
+				alert = "Something went wrong. Jaeger Test wasn't updated successfully";
+				model.addAttribute("alert", alert);
+				return "personel/edit_docs/editJaegerTest";
+			}
+			alert = "Jaeger Test was updated successfully";
+			model.addAttribute("alert", alert);
 		}
 
 		return "personel/edit_docs/editJaegerTest";
@@ -426,23 +500,36 @@ public class DocumentControler {
 		model.addAttribute("employess", employeeList);
 		return "personel/edit_docs/editVcaCertificate";
 	}
-	
 
 	/**
-	 * Updates VCA Certificate 
-	 * @param vcaCertificateDTO Transfer object with values transfered from input form into
+	 * Updates VCA Certificate
+	 * 
+	 * @param vcaCertificateDTO
+	 *            Transfer object with values transfered from input form into
 	 *            the database
-	 * @param result Holder for errors
-	 * @param model Holder for attributes
+	 * @param result
+	 *            Holder for errors
+	 * @param model
+	 *            Holder for attributes
 	 * @return editVcaCertificate view
 	 */
 
 	@RequestMapping("/updateVcaCertificate")
 	public String updateVcaCertificate(@Valid @ModelAttribute VcaCertificateDTO vcaCertificateDTO, BindingResult result,
-			Model model) {
+			@RequestParam("id") Long id, Model model) {
 
 		if (!result.hasErrors()) {
-			documentService.updateVcaCertificate(vcaCertificateDTO);
+			String alert = null;
+			vcaCertificateDTO.setId(id);
+			try {
+				documentService.updateVcaCertificate(vcaCertificateDTO);
+			} catch (Exception e) {
+				alert = "Something went wrong. VCA Certificate wasn't updated successfully";
+				model.addAttribute("alert", alert);
+				return "personel/edit_docs/editVcaCertificate";
+			}
+			alert = "VCA Certificate was updated successfully";
+			model.addAttribute("alert", alert);
 		}
 
 		return "personel/edit_docs/editVcaCertificate";
@@ -471,21 +558,39 @@ public class DocumentControler {
 		model.addAttribute("employess", employeeList);
 		return "personel/edit_docs/editMedicalExamination";
 	}
+
 	/**
-	 * Updates Medical Examination 
-	 * @param medicalExaminationDTO Transfer object with values transfered from input form into
+	 * Updates Medical Examination
+	 * 
+	 * @param medicalExaminationDTO
+	 *            Transfer object with values transfered from input form into
 	 *            the database
-	 * @param result Holder for errors
-	 * @param model Holder for attributes
+	 * @param result
+	 *            Holder for errors
+	 * @param model
+	 *            Holder for attributes
 	 * @return editVcaCertificate view
 	 */
 
 	@RequestMapping("/updateMedicalExamination")
 	public String updateMedicalExamination(@Valid @ModelAttribute MedicalExaminationDTO medicalExaminationDTO,
-			BindingResult result, Model model) {
-
+			 BindingResult result,@RequestParam("id") Long id, Model model) {
+		
+		
+		System.out.println("Control"+medicalExaminationDTO);
 		if (!result.hasErrors()) {
-			documentService.updateMedicalExamination(medicalExaminationDTO);
+			String alert = null;
+			medicalExaminationDTO.setId(id);
+			
+			try {
+				documentService.updateMedicalExamination(medicalExaminationDTO);
+			} catch (Exception e) {
+				alert = "Something went wrong. Medical Examination wasn't updated successfully";
+				model.addAttribute("alert", alert);
+				return "personel/edit_docs/editMedicalExamination";
+			}
+			alert = "Medical Examination was updated successfully";
+			model.addAttribute("alert", alert);
 		}
 
 		return "personel/edit_docs/editMedicalExamination";

@@ -4,21 +4,23 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import pl.ndt.manager.model.enums.NdtMethod;
+
 @Entity
 @Table(name = "vca_certificates")
-@PrimaryKeyJoinColumn(name = "document_id")
-public class VcaCertificate extends Document {
+@PrimaryKeyJoinColumn(name = "personal_document_id")
+public class VcaCertificate extends PersonalDocument {
 
-	@Column(name = "document_number" ,length=40)
+	@Column(name = "document_number", length = 40)
 	private String documentNumber;
 
 	public VcaCertificate() {
 		super();
 	}
 
-	public VcaCertificate(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			Employee employee, String documentNumber) {
-		super(issueDate, expirationDate, issuedBy, fileName, employee);
+	public VcaCertificate(long id, LocalDateTime issueDate, String issuedBy, String fileName,
+			LocalDateTime expirationDate, Employee employee, String documentNumber) {
+		super(id, issueDate, issuedBy, fileName, expirationDate, employee);
 		this.documentNumber = documentNumber;
 	}
 
@@ -32,8 +34,9 @@ public class VcaCertificate extends Document {
 
 	@Override
 	public String toString() {
-		return "VcaCertificate [documentNumber=" + documentNumber + ", id=" + id + ", issueDate=" + issueDate
-				+ ", expirationDate=" + expirationDate + ", issuedBy=" + issuedBy + ", fileName=" + fileName + "]";
+		return "VcaCertificate [documentNumber=" + documentNumber + ", expirationDate=" + expirationDate + ", employee="
+				+ employee + ", id=" + id + ", issueDate=" + issueDate + ", issuedBy=" + issuedBy + ", fileName="
+				+ fileName + "]";
 	}
 
 }

@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.ndt.manager.model.enums.CorerctlyEyeCondition;
 import pl.ndt.manager.model.enums.DocumentIsValid;
 
-public class JaegerTestDTO extends DocumentDTO {
+public class JaegerTestDTO extends PersonalDocumentDTO {
 	
 	@NotNull(message = "Select Value")
 	private CorerctlyEyeCondition corerctlyEyeCondition;
@@ -16,11 +16,10 @@ public class JaegerTestDTO extends DocumentDTO {
 		super();
 	}
 
-	public JaegerTestDTO(Long id,String issueDate, String expirationDate, String issuedBy, MultipartFile file,
-			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
-			CorerctlyEyeCondition corerctlyEyeCondition) {
-		super(id,issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
-
+	public JaegerTestDTO(long id, String issueDate, String issuedBy, MultipartFile file, String fileDirectory,
+			String expirationDate, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
+			 CorerctlyEyeCondition corerctlyEyeCondition) {
+		super(id, issueDate, issuedBy, file, fileDirectory, expirationDate, email, ownersNameAndSurname, documentIsValid);
 		this.corerctlyEyeCondition = corerctlyEyeCondition;
 	}
 
@@ -34,11 +33,10 @@ public class JaegerTestDTO extends DocumentDTO {
 
 	@Override
 	public String toString() {
-		return "JaegerTestDTO [corerctlyEyeCondition=" + corerctlyEyeCondition + ", issueDate=" + issueDate
-				+ ", expirationDate=" + expirationDate + ", issuedBy=" + issuedBy + ", file=" + file
-				+ ", fileDirectory=" + fileDirectory + ", email=" + email + ", ownersNameAndSurname="
-				+ ownersNameAndSurname + ", documentIsValid=" + documentIsValid + "]";
+		return "JaegerTestDTO [corerctlyEyeCondition=" + corerctlyEyeCondition + ", expirationDate=" + expirationDate
+				+ ", email=" + email + ", ownersNameAndSurname=" + ownersNameAndSurname + ", documentIsValid="
+				+ documentIsValid + ", id=" + id + ", issueDate=" + issueDate + ", issuedBy=" + issuedBy + ", file="
+				+ file + ", fileDirectory=" + fileDirectory + "]";
 	}
 
-	
 }

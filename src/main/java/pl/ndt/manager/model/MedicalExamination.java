@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "medical_examinations")
-@PrimaryKeyJoinColumn(name = "document_id")
-public class MedicalExamination extends Document {
+@PrimaryKeyJoinColumn(name = "personal_document_id")
+public class MedicalExamination extends PersonalDocument {
 
 	@Column(name = "requirements_description",length=500)
 	private String requirementsDescription;
@@ -18,13 +18,12 @@ public class MedicalExamination extends Document {
 		super();
 	}
 
-	public MedicalExamination(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			Employee employee, String requirementsFullFilled, String requirementsDescription) {
-		super(issueDate, expirationDate, issuedBy, fileName, employee);
+	public MedicalExamination(long id, LocalDateTime issueDate, String issuedBy, String fileName,
+			LocalDateTime expirationDate, Employee employee, String requirementsDescription,String requirementsFullFilled) {
+		super(id, issueDate, issuedBy, fileName, expirationDate, employee);
+		this.requirementsDescription=requirementsDescription;
 		this.requirementsFullFilled = requirementsFullFilled;
-		this.requirementsDescription = requirementsDescription;
 	}
-
 
 	public String getRequirementsDescription() {
 		return requirementsDescription;
@@ -33,7 +32,6 @@ public class MedicalExamination extends Document {
 	public void setRequirementsDescription(String requirementsDescription) {
 		this.requirementsDescription = requirementsDescription;
 	}
-	
 
 	public String getRequirementsFullFilled() {
 		return requirementsFullFilled;
@@ -45,9 +43,12 @@ public class MedicalExamination extends Document {
 
 	@Override
 	public String toString() {
-		return "MedicalExamination [positiveResultTest=" +  requirementsFullFilled + ", requirementsDescription="
-				+ requirementsDescription + ", id=" + id + ", issueDate=" + issueDate + ", expirationDate="
-				+ expirationDate + ", issuedBy=" + issuedBy + ", fileName=" + fileName + "]";
+		return "MedicalExamination [requirementsDescription=" + requirementsDescription + ", requirementsFullFilled="
+				+ requirementsFullFilled + ", expirationDate=" + expirationDate + ", employee=" + employee + ", id="
+				+ id + ", issueDate=" + issueDate + ", issuedBy=" + issuedBy + ", fileName=" + fileName + "]";
 	}
+
+	
+	
 
 }

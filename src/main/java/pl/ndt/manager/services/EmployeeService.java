@@ -78,7 +78,7 @@ public class EmployeeService {
 		employee.setFirstName(employeeDTO.getFirstName());
 		employee.setLastName(employeeDTO.getLastName());
 		employee.setEmployeePosition(employeeDTO.getEmployeePositon());
-		employee.setDocumentsList(documentList);
+	//	employee.setDocumentsList(documentList);
 		employee.setUser(user);
 		employee.setLocation(location);
 

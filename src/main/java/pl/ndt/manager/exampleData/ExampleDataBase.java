@@ -15,6 +15,7 @@ import pl.ndt.manager.model.JaegerTest;
 import pl.ndt.manager.model.Location;
 import pl.ndt.manager.model.MedicalExamination;
 import pl.ndt.manager.model.NdtCertificate;
+import pl.ndt.manager.model.PersonalDocument;
 import pl.ndt.manager.model.User;
 import pl.ndt.manager.model.VcaCertificate;
 import pl.ndt.manager.model.enums.CorerctlyEyeCondition;
@@ -50,11 +51,11 @@ public class ExampleDataBase {
 
 
 	public void prepareDataBase() {
-		List<Document> documentsList1 = new ArrayList<>();
-		List<Document> documentsList2 = new ArrayList<>();
-		List<Document> documentsList3 = new ArrayList<>();
-		List<Document> documentsList4 = new ArrayList<>();
-		List<Document> documentsList5 = new ArrayList<>();
+		List<PersonalDocument> documentsList1 = new ArrayList<>();
+		List<PersonalDocument> documentsList2 = new ArrayList<>();
+		List<PersonalDocument> documentsList3 = new ArrayList<>();
+		List<PersonalDocument> documentsList4 = new ArrayList<>();
+		List<PersonalDocument> documentsList5 = new ArrayList<>();
 		
 		Address address1 = new Address();
 		Location location1 = new Location();

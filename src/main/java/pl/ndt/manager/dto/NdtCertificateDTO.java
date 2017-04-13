@@ -10,9 +10,9 @@ import pl.ndt.manager.model.enums.DocumentIsValid;
 import pl.ndt.manager.model.enums.NdtMethod;
 import pl.ndt.manager.model.enums.Sector;
 
-public class NdtCertificateDTO extends DocumentDTO {
+public class NdtCertificateDTO extends PersonalDocumentDTO {
 	@NotBlank(message = "This field may not be empty")
-	@Size(max=40, message="To long sentence. Only 40 signs allowed")
+	@Size(max = 40, message = "To long sentence. Only 40 signs allowed")
 	private String documentNumber;
 	@NotNull(message = "Select Sector")
 	private Sector sector;
@@ -23,10 +23,11 @@ public class NdtCertificateDTO extends DocumentDTO {
 		super();
 	}
 
-	public NdtCertificateDTO(Long id,String issueDate, String expirationDate, String issuedBy, MultipartFile file,
-			String fileDirectory, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
+	public NdtCertificateDTO(long id, String issueDate, String issuedBy, MultipartFile file, String fileDirectory,
+			String expirationDate, String email, String ownersNameAndSurname, DocumentIsValid documentIsValid,
 			String documentNumber, Sector sector, NdtMethod ndtMethod) {
-		super(id,issueDate, expirationDate, issuedBy, file, fileDirectory, email, ownersNameAndSurname, documentIsValid);
+		super(id, issueDate, issuedBy, file, fileDirectory, expirationDate, email, ownersNameAndSurname,
+				documentIsValid);
 		this.documentNumber = documentNumber;
 		this.sector = sector;
 		this.ndtMethod = ndtMethod;
@@ -59,16 +60,9 @@ public class NdtCertificateDTO extends DocumentDTO {
 	@Override
 	public String toString() {
 		return "NdtCertificateDTO [documentNumber=" + documentNumber + ", sector=" + sector + ", ndtMethod=" + ndtMethod
-				+ ", id=" + id + ", issueDate=" + issueDate + ", expirationDate=" + expirationDate + ", issuedBy="
-				+ issuedBy + ", file=" + file + ", fileDirectory=" + fileDirectory + ", email=" + email
-				+ ", ownersNameAndSurname=" + ownersNameAndSurname + ", documentIsValid=" + documentIsValid + "]";
+				+ ", expirationDate=" + expirationDate + ", email=" + email + ", ownersNameAndSurname="
+				+ ownersNameAndSurname + ", documentIsValid=" + documentIsValid + ", id=" + id + ", issueDate="
+				+ issueDate + ", issuedBy=" + issuedBy + ", file=" + file + ", fileDirectory=" + fileDirectory + "]";
 	}
-
-	
-
-	
-	
-	
-	
 
 }

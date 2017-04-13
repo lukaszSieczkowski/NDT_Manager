@@ -105,7 +105,7 @@ public class DocumentService implements FileDirectory {
 
 		for (MedicalExamination medCert : medicalCertificateList) {
 			MedicalExaminationDTO medCertDto = new MedicalExaminationDTO();
-			medCertDto.setId(medCertDto.getId());
+			medCertDto.setId(medCert.getId());
 			medCertDto.setIssueDate(dateConverter.createDateToString(medCert.getIssueDate()));
 			medCertDto.setExpirationDate(dateConverter.createDateToString(medCert.getExpirationDate()));
 			medCertDto.setIssuedBy(medCert.getIssuedBy());
@@ -175,7 +175,6 @@ public class DocumentService implements FileDirectory {
 	public void updateNdtCertificate(NdtCertificateDTO ndtCertificateDTO) {
 
 		NdtCertificate ndtCertificate = conventDTOtoNDTCertificate(ndtCertificateDTO);
-
 		Long id = ndtCertificateDTO.getId();
 		NdtCertificate tempNdtCert = ndtCertificateRepository.findOne(id);
 
@@ -185,6 +184,7 @@ public class DocumentService implements FileDirectory {
 		FileTool fileTool = new FileTool();
 		fileTool.saveFile(ndtCertificateDTO.getFile(), fileName);
 
+		System.out.println("Service "+ndtCertificate);
 		ndtCertificateRepository.save(ndtCertificate);
 
 	}
@@ -198,8 +198,9 @@ public class DocumentService implements FileDirectory {
 
 	public NdtCertificate conventDTOtoNDTCertificate(NdtCertificateDTO ndtCertificateDTO) {
 		dateConverter = new DateConverter();
+		
 		NdtCertificate ndtCertificate = new NdtCertificate();
-		ndtCertificate.setId(ndtCertificate.getId());
+		ndtCertificate.setId(ndtCertificateDTO.getId());
 		ndtCertificate.setIssueDate(dateConverter.createDateFromString(ndtCertificateDTO.getIssueDate(), 0, 0));
 		ndtCertificate
 				.setExpirationDate(dateConverter.createDateFromString(ndtCertificateDTO.getExpirationDate(), 0, 0));

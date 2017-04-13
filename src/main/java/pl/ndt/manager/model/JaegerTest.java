@@ -8,8 +8,8 @@ import pl.ndt.manager.model.enums.CorerctlyEyeCondition;
 
 @Entity
 @Table(name = "jaeger_tests")
-@PrimaryKeyJoinColumn(name = "documnet_id")
-public class JaegerTest extends Document {
+@PrimaryKeyJoinColumn(name = "personal_document_id")
+public class JaegerTest extends PersonalDocument {
 
 	@Column(name = "correct_eye_condition")
 	private CorerctlyEyeCondition corerctlyEyeCondition;
@@ -18,12 +18,12 @@ public class JaegerTest extends Document {
 		super();
 	}
 
-	public JaegerTest(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			Employee employee, CorerctlyEyeCondition corerctlyEyeCondition) {
-		super(issueDate, expirationDate, issuedBy, fileName, employee);
+
+	public JaegerTest(long id, LocalDateTime issueDate, String issuedBy, String fileName, LocalDateTime expirationDate,
+			Employee employee,CorerctlyEyeCondition corerctlyEyeCondition) {
+		super(id, issueDate, issuedBy, fileName, expirationDate, employee);
 		this.corerctlyEyeCondition = corerctlyEyeCondition;
 	}
-
 
 	public CorerctlyEyeCondition getCorerctlyEyeCondition() {
 		return corerctlyEyeCondition;

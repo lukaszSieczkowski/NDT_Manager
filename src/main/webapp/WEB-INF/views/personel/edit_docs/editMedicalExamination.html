@@ -27,7 +27,7 @@
 
 <div class="col-md-8 col-md-offset-2">
 
-	<form th:action="@{saveMedicalExamination}" th:object="${medicalExaminationDTO}" method ="post" enctype="multipart/form-data">
+	<form th:object="${medicalExaminationDTO}" th:action="@{updateMedicalExamination(id=${medicalExaminationDTO.id})}" method ="post" enctype="multipart/form-data">
 	<th:block th:include="fragments/medicalExaminationForm :: medicalExaminationForm"></th:block>
 		<div class="col-md-8 ">
 			<div class="col-md-8 ">

@@ -9,8 +9,8 @@ import pl.ndt.manager.model.enums.Sector;
 
 @Entity
 @Table(name = "ndt_certificates")
-@PrimaryKeyJoinColumn(name = "document_id")
-public class NdtCertificate extends Document {
+@PrimaryKeyJoinColumn(name = "personal_document_id")
+public class NdtCertificate extends PersonalDocument{
 
 	@Column(name = "document_number", length = 40)
 	private String documentNumber;
@@ -25,9 +25,9 @@ public class NdtCertificate extends Document {
 
 	}
 
-	public NdtCertificate(LocalDateTime issueDate, LocalDateTime expirationDate, String issuedBy, String fileName,
-			Employee employee, String documentNumber, Sector sector, NdtMethod ndtMethod) {
-		super(issueDate, expirationDate, issuedBy, fileName, employee);
+	public NdtCertificate(long id, LocalDateTime issueDate, String issuedBy, String fileName,
+			LocalDateTime expirationDate, Employee employee,String documentNumber,Sector sector,NdtMethod ndtMethod) {
+		super(id, issueDate, issuedBy, fileName, expirationDate, employee);
 		this.documentNumber = documentNumber;
 		this.sector = sector;
 		this.ndtMethod = ndtMethod;
@@ -60,39 +60,12 @@ public class NdtCertificate extends Document {
 	@Override
 	public String toString() {
 		return "NdtCertificate [documentNumber=" + documentNumber + ", sector=" + sector + ", ndtMethod=" + ndtMethod
-				+ ", id=" + id + ", issueDate=" + issueDate + ", expirationDate=" + expirationDate + ", issuedBy="
-				+ issuedBy + ", fileName=" + fileName + "]";
+				+ ", expirationDate=" + expirationDate + ", employee=" + employee + ", id=" + id + ", issueDate="
+				+ issueDate + ", issuedBy=" + issuedBy + ", fileName=" + fileName + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((documentNumber == null) ? 0 : documentNumber.hashCode());
-		result = prime * result + ((ndtMethod == null) ? 0 : ndtMethod.hashCode());
-		result = prime * result + ((sector == null) ? 0 : sector.hashCode());
-		return result;
-	}
+	
+	
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		NdtCertificate other = (NdtCertificate) obj;
-		if (documentNumber == null) {
-			if (other.documentNumber != null)
-				return false;
-		} else if (!documentNumber.equals(other.documentNumber))
-			return false;
-		if (ndtMethod != other.ndtMethod)
-			return false;
-		if (sector != other.sector)
-			return false;
-		return true;
-	}
-
+	
 }

@@ -37,8 +37,8 @@
 									Certificates</a></li>
 							<li><a th:href="@{/showValidVcaCertificates}"> VCA
 									Certificates</a></li>
-							<li><a th:href="@{/showValidMedicalExaminations}"> Medical
-									Examinations</a></li>
+							<li><a th:href="@{/showValidMedicalExaminations}">
+									Medical Examinations</a></li>
 							<li><a th:href="@{/showValidJaegerTests}"> Jaeger Tests</a></li>
 						</ul></li>
 					<li class="dropdown-submenu"><a class="test" tabindex="-1"
@@ -53,7 +53,7 @@
 							<li><a th:href="@{/addJaegerTest}"> Add Jaeger Test</a></li>
 						</ul></li>
 				</ul></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">Equipment <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
 					<li><a href="showMeasuringDevices">Show Equipment</a></li>
@@ -65,8 +65,8 @@
 									Certificates</a></li>
 							<li><a th:href="@{/showValidVcaCertificates}"> VCA
 									Certificates</a></li>
-							<li><a th:href="@{/showValidMedicalExaminations}"> Medical
-									Examinations</a></li>
+							<li><a th:href="@{/showValidMedicalExaminations}">
+									Medical Examinations</a></li>
 							<li><a th:href="@{/showValidJaegerTests}"> Jaeger Tests</a></li>
 						</ul></li>
 					<li class="dropdown-submenu"><a class="test" tabindex="-1"
@@ -81,17 +81,36 @@
 							<li><a th:href="@{/addJaegerTest}"> Add Jaeger Test</a></li>
 						</ul></li>
 				</ul></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">Locations <span class="caret"></span></a>
-				<ul class="dropdown-menu" role="menu" >
+				<ul class="dropdown-menu" role="menu">
 					<li><a href="showLocations">Show Locations </a></li>
 					<li><a href="addLocation">Add New Location</a></li>
+				</ul></li>
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown">Technical Documents <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li class="dropdown-submenu"><a class="test" tabindex="-1"
+						href="#">Norms <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a th:href="@{/showValidNdtCertificates}"> Show
+									Norms</a></li>
+							<li><a th:href="@{/showValidVcaCertificates}">Add Norms</a></li>
+						</ul></li>
+					<li class="dropdown-submenu"><a class="test" tabindex="-1"
+						href="#">Procedures <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a th:href="@{/showValidNdtCertificates}"> Show
+									Procedures</a></li>
+							<li><a th:href="@{/showValidVcaCertificates}">Add
+									Procedures</a></li>
+						</ul></li>
 				</ul></li>
 		</ul>
 		<div class="navbar-right user">
 			<span th:text="${session.logedEmployee.firstName}"></span> <span
-				th:text="${session.logedEmployee.lastName}"></span> <a
-				href="logout"> <span class="glyphicon glyphicon-log-in"></span>
+				th:text="${session.logedEmployee.lastName}"></span> <a href="logout">
+				<span class="glyphicon glyphicon-log-in"></span>
 			</a>
 		</div>
 	</nav>
