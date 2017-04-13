@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="jquery.timepicker.js"></script>
+
+<script src="resources/js/datepicker.js">
+	
+</script>
+
+</head>
+
+</body>
+<div th:switch="${session.logedEmployee.role}">
+	<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+		<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+	</p>
+	<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+		<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+	</p>
+</div>
+<h3 class="text-center">Update Employee</h3>
+
+<div class="col-md-6 col-md-offset-3">
+
+	<form th:object="${employeeDTO}" th:action="@{updateEmployee(id=${employeeDTO.id})}"  method ="post" enctype="multipart/form-data">
+		<th:block th:include="fragments/employee/employeeForm :: employeeForm"></th:block>
+		<div class="col-md-8 ">
+			<div class="col-md-8 ">
+				<input type="submit" class="action_button " value="Update">
+			</div>
+			
+		</div>
+		
+	</form>
+</div>
+</body>
+</html>

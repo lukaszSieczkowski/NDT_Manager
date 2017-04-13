@@ -1,10 +1,18 @@
 package pl.ndt.manager.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import pl.ndt.manager.model.enums.UserRole;
 
 public class UserDTO {
+
 	private String firstName;
+
 	private String lastName;
+	
 	private UserRole role;
 
 	public UserDTO() {
@@ -42,4 +50,10 @@ public class UserDTO {
 		this.role = role;
 	}
 
+	@Override
+	public String toString() {
+		return "UserDTO [firstName=" + firstName + ", lastName=" + lastName + ", role=" + role + "]";
+	}
+
+	
 }

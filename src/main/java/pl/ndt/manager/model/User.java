@@ -29,7 +29,8 @@ public class User {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "employee_id")
 	private Employee employee;
-
+	
+	
 	public User() {
 
 	}

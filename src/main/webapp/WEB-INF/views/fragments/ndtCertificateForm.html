@@ -52,7 +52,7 @@
 		
 		
 			<div class="form-group col-md-4">
-				<label for="owner">Sector</label> 
+				<label for="locationName">Location</label> 
 					<select class="form-control"  th:field="*{sector}">
 					<option value="">----  Select Sector  ----</option>
 					<option th:each="sector: ${T(pl.ndt.manager.model.enums.Sector).values()}" 

@@ -17,7 +17,7 @@
 	</div>
 	<h3 class="text-center">Employees</h3>
 
-	<div class="col-md-4 col-md-offset-4">
+	<div class="col-md-6 col-md-offset-3">
 
 		<table class="table table-condensed">
 			<tr>
@@ -25,6 +25,8 @@
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Position</th>
+				<th>Location</th>
+				<th>Edit</th>
 
 			</tr>
 			<tr th:each="employee,id : ${employess.getEmployees()}">
@@ -32,6 +34,8 @@
 				<td th:text="${employee.firstName}"></td>
 				<td th:text="${employee.lastName}"></td>
 				<td th:text="${employee.employeePositon.getValue()}"></td>
+				<td th:text="${employee.locationName}"></td>
+				<td><a th:href="@{/editEmployee(id=${employee.id})}">Update</a>
 			</tr>
 		</table>
 	</div>

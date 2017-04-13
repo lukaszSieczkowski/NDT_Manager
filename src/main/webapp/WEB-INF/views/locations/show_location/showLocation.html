@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+</head>
+<body>
+	<div th:switch="${session.logedEmployee.role}">
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+			<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+		</p>
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+			<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+		</p>
+	</div>
+
+	<h3 class="text-center">Business Locations</h3>
+
+	<div class="col-md-4 col-md-offset-4">
+
+		<table class="table table-condensed">
+			<tr>
+				<th>No.</th>
+				<th>Name</th>
+				<th>Address</th>
+				<th>Edit</th>
+			</tr>
+			<tr th:each="location,id : ${locations.getLocations()}">
+				<td th:text="${id.count}"></td>
+				<td th:text="${location.institutionName}"></td>
+				<td th:if="${location.localNumber != '0'}">	
+					<div th:text="${location.street} + ' ' +${location.houseNumber}+' / ' + ${location.localNumber} " ></div>
+					<div th:text="${location.city} + ' ' +${location.zipCode}"></div>
+				</td>
+				<td th:if="${location.localNumber == '0'}" >
+					<div th:text="${location.street} + ' ' +${location.houseNumber}"></div>
+					<div th:text="${location.city} + ' ' +${location.zipCode}"></div>
+				 </td>
+				 <td><a th:href="@{/editLocation(id=${location.id})}">Update</a>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

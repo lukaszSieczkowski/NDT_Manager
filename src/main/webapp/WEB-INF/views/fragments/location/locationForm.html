@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	th:fragment="locationForm">
+<head>
+
+</head>
+
+<body>
+		<div class="col-md-12">
+			<div class="date form-group col-md-6 ">
+				<label for="institutionName">Location name</label> 
+				<input type="text" class="form-control" id="institutionName" th:field="*{institutionName}" placeholder="Company or department name">
+				<p class="text-center alert" th:if="${#fields.hasErrors('institutionName')}" th:errors="*{institutionName}"></p>	
+			</div>
+			<div class="date form-group col-md-6">
+				<label for="street">Street</label>
+				<input type="text" class="form-control" id="street" th:field="*{street}" placeholder="Street name">
+				<p class="text-center alert" th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></p>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group col-md-6">
+				<label for="houseNumber">House</label>
+				<input type="text" class="form-control" id="issuedBy" th:field="*{houseNumber}" placeholder="House number">
+				<p class="text-center alert" th:if="${#fields.hasErrors('houseNumber')}" th:errors="*{houseNumber}"></p>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="localNumber">Place Number</label>
+				<input type="text" class="form-control" id="issuedBy" th:field="*{localNumber}" placeholder="0 if doesen't exist">
+				<p class="text-center alert" th:if="${#fields.hasErrors('localNumber')}" th:errors="*{localNumber}"></p>
+			</div>
+			
+		</div>
+		<div class="col-md-12">
+			<div class="form-group col-md-6">
+				<label for="city">City</label>
+				<input type="text" class="form-control" id="city" th:field="*{city}" placeholder="City name">
+				<p class="text-center alert" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="zipCode">Zip Code</label>
+				<input type="text" class="form-control" id="ziCode" th:field="*{zipCode}" placeholder="Zip code">
+				<p class="text-center alert" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
+			</div>
+			<p class="alert text-center" th:text="${alert}"></p>
+			<div class="form-group col-md-6">
+				<label ></label>
+			</div>
+			
+		</div>
+		
+	
+
+</body>
+</html>

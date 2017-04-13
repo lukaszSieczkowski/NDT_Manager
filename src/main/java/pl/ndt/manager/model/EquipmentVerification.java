@@ -30,6 +30,7 @@ public class EquipmentVerification {
 	@ManyToOne
 	@JoinColumn(name = "equipment_id")
 	private Device device;
+	
 	public EquipmentVerification() {
 		super();
 	}

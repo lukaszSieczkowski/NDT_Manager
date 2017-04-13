@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import pl.ndt.manager.model.enums.EmployeePositon;
 import pl.ndt.manager.model.enums.NdtMethod;
 import pl.ndt.manager.model.enums.Sector;
 import pl.ndt.manager.model.enums.UserRole;
+import pl.ndt.manager.repository.EmployeeRepository;
 import pl.ndt.manager.repository.JaegerTestRepository;
 import pl.ndt.manager.repository.LocationRepository;
 import pl.ndt.manager.repository.MedicalExaminationRepository;
@@ -33,6 +35,8 @@ public class ExampleDataBase {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private EmployeeRepository employeeRepository;
 	@Autowired
 	private NdtCertificateRepository ndtCertificateRepository;
 	@Autowired
@@ -51,17 +55,46 @@ public class ExampleDataBase {
 		List<Document> documentsList3 = new ArrayList<>();
 		List<Document> documentsList4 = new ArrayList<>();
 		List<Document> documentsList5 = new ArrayList<>();
+		
+		Address address1 = new Address();
+		Location location1 = new Location();
+		address1.setStreet("Przemys³owa");
+		address1.setHouseNumber(12);
+		address1.setLocalNumber(0);
+		address1.setCity("Katowice");
+		address1.setZipCode("41-000");
+		
+		location1.setInstitutionName("Business Unit No.1");
+		address1.setLocaton(location1);
+		location1.setAddress(address1);
+		
+		Address address2 = new Address();
+		Location location2 = new Location();
+		address2.setStreet("Industrialna");
+		address2.setHouseNumber(3);
+		address2.setLocalNumber(12);
+		address2.setCity("Gliwice");
+		address2.setZipCode("41-100");
+		
+		location2.setInstitutionName("Business Unit No.2");
+		address2.setLocaton(location2);
+		location2.setAddress(address2);
+		
+		locationRepository.save(location1);
+		locationRepository.save(location2);
+		
 
 		Employee employee1 = new Employee();
 		User user1 = new User();
-
 		employee1.setFirstName("Tadeusz");
 		employee1.setLastName("Nowak");
 		employee1.setEmployeePosition(EmployeePositon.NDT_MANAGER);
 		employee1.setDocumentsList(documentsList1);
 		employee1.setUser(user1);
+		employee1.setLocation(location1);
 		user1.setEmail("tadeusz.nowak@frm.pl");
-		user1.setPassword("qwerty");
+		String decryptedPassword=DigestUtils.sha256Hex("qwerty");
+		user1.setPassword(decryptedPassword);
 		user1.setRole(UserRole.ADMIN);
 		user1.setEmployee(employee1);
 		employee1.setUser(user1);
@@ -73,8 +106,9 @@ public class ExampleDataBase {
 		employee2.setEmployeePosition(EmployeePositon.NDT_INSPECTOR);
 		employee2.setDocumentsList(documentsList2);
 		employee2.setUser(user2);
+		employee2.setLocation(location2);
 		user2.setEmail("bonifacy.bomba@frm.pl");
-		user2.setPassword("qwerty");
+		user2.setPassword(decryptedPassword);
 		user2.setRole(UserRole.USER);
 		user2.setEmployee(employee2);
 		employee2.setUser(user2);
@@ -86,8 +120,9 @@ public class ExampleDataBase {
 		employee3.setEmployeePosition(EmployeePositon.NDT_INSPECTOR);
 		employee3.setDocumentsList(documentsList3);
 		employee3.setUser(user3);
+		employee3.setLocation(location1);
 		user3.setEmail("teodor.wiercipieta@frm.pl");
-		user3.setPassword("qwerty");
+		user3.setPassword(decryptedPassword);
 		user3.setRole(UserRole.USER);
 		user3.setEmployee(employee3);
 		employee3.setUser(user3);
@@ -99,8 +134,9 @@ public class ExampleDataBase {
 		employee4.setEmployeePosition(EmployeePositon.NDT_INSPECTOR);
 		employee4.setDocumentsList(documentsList4);
 		employee4.setUser(user4);
+		employee4.setLocation(location2);
 		user4.setEmail("janusz.polak@frm.pl");
-		user4.setPassword("qwerty");
+		user4.setPassword(decryptedPassword);
 		user4.setRole(UserRole.USER);
 		user4.setEmployee(employee4);
 		employee4.setUser(user4);
@@ -112,8 +148,9 @@ public class ExampleDataBase {
 		employee5.setEmployeePosition(EmployeePositon.NDT_INSPECTOR);
 		employee5.setDocumentsList(documentsList5);
 		employee5.setUser(user5);
+		employee5.setLocation(location1);
 		user5.setEmail("panracy.maslak@frm.pl");
-		user5.setPassword("qwerty");
+		user5.setPassword(decryptedPassword);
 		user5.setRole(UserRole.USER);
 		user5.setEmployee(employee5);
 		employee5.setUser(user5);
@@ -343,37 +380,23 @@ public class ExampleDataBase {
 		medicalExamination5.setRequirementsFullFilled("Working at height - positive");
 		medicalExamination5.setFileName("eeeee");
 		
-		Address address1 = new Address();
-		Location location1 = new Location();
-		address1.setStreet("Przemys³owa");
-		address1.setHouseNumber(12);
-		address1.setLocalNumber(0);
-		address1.setCity("Katowice");
-		address1.setZipCode("41-000");
-		
-		location1.setInstitutionName("Business Unit No.1");
-		address1.setLocaton(location1);
-		location1.setAddress(address1);
-		
-		Address address2 = new Address();
-		Location location2 = new Location();
-		address2.setStreet("Industrialna");
-		address2.setHouseNumber(3);
-		address2.setLocalNumber(12);
-		address2.setCity("Gliwice");
-		address2.setZipCode("41-100");
-		
-		location2.setInstitutionName("Business Unit No.2");
-		address2.setLocaton(location2);
-		location2.setAddress(address2);
+	
 		
 		
+	
 		
+	
 		userRepository.save(user1);
 		userRepository.save(user2);
 		userRepository.save(user3);
 		userRepository.save(user4);
 		userRepository.save(user5);
+		
+		
+		
+		
+		
+		
 
 		ndtCertificateRepository.save(ndtCert1);
 		ndtCertificateRepository.save(ndtCert2);
@@ -405,8 +428,7 @@ public class ExampleDataBase {
 		medicalExaminationRepository.save(medicalExamination5);
 		
 		
-		locationRepository.save(location1);
-		locationRepository.save(location2);
+	
 		
 	}
 }
