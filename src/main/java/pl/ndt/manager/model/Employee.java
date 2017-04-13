@@ -80,8 +80,8 @@ public class Employee {
 		return documentsList;
 	}
 
-	public void setDocumentsList(List<PersonalDocument> documentsList) {
-		this.documentsList = documentsList;
+	public void setDocumentsList(List<PersonalDocument> documentList) {
+		this.documentsList = documentList;
 	}
 
 	public User getUser() {

@@ -12,6 +12,7 @@ import pl.ndt.manager.dto.EmployeeDTO;
 import pl.ndt.manager.model.Document;
 import pl.ndt.manager.model.Employee;
 import pl.ndt.manager.model.Location;
+import pl.ndt.manager.model.PersonalDocument;
 import pl.ndt.manager.model.User;
 import pl.ndt.manager.repository.EmployeeRepository;
 import pl.ndt.manager.repository.LocationRepository;
@@ -65,7 +66,8 @@ public class EmployeeService {
 
 		Employee employee = new Employee();
 		User user = new User();
-		List<Document> documentList = new ArrayList<>();
+		
+		List<PersonalDocument> documentList = new ArrayList<>();
 
 		String institutionName = employeeDTO.getLocationName();
 		Location location = locationRepository.getByInstitutionName(institutionName);
@@ -78,15 +80,14 @@ public class EmployeeService {
 		employee.setFirstName(employeeDTO.getFirstName());
 		employee.setLastName(employeeDTO.getLastName());
 		employee.setEmployeePosition(employeeDTO.getEmployeePositon());
-	//	employee.setDocumentsList(documentList);
+		employee.setDocumentsList(documentList);
 		employee.setUser(user);
 		employee.setLocation(location);
-
+		
 		user.setEmail(employeeDTO.getEmail());
 		user.setRole(employeeDTO.getRole());
 		user.setPassword(decryptedPassword);
-		user.setEmployee(employee);
-
+	
 		userRepository.save(user);
 
 		Mail mail = new Mail();
