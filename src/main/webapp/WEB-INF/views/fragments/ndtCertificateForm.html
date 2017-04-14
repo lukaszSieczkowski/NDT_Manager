@@ -10,12 +10,12 @@
 			<div class="date form-group col-md-6 ">
 				<label for="issueDate">Issue Date</label>
 				<input type="text" class="form-control" id="issueDate" th:field="*{issueDate}" placeholder="dd-mm-yyyy">
-				<p class="text-center alert" th:if="${#fields.hasErrors('issueDate')}" th:errors="*{issueDate}">First name errors</p>	
+				<p class="text-center alert" th:if="${#fields.hasErrors('issueDate')}" th:errors="*{issueDate}"></p>	
 			</div>
 			<div class="date form-group col-md-6">
 				<label for="expirationDate">Expiration Date</label>
 				<input type="text" class="form-control" id="expirationDate" th:field="*{expirationDate}" placeholder="dd-mm-yyyy">
-				<p class="text-center alert" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}">First name errors</p>	
+				<p class="text-center alert" th:if="${#fields.hasErrors('expirationDate')}" th:errors="*{expirationDate}"></p>	
 			</div>
 		</div>
 		<div class="col-md-12">

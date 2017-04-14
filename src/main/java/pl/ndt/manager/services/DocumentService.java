@@ -30,6 +30,8 @@ public class DocumentService implements FileDirectory {
 	@Autowired
 	private JaegerTestRepository jaegerTestRepository;
 	@Autowired
+	private TechnicalDocumentRepository technicalDocumentRepository;
+	@Autowired
 	private UserRepository userRepository;
 
 	private DateConverter dateConverter;
@@ -82,7 +84,8 @@ public class DocumentService implements FileDirectory {
 			vcaCertDto.setIssueDate(dateConverter.createDateToString(vcaCert.getIssueDate()));
 			vcaCertDto.setExpirationDate(dateConverter.createDateToString(vcaCert.getExpirationDate()));
 			vcaCertDto.setIssuedBy(vcaCert.getIssuedBy());
-
+			String fileDirectory = UPLOAD_FOLDER + vcaCert.getFileName() + ".pdf";
+			vcaCertDto.setFileDirectory(fileDirectory);
 			vcaCertDto.setOwnersNameAndSurname(
 					vcaCert.getEmployee().getFirstName() + " " + vcaCert.getEmployee().getLastName());
 			vcaCertDto.setDocumentNumber(vcaCert.getDocumentNumber());
@@ -109,7 +112,8 @@ public class DocumentService implements FileDirectory {
 			medCertDto.setIssueDate(dateConverter.createDateToString(medCert.getIssueDate()));
 			medCertDto.setExpirationDate(dateConverter.createDateToString(medCert.getExpirationDate()));
 			medCertDto.setIssuedBy(medCert.getIssuedBy());
-
+			String fileDirectory = UPLOAD_FOLDER + medCert.getFileName() + ".pdf";
+			medCertDto.setFileDirectory(fileDirectory);
 			medCertDto.setOwnersNameAndSurname(
 					medCert.getEmployee().getFirstName() + " " + medCert.getEmployee().getLastName());
 
@@ -138,6 +142,8 @@ public class DocumentService implements FileDirectory {
 			jaegerTestDto.setExpirationDate(dateConverter.createDateToString(jaegerTest.getExpirationDate()));
 			jaegerTestDto.setIssueDate(dateConverter.createDateToString(jaegerTest.getIssueDate()));
 			jaegerTestDto.setIssuedBy(jaegerTest.getIssuedBy());
+			String fileDirectory = UPLOAD_FOLDER + jaegerTest.getFileName() + ".pdf";
+			jaegerTestDto.setFileDirectory(fileDirectory);
 			jaegerTestDto.setOwnersNameAndSurname(
 					jaegerTest.getEmployee().getFirstName() + " " + jaegerTest.getEmployee().getLastName());
 			jaegerTestDto.setCorerctlyEyeCondition(jaegerTest.getCorerctlyEyeCondition());
@@ -184,7 +190,7 @@ public class DocumentService implements FileDirectory {
 		FileTool fileTool = new FileTool();
 		fileTool.saveFile(ndtCertificateDTO.getFile(), fileName);
 
-		System.out.println("Service "+ndtCertificate);
+		System.out.println("Service " + ndtCertificate);
 		ndtCertificateRepository.save(ndtCertificate);
 
 	}
@@ -198,7 +204,7 @@ public class DocumentService implements FileDirectory {
 
 	public NdtCertificate conventDTOtoNDTCertificate(NdtCertificateDTO ndtCertificateDTO) {
 		dateConverter = new DateConverter();
-		
+
 		NdtCertificate ndtCertificate = new NdtCertificate();
 		ndtCertificate.setId(ndtCertificateDTO.getId());
 		ndtCertificate.setIssueDate(dateConverter.createDateFromString(ndtCertificateDTO.getIssueDate(), 0, 0));
@@ -295,7 +301,7 @@ public class DocumentService implements FileDirectory {
 
 		vcaCertificateRepository.save(vcaCertificate);
 	}
-	
+
 	/**
 	 * Updates VCA Certificate in database
 	 * 
@@ -359,7 +365,7 @@ public class DocumentService implements FileDirectory {
 		medicalExaminationRepository.save(medicalExamination);
 
 	}
-	
+
 	/**
 	 * Updates Medical Examination in database
 	 * 
@@ -437,6 +443,115 @@ public class DocumentService implements FileDirectory {
 		User user = userRepository.findByEmail(email);
 		Employee employee = user.getEmployee();
 		return employee;
+	}
+
+	/**
+	 * Creates list of all TEchnical Standards
+	 * 
+	 * @return Technical Standards list
+	 */
+	public List<DocumentDTO> getTechnicalDocuments() {
+		dateConverter = new DateConverter();
+
+		List<TechnicalDocument> technicalDocuments = (List<TechnicalDocument>) technicalDocumentRepository.findAll();
+		List<DocumentDTO> technicalDocumnetsDTO = new ArrayList<>();
+		for (TechnicalDocument technicalDocument : technicalDocuments) {
+			TechnicalDocumentDTO technicalDocumentDTO = new TechnicalDocumentDTO();
+			technicalDocumentDTO.setId(technicalDocument.getId());
+			technicalDocumentDTO.setIssueDate(dateConverter.createDateToString(technicalDocument.getIssueDate()));
+			technicalDocumentDTO.setIssuedBy(technicalDocument.getIssuedBy());
+			technicalDocumentDTO.setTypeOfTesting(technicalDocument.getTypeOfTesting());
+			technicalDocumentDTO.setNumber(technicalDocument.getNumber());
+			technicalDocumentDTO.setTitle(technicalDocument.getTitle());
+
+			String fileDirectory = UPLOAD_FOLDER + technicalDocument.getFileName() + ".pdf";
+			technicalDocumentDTO.setFileDirectory(fileDirectory);
+
+			technicalDocumnetsDTO.add(technicalDocumentDTO);
+		}
+		return technicalDocumnetsDTO;
+	}
+
+	/**
+	 * Saves Technical Document in system
+	 * 
+	 * @param technicalDocumentDTO
+	 */
+	public void saveTechnicalDocument(TechnicalDocumentDTO technicalDocumentDTO) {
+
+		TechnicalDocument technicalDocument = conventDTOtoTechnicalDocumentDTO(technicalDocumentDTO);
+
+		FileTool fileTool = new FileTool();
+		String fileName = fileTool.prepareFileName();
+		technicalDocument.setFileName(fileName);
+
+		fileTool.saveFile(technicalDocumentDTO.getFile(), fileName);
+
+		technicalDocumentRepository.save(technicalDocument);
+
+	}
+
+	/**
+	 * Updates Technical Standard in database
+	 * 
+	 * @param technicalDocumentDTO
+	 */
+
+	public void updateTechnicalDocument(TechnicalDocumentDTO technicalDocumentDTO) {
+
+		TechnicalDocument technicalDocument = conventDTOtoTechnicalDocumentDTO(technicalDocumentDTO);
+
+		Long id = technicalDocumentDTO.getId();
+		TechnicalDocument tempTechnicalDocument = technicalDocumentRepository.findOne(id);
+
+		String fileName = tempTechnicalDocument.getFileName();
+		technicalDocument.setFileName(fileName);
+
+		FileTool fileTool = new FileTool();
+		fileTool.saveFile(technicalDocumentDTO.getFile(), fileName);
+
+		technicalDocumentRepository.save(technicalDocument);
+
+	}
+
+	/**
+	 * Convents technicalDocumentDTO into technicalDocument(Entity)
+	 * 
+	 * @param technicalDocumentDTO
+	 * @return technicalDocument
+	 */
+
+	public TechnicalDocument conventDTOtoTechnicalDocumentDTO(TechnicalDocumentDTO technicalDocumentDTO) {
+		dateConverter = new DateConverter();
+
+		TechnicalDocument technicalDocument = new TechnicalDocument();
+		technicalDocument.setId(technicalDocumentDTO.getId());
+		technicalDocument.setNumber(technicalDocumentDTO.getNumber());
+		technicalDocument.setTitle(technicalDocumentDTO.getTitle());
+		technicalDocument.setIssuedBy(technicalDocumentDTO.getIssuedBy());
+		technicalDocument.setIssueDate(dateConverter.createDateFromString(technicalDocumentDTO.getIssueDate(), 0, 0));
+		technicalDocument.setTypeOfTesting(technicalDocumentDTO.getTypeOfTesting());
+
+		return technicalDocument;
+	}
+
+	/**
+	 * Deletes selected Technical Standard from database and file system
+	 * 
+	 * @param id
+	 *            Technical Document id;
+	 */
+
+	public void deleteTechnicalDocument(Long id) {
+
+		TechnicalDocument technicalDocument = technicalDocumentRepository.findOne(id);
+		String fileName = technicalDocument.getFileName();
+
+		FileTool fileTool = new FileTool();
+		fileTool.removeFile(fileName);
+
+		technicalDocumentRepository.delete(id);
+
 	}
 
 }

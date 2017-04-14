@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+</head>
+<body>
+	<div th:switch="${session.logedEmployee.role}">
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+			<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+		</p>
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+			<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+		</p>
+	</div>
+
+	<h3 class="text-center">Technical Standards</h3>
+		<p class="alert text-center" th:text="${alert}"></p>
+	<div class="col-md-10 col-md-offset-1">
+
+		<table class="table table-condensed">
+			<tr>
+				<th>No.</th>
+				<th>Number</th>
+				<th>Title</th>
+				<th>Issued By</th>
+				<th>Issue Date</th>
+				<th>NDT Method</th>
+				<th>Download</th>
+				<th>Edit</th>
+			</tr>
+			<tr th:each="document,id : ${documents.getDocuments()}">
+				<td th:text="${id.count}"></td>
+				<td th:text="${document.number}"></td>
+				<td th:text="${document.title}"></td>
+				<td th:text="${document.issuedBy}"></td>
+				<td th:text="${document.issueDate}"></td>
+				<td th:text="${document.typeOfTesting.getValue()}"></td>
+				<td><a id="document_dawnload"
+					th:href="@{${document.fileDirectory}}">Download</a></td>
+				<td><a th:href="@{/editNorm(id=${document.id})}">Update</a>
+				</td>
+		</table>
+		
+	</div>
+</body>
+</html>

@@ -16,18 +16,21 @@ import pl.ndt.manager.model.Location;
 import pl.ndt.manager.model.MedicalExamination;
 import pl.ndt.manager.model.NdtCertificate;
 import pl.ndt.manager.model.PersonalDocument;
+import pl.ndt.manager.model.TechnicalDocument;
 import pl.ndt.manager.model.User;
 import pl.ndt.manager.model.VcaCertificate;
 import pl.ndt.manager.model.enums.CorerctlyEyeCondition;
 import pl.ndt.manager.model.enums.EmployeePositon;
 import pl.ndt.manager.model.enums.NdtMethod;
 import pl.ndt.manager.model.enums.Sector;
+import pl.ndt.manager.model.enums.TypeOfTesting;
 import pl.ndt.manager.model.enums.UserRole;
 import pl.ndt.manager.repository.EmployeeRepository;
 import pl.ndt.manager.repository.JaegerTestRepository;
 import pl.ndt.manager.repository.LocationRepository;
 import pl.ndt.manager.repository.MedicalExaminationRepository;
 import pl.ndt.manager.repository.NdtCertificateRepository;
+import pl.ndt.manager.repository.TechnicalDocumentRepository;
 import pl.ndt.manager.repository.UserRepository;
 import pl.ndt.manager.repository.VcaCertificateRepository;
 
@@ -45,10 +48,11 @@ public class ExampleDataBase {
 	@Autowired
 	private VcaCertificateRepository vcaCertificateRepository;
 	@Autowired
-	private  MedicalExaminationRepository medicalExaminationRepository;
+	private MedicalExaminationRepository medicalExaminationRepository;
 	@Autowired
 	private LocationRepository locationRepository;
-
+	@Autowired
+	private TechnicalDocumentRepository technicalDocumentRepository;
 
 	public void prepareDataBase() {
 		List<PersonalDocument> documentsList1 = new ArrayList<>();
@@ -56,7 +60,7 @@ public class ExampleDataBase {
 		List<PersonalDocument> documentsList3 = new ArrayList<>();
 		List<PersonalDocument> documentsList4 = new ArrayList<>();
 		List<PersonalDocument> documentsList5 = new ArrayList<>();
-		
+
 		Address address1 = new Address();
 		Location location1 = new Location();
 		address1.setStreet("Przemys³owa");
@@ -64,11 +68,11 @@ public class ExampleDataBase {
 		address1.setLocalNumber(0);
 		address1.setCity("Katowice");
 		address1.setZipCode("41-000");
-		
+
 		location1.setInstitutionName("Business Unit No.1");
 		address1.setLocaton(location1);
 		location1.setAddress(address1);
-		
+
 		Address address2 = new Address();
 		Location location2 = new Location();
 		address2.setStreet("Industrialna");
@@ -76,14 +80,13 @@ public class ExampleDataBase {
 		address2.setLocalNumber(12);
 		address2.setCity("Gliwice");
 		address2.setZipCode("41-100");
-		
+
 		location2.setInstitutionName("Business Unit No.2");
 		address2.setLocaton(location2);
 		location2.setAddress(address2);
-		
+
 		locationRepository.save(location1);
 		locationRepository.save(location2);
-		
 
 		Employee employee1 = new Employee();
 		User user1 = new User();
@@ -94,7 +97,7 @@ public class ExampleDataBase {
 		employee1.setUser(user1);
 		employee1.setLocation(location1);
 		user1.setEmail("tadeusz.nowak@frm.pl");
-		String decryptedPassword=DigestUtils.sha256Hex("qwerty");
+		String decryptedPassword = DigestUtils.sha256Hex("qwerty");
 		user1.setPassword(decryptedPassword);
 		user1.setRole(UserRole.ADMIN);
 		user1.setEmployee(employee1);
@@ -255,7 +258,7 @@ public class ExampleDataBase {
 		ndtCert10.setDocumentNumber("Doc-10");
 		ndtCert10.setSector(Sector.METAL_MANUFACTURING);
 		ndtCert10.setNdtMethod(NdtMethod.TOFD_2);
-		
+
 		JaegerTest jaegerTest1 = new JaegerTest();
 		jaegerTest1.setIssueDate(LocalDateTime.of(2016, 3, 3, 0, 0));
 		jaegerTest1.setExpirationDate(LocalDateTime.of(2017, 3, 3, 0, 0));
@@ -271,7 +274,7 @@ public class ExampleDataBase {
 		jaegerTest2.setIssuedBy("Doctor");
 		jaegerTest2.setFileName("bbb");
 		jaegerTest2.setCorerctlyEyeCondition(CorerctlyEyeCondition.POSIVE);
-	
+
 		JaegerTest jaegerTest3 = new JaegerTest();
 		jaegerTest3.setIssueDate(LocalDateTime.of(2016, 4, 3, 0, 0));
 		jaegerTest3.setExpirationDate(LocalDateTime.of(2017, 4, 3, 0, 0));
@@ -279,7 +282,7 @@ public class ExampleDataBase {
 		jaegerTest3.setIssuedBy("Doctor");
 		jaegerTest3.setFileName("ccc");
 		jaegerTest3.setCorerctlyEyeCondition(CorerctlyEyeCondition.POSIVE);
-		
+
 		JaegerTest jaegerTest4 = new JaegerTest();
 		jaegerTest4.setIssueDate(LocalDateTime.of(2016, 8, 3, 0, 0));
 		jaegerTest4.setExpirationDate(LocalDateTime.of(2017, 8, 3, 0, 0));
@@ -287,7 +290,7 @@ public class ExampleDataBase {
 		jaegerTest4.setIssuedBy("Doctor");
 		jaegerTest4.setFileName("ddd");
 		jaegerTest4.setCorerctlyEyeCondition(CorerctlyEyeCondition.POSIVE);
-	
+
 		JaegerTest jaegerTest5 = new JaegerTest();
 		jaegerTest5.setIssueDate(LocalDateTime.of(2016, 10, 3, 0, 0));
 		jaegerTest5.setExpirationDate(LocalDateTime.of(2017, 10, 3, 0, 0));
@@ -295,48 +298,48 @@ public class ExampleDataBase {
 		jaegerTest5.setIssuedBy("Doctor");
 		jaegerTest5.setFileName("eee");
 		jaegerTest5.setCorerctlyEyeCondition(CorerctlyEyeCondition.POSIVE);
-	
-		VcaCertificate vcaCertificate1= new VcaCertificate();
+
+		VcaCertificate vcaCertificate1 = new VcaCertificate();
 		vcaCertificate1.setIssueDate(LocalDateTime.of(2010, 10, 3, 0, 0));
 		vcaCertificate1.setExpirationDate(LocalDateTime.of(2010, 10, 3, 0, 0).plusYears(10));
 		vcaCertificate1.setIssuedBy("Het");
 		vcaCertificate1.setEmployee(employee1);
 		vcaCertificate1.setDocumentNumber("Doc-1");
 		vcaCertificate1.setFileName("aaaa");
-		
-		VcaCertificate vcaCertificate2= new VcaCertificate();
+
+		VcaCertificate vcaCertificate2 = new VcaCertificate();
 		vcaCertificate2.setIssueDate(LocalDateTime.of(2005, 10, 3, 0, 0));
 		vcaCertificate2.setExpirationDate(LocalDateTime.of(2005, 10, 3, 0, 0).plusYears(10));
 		vcaCertificate2.setIssuedBy("Het");
 		vcaCertificate2.setEmployee(employee2);
 		vcaCertificate2.setDocumentNumber("Doc-2");
 		vcaCertificate2.setFileName("bbbb");
-	
-		VcaCertificate vcaCertificate3= new VcaCertificate();
+
+		VcaCertificate vcaCertificate3 = new VcaCertificate();
 		vcaCertificate3.setIssueDate(LocalDateTime.of(2007, 10, 3, 0, 0));
 		vcaCertificate3.setExpirationDate(LocalDateTime.of(2007, 10, 3, 0, 0).plusYears(10));
 		vcaCertificate3.setIssuedBy("Het");
 		vcaCertificate3.setEmployee(employee3);
 		vcaCertificate3.setDocumentNumber("Doc-3");
 		vcaCertificate3.setFileName("cccc");
-		
-		VcaCertificate vcaCertificate4= new VcaCertificate();
+
+		VcaCertificate vcaCertificate4 = new VcaCertificate();
 		vcaCertificate4.setIssueDate(LocalDateTime.of(2010, 10, 3, 0, 0));
 		vcaCertificate4.setExpirationDate(LocalDateTime.of(2010, 10, 3, 0, 0).plusYears(10));
 		vcaCertificate4.setIssuedBy("Het");
 		vcaCertificate4.setEmployee(employee4);
 		vcaCertificate4.setDocumentNumber("Doc-4");
 		vcaCertificate4.setFileName("dddd");
-		
-		VcaCertificate vcaCertificate5= new VcaCertificate();
+
+		VcaCertificate vcaCertificate5 = new VcaCertificate();
 		vcaCertificate5.setIssueDate(LocalDateTime.of(2008, 10, 3, 0, 0));
 		vcaCertificate5.setExpirationDate(LocalDateTime.of(2008, 10, 3, 0, 0).plusYears(10));
 		vcaCertificate5.setIssuedBy("Het");
 		vcaCertificate5.setEmployee(employee5);
 		vcaCertificate5.setDocumentNumber("Doc-5");
 		vcaCertificate5.setFileName("eeee");
-		
-		MedicalExamination medicalExamination1 =new MedicalExamination();
+
+		MedicalExamination medicalExamination1 = new MedicalExamination();
 		medicalExamination1.setIssueDate(LocalDateTime.of(2015, 10, 3, 0, 0));
 		medicalExamination1.setExpirationDate(LocalDateTime.of(2015, 10, 3, 0, 0).plusYears(2));
 		medicalExamination1.setIssuedBy("Med");
@@ -344,8 +347,8 @@ public class ExampleDataBase {
 		medicalExamination1.setRequirementsDescription("Working at height");
 		medicalExamination1.setRequirementsFullFilled("Working at height - positive");
 		medicalExamination1.setFileName("aaaaa");
-		
-		MedicalExamination medicalExamination2 =new MedicalExamination();
+
+		MedicalExamination medicalExamination2 = new MedicalExamination();
 		medicalExamination2.setIssueDate(LocalDateTime.of(2014, 3, 3, 0, 0));
 		medicalExamination2.setExpirationDate(LocalDateTime.of(2014, 3, 3, 0, 0).plusYears(3));
 		medicalExamination2.setIssuedBy("Med");
@@ -353,8 +356,8 @@ public class ExampleDataBase {
 		medicalExamination2.setRequirementsDescription("Working at height");
 		medicalExamination2.setRequirementsFullFilled("Working at height - positive");
 		medicalExamination2.setFileName("bbbbb");
-		
-		MedicalExamination medicalExamination3 =new MedicalExamination();
+
+		MedicalExamination medicalExamination3 = new MedicalExamination();
 		medicalExamination3.setIssueDate(LocalDateTime.of(2015, 3, 3, 0, 0));
 		medicalExamination3.setExpirationDate(LocalDateTime.of(2015, 3, 3, 0, 0).plusYears(3));
 		medicalExamination3.setIssuedBy("Med");
@@ -362,8 +365,8 @@ public class ExampleDataBase {
 		medicalExamination3.setRequirementsDescription("Working at height");
 		medicalExamination3.setRequirementsFullFilled("Working at height - positive");
 		medicalExamination3.setFileName("ccccc");
-		
-		MedicalExamination medicalExamination4 =new MedicalExamination();
+
+		MedicalExamination medicalExamination4 = new MedicalExamination();
 		medicalExamination4.setIssueDate(LocalDateTime.of(2017, 3, 3, 0, 0));
 		medicalExamination4.setExpirationDate(LocalDateTime.of(2017, 3, 3, 0, 0).plusYears(1));
 		medicalExamination4.setIssuedBy("Med");
@@ -371,8 +374,8 @@ public class ExampleDataBase {
 		medicalExamination4.setRequirementsDescription("Working at height");
 		medicalExamination4.setRequirementsFullFilled("Working at height - positive");
 		medicalExamination4.setFileName("ddddd");
-		
-		MedicalExamination medicalExamination5 =new MedicalExamination();
+
+		MedicalExamination medicalExamination5 = new MedicalExamination();
 		medicalExamination5.setIssueDate(LocalDateTime.of(2016, 3, 3, 0, 0));
 		medicalExamination5.setExpirationDate(LocalDateTime.of(2016, 3, 3, 0, 0).plusYears(2));
 		medicalExamination5.setIssuedBy("Med");
@@ -380,24 +383,51 @@ public class ExampleDataBase {
 		medicalExamination5.setRequirementsDescription("Working at height");
 		medicalExamination5.setRequirementsFullFilled("Working at height - positive");
 		medicalExamination5.setFileName("eeeee");
-		
-	
-		
-		
-	
-		
-	
+
+		TechnicalDocument technicalDocument1 = new TechnicalDocument();
+		technicalDocument1.setNumber("EN-10160:1999");
+		technicalDocument1.setTitle(
+				"Ultrasonic testing of steel flat product of thickness equal or greater than 6 mm (reflection method)");
+		technicalDocument1.setIssuedBy("PKN");
+		technicalDocument1.setIssueDate(LocalDateTime.of(1999, 7, 1, 0, 0));
+		technicalDocument1.setTypeOfTesting(TypeOfTesting.UT);
+
+		TechnicalDocument technicalDocument2 = new TechnicalDocument();
+		technicalDocument2.setNumber("PN-EN ISO 11666:2011");
+		technicalDocument2.setTitle("Non-destructive testing of welds - Ultrasonic testing - Acceptance levels");
+		technicalDocument2.setIssuedBy("PKN");
+		technicalDocument2.setIssueDate(LocalDateTime.of(2011, 3, 1, 0, 0));
+		technicalDocument2.setTypeOfTesting(TypeOfTesting.UT);
+
+		TechnicalDocument technicalDocument3 = new TechnicalDocument();
+		technicalDocument3.setNumber("PN-EN-17640:2011");
+		technicalDocument3.setTitle(
+				"Non-destructive testing of welds - Ultrasonic testing - Acceptance levels - Techniques, testing levels and assessment");
+		technicalDocument3.setIssuedBy("PKN");
+		technicalDocument3.setIssueDate(LocalDateTime.of(2011, 3, 1, 0, 0));
+		technicalDocument3.setTypeOfTesting(TypeOfTesting.UT);
+
+		TechnicalDocument technicalDocument4 = new TechnicalDocument();
+		technicalDocument4.setNumber("PN-EN ISO 23278:2010");
+		technicalDocument4
+				.setTitle("Non-destructive testing of welds - Magnetic particle testing of welds - Acceptance levels");
+		technicalDocument4.setIssuedBy("PKN");
+		technicalDocument4.setIssueDate(LocalDateTime.of(2010, 2, 1, 0, 0));
+		technicalDocument4.setTypeOfTesting(TypeOfTesting.MT);
+
+		TechnicalDocument technicalDocument5 = new TechnicalDocument();
+		technicalDocument5.setNumber("PN-EN ISO 17636-1:2013");
+		technicalDocument5.setTitle(
+				"Non-destructive testing of welds - Radiographic testing - Part 1 - X-and gamma-ray techniques with film");
+		technicalDocument5.setIssuedBy("PKN");
+		technicalDocument5.setIssueDate(LocalDateTime.of(2013, 1, 1, 0, 0));
+		technicalDocument5.setTypeOfTesting(TypeOfTesting.RT);
+
 		userRepository.save(user1);
 		userRepository.save(user2);
 		userRepository.save(user3);
 		userRepository.save(user4);
 		userRepository.save(user5);
-		
-		
-		
-		
-		
-		
 
 		ndtCertificateRepository.save(ndtCert1);
 		ndtCertificateRepository.save(ndtCert2);
@@ -409,27 +439,29 @@ public class ExampleDataBase {
 		ndtCertificateRepository.save(ndtCert8);
 		ndtCertificateRepository.save(ndtCert9);
 		ndtCertificateRepository.save(ndtCert10);
-		
+
 		jaegerTestRepository.save(jaegerTest1);
 		jaegerTestRepository.save(jaegerTest2);
 		jaegerTestRepository.save(jaegerTest3);
 		jaegerTestRepository.save(jaegerTest4);
 		jaegerTestRepository.save(jaegerTest5);
-		
+
 		vcaCertificateRepository.save(vcaCertificate1);
 		vcaCertificateRepository.save(vcaCertificate2);
 		vcaCertificateRepository.save(vcaCertificate3);
 		vcaCertificateRepository.save(vcaCertificate4);
 		vcaCertificateRepository.save(vcaCertificate5);
-		
+
 		medicalExaminationRepository.save(medicalExamination1);
 		medicalExaminationRepository.save(medicalExamination2);
 		medicalExaminationRepository.save(medicalExamination3);
 		medicalExaminationRepository.save(medicalExamination4);
 		medicalExaminationRepository.save(medicalExamination5);
-		
-		
-	
-		
+
+		technicalDocumentRepository.save(technicalDocument1);
+		technicalDocumentRepository.save(technicalDocument2);
+		technicalDocumentRepository.save(technicalDocument3);
+		technicalDocumentRepository.save(technicalDocument4);
+		technicalDocumentRepository.save(technicalDocument5);
 	}
 }

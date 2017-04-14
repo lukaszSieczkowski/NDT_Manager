@@ -23,6 +23,7 @@ import pl.ndt.manager.dto.JaegerTestDTO;
 import pl.ndt.manager.dto.MedicalExaminationDTO;
 import pl.ndt.manager.dto.NdtCertificateDTO;
 import pl.ndt.manager.dto.PersonalDocumentDTO;
+import pl.ndt.manager.dto.TechnicalDocumentDTO;
 import pl.ndt.manager.dto.VcaCertificateDTO;
 import pl.ndt.manager.model.enums.DocumentIsValid;
 import pl.ndt.manager.services.DocumentService;
@@ -574,14 +575,12 @@ public class DocumentControler {
 
 	@RequestMapping("/updateMedicalExamination")
 	public String updateMedicalExamination(@Valid @ModelAttribute MedicalExaminationDTO medicalExaminationDTO,
-			 BindingResult result,@RequestParam("id") Long id, Model model) {
-		
-		
-		System.out.println("Control"+medicalExaminationDTO);
+			BindingResult result, @RequestParam("id") Long id, Model model) {
+
 		if (!result.hasErrors()) {
 			String alert = null;
 			medicalExaminationDTO.setId(id);
-			
+
 			try {
 				documentService.updateMedicalExamination(medicalExaminationDTO);
 			} catch (Exception e) {
@@ -592,7 +591,157 @@ public class DocumentControler {
 			alert = "Medical Examination was updated successfully";
 			model.addAttribute("alert", alert);
 		}
-
 		return "personel/edit_docs/editMedicalExamination";
+	}
+
+	/**
+	 * Show list of all Technical Standards saved in system
+	 * 
+	 * @param model
+	 *            Holder for attributes
+	 * @return showNorms view
+	 */
+	@RequestMapping("/showNorms")
+	public String showAllNorms(Model model) {
+		List<DocumentDTO> documents = documentService.getTechnicalDocuments();
+
+		documentList.setDocuments(documents);
+		model.addAttribute("documents", documentList);
+		return "technical_docs/show_norm/showNorms";
+	}
+
+	/**
+	 * Shows form to save Technical Standard in system
+	 * 
+	 * @param model
+	 *            Holed for attributes
+	 * @return addNormview
+	 */
+	@RequestMapping("/addNorm")
+	public String addNorm(Model model) {
+		model.addAttribute("technicalDocumentDTO", new TechnicalDocumentDTO());
+		return "technical_docs/add_norm/addNorm";
+	}
+
+	/**
+	 * Saves new Technical Standard System
+	 * 
+	 * @param technicalDocumentDTO
+	 *            Transfer object with values transfered from input form into
+	 *            the database
+	 * @param model
+	 *            Holder for attributes
+	 * @return addNorm view
+	 */
+
+	@PostMapping("/saveNorm")
+	public String saveNorm(@Valid @ModelAttribute TechnicalDocumentDTO technicalDocumentDTO, BindingResult result,
+			Model model) {
+		String alert = null;
+		try {
+			documentService.saveTechnicalDocument(technicalDocumentDTO);
+		} catch (Exception e) {
+			alert = "Something went wrong. Standard wasn't saved successfully";
+			model.addAttribute("alert", alert);
+			return "technical_docs/add_norm/addNorm";
+		}
+		alert = "Standard was saved successfully";
+		model.addAttribute("alert", alert);
+		return "technical_docs/add_norm/addNorm";
+	}
+
+	/**
+	 * Shows form for editing Technical Standard
+	 * 
+	 * @param id
+	 *            Technical Standard id
+	 * @param model
+	 *            Holder for attributes
+	 * @return editNorm
+	 */
+	@RequestMapping("/editNorm")
+	public String editTechnicalDocumen(@RequestParam("id") Long id, Model model) {
+
+		List<DocumentDTO> documents = documentService.getTechnicalDocuments();
+		Optional<DocumentDTO> optionalTechnicalDocumentDTO = documents.stream().filter(a -> (a.getId() == id))
+				.findAny();
+		TechnicalDocumentDTO technicalDocumentDTO = (TechnicalDocumentDTO) optionalTechnicalDocumentDTO.get();
+
+		model.addAttribute("technicalDocumentDTO", technicalDocumentDTO);
+
+		return "technical_docs/edit_norm/editNorm";
+	}
+
+	/**
+	 * Updates Technical Standard
+	 * 
+	 * @param technicalDocumentDTO
+	 *            Transfer object with values transfered from input form into
+	 *            the database
+	 * @param result
+	 *            Holder for errors
+	 * @param model
+	 *            Holder for attributes
+	 * @return editNorm view
+	 */
+
+	@RequestMapping("/updateNorm")
+	public String updateTechnicalDocument(@Valid @ModelAttribute TechnicalDocumentDTO technicalDocumentDTO,
+			BindingResult result, @RequestParam("id") Long id, Model model) {
+
+		if (!result.hasErrors()) {
+			String alert = null;
+			technicalDocumentDTO.setId(id);
+
+			try {
+				documentService.updateTechnicalDocument(technicalDocumentDTO);
+			} catch (Exception e) {
+				alert = "Something went wrong. Standard wasn't updated successfully";
+				model.addAttribute("alert", alert);
+				return "technical_docs/edit_norm/editNorm";
+			}
+			alert = "Standard was updated successfully";
+			model.addAttribute("alert", alert);
+		}
+		return "technical_docs/edit_norm/editNorm";
+	}
+
+	/**
+	 * Shows list of all Technical Standards to select witch one will be deleted
+	 * 
+	 * @param model
+	 *            Holder for attributes
+	 * @return deleteNorm
+	 */
+	@RequestMapping("/removeNorm")
+	public String remove(Model model) {
+		List<DocumentDTO> documents = documentService.getTechnicalDocuments();
+
+		documentList.setDocuments(documents);
+		model.addAttribute("documents", documentList);
+		return "technical_docs/delete_norm/deleteNorm";
+	}
+
+	/**
+	 * Deletes selected Technical Document
+	 * 
+	 * @param id
+	 *            Technical Document id
+	 * @param model
+	 *            Holder for attributes
+	 * @return showNorms
+	 */
+	@RequestMapping("/deleteNorm")
+	public String editTDeleteNorm(@RequestParam("id") Long id, Model model) {
+		String alert = null;
+		documentService.deleteTechnicalDocument(id);
+		List<DocumentDTO> documents = documentService.getTechnicalDocuments();
+		documentList.setDocuments(documents);
+
+		alert = "Standard was deleted successfully";
+		model.addAttribute("alert", alert);
+		model.addAttribute("documents", documentList);
+
+		return "technical_docs/show_norm/showNorms";
 	}
 }

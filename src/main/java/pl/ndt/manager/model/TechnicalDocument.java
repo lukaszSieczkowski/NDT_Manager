@@ -10,29 +10,30 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import pl.ndt.manager.model.enums.NdtMethod;
+import pl.ndt.manager.model.enums.TypeOfTesting;
 @Entity
 @Table(name = "technical_document")
 @PrimaryKeyJoinColumn(name = "documnet_id")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class TechnicalDocument extends Document {
 
-	@Column(name="title")
+	@Column(name="title",length=200)
 	private String title;
-	@Column(name="number")
+	@Column(name="number",length=50)
 	private String number;
 	@Column(name="ndt_method")
-	private NdtMethod ndtMethod;
+	private TypeOfTesting typeOfTesting;
 
 	public TechnicalDocument() {
 		super();
 	}
 
 	public TechnicalDocument(long id, LocalDateTime issueDate, String issuedBy, String fileName, String title,
-			String number, NdtMethod ndtMethod) {
+			String number, TypeOfTesting typeOfTesting) {
 		super(id, issueDate, issuedBy, fileName);
 		this.number = number;
 		this.title = title;
-		this.ndtMethod = ndtMethod;
+		this.typeOfTesting = typeOfTesting;
 	}
 
 	public String getTitle() {
@@ -51,17 +52,17 @@ public class TechnicalDocument extends Document {
 		this.number = number;
 	}
 
-	public NdtMethod getNdtMethod() {
-		return ndtMethod;
+	public TypeOfTesting getTypeOfTesting() {
+		return typeOfTesting;
 	}
 
-	public void setNdtMethod(NdtMethod ndtMethod) {
-		this.ndtMethod = ndtMethod;
+	public void setTypeOfTesting(TypeOfTesting typeOfTesting) {
+		this.typeOfTesting = typeOfTesting;
 	}
 
 	@Override
 	public String toString() {
-		return "TechnicalDocument [title=" + title + ", number=" + number + ", ndtMethod=" + ndtMethod + ", id=" + id
+		return "TechnicalDocument [title=" + title + ", number=" + number + ", ndtMethod=" + typeOfTesting + ", id=" + id
 				+ ", issueDate=" + issueDate + ", issuedBy=" + issuedBy + ", fileName=" + fileName + "]";
 	}
 	

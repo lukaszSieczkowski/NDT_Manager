@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	th:fragment="technicalDocumentForm">
+<head>
+
+</head>
+
+<body>
+		<div class="col-md-12">
+			<div class="date form-group col-md-6 ">
+				<label for="number">Number</label> 
+				<input type="text" class="form-control" id="number" th:field="*{number}" placeholder="Standard number (PN-EN )">
+				<p class="text-center alert" th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></p>	
+			</div>
+			<div class="date form-group col-md-6">
+				<label for="issuedBy">Issued By</label>
+				<input type="text" class="form-control" id="issuedBy" th:field="*{issuedBy}" placeholder="Institution name">
+				<p class="text-center alert" th:if="${#fields.hasErrors('issuedBy')}" th:errors="*{issuedBy}"></p>
+			</div>
+		</div>
+		<div class="form-group col-md-12">
+			<div class="form-group col-md-12">
+				<label for="title">Title</label>
+				<textarea  class="form-control" id="title" th:field="*{title}" placeholder="Full document title"></textarea>
+				<p class="text-center alert" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+			</div>	
+		</div>	
+			
+		<div class="col-md-12">
+			<div class="date form-group col-md-6 ">
+				<label for="issueDate">Issue Date</label>
+				<input type="text" class="form-control" id="issueDate" th:field="*{issueDate}" placeholder="dd-mm-yyyy">
+				<p class="text-center alert" th:if="${#fields.hasErrors('issueDate')}" th:errors="*{issueDate}"></p>	
+			</div>
+			<div class="form-group col-md-6">
+				<label for="typeOfTesting">NDT Method</label>
+			 	<select class="form-control" th:field="*{typeOfTesting}">
+			 		<option value="">----  Select NDT Method  ----</option>
+					<option  th:each="ndtMethod: ${T(pl.ndt.manager.model.enums.TypeOfTesting).values()}"
+				 		th:value="${ndtMethod}" th:text="${ndtMethod.getValue()}"></option>
+				</select>
+				<p class="text-center alert" th:if="${#fields.hasErrors('typeOfTesting')}" th:errors="*{typeOfTesting}"></p>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group col-md-8">
+				<label for="file">File input</label> <input type="file"  th:field="*{file}" id="file">
+				<p class="text-center alert" th:if="${#fields.hasErrors('file')}" th:errors="*{file}"></p>
+				<p class="help-block">Select Standard to upload(20 MB max, pdf file)</p>
+			</div>
+		</div>
+		<p class="alert text-center" th:text="${alert}"></p>
+		<div class="form-group col-md-6">
+			<label ></label>
+		</div>
+			
+</body>
+</html>
