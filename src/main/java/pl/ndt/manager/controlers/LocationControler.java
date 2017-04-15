@@ -29,6 +29,7 @@ public class LocationControler {
 
 	@Autowired
 	private LocationsList locations;
+
 	/**
 	 * Shows list of all Business locations saved in system
 	 * 
@@ -44,23 +45,24 @@ public class LocationControler {
 		return "locations/show_location/showLocation";
 
 	}
+
 	/**
 	 * Shows form to save Business Location in system
 	 * 
 	 * @param model
 	 *            Holed for attributes
-	 *            
+	 * 
 	 * @return addLocation view
 	 */
-	
-	
+
 	@RequestMapping("/addLocation")
 	public String addLocation(Model model) {
 		model.addAttribute("locationDTO", new LocationDTO());
 		return "locations/add_location/addLocation";
 	}
+
 	/**
-	 * Saves new Business Location System
+	 * Saves new Business Location in System
 	 * 
 	 * @param locationDTO
 	 *            Transfer object with values transfered from input form into
@@ -96,7 +98,7 @@ public class LocationControler {
 	 *            Holder for attributes
 	 * @return editLocation view
 	 */
-	
+
 	@GetMapping("/editLocation")
 	public String editLocation(@RequestParam("id") Long id, Model model) {
 		List<LocationDTO> locations = locationService.getLocations();
@@ -106,14 +108,19 @@ public class LocationControler {
 		model.addAttribute("locationDTO", locationDTO);
 		return "locations/edit_location/editLocation";
 	}
-	
-	 /**
-	 * Updates Business Location  
-	 * @param locationDTO Transfer object with values transfered from input form into
+
+	/**
+	 * Updates Business Location
+	 * 
+	 * @param locationDTO
+	 *            Transfer object with values transfered from input form into
 	 *            the database
-	 * @param result Holder for errors
-	 * @param id  Business Location id
-	 * @param model Holder for attributes
+	 * @param result
+	 *            Holder for errors
+	 * @param id
+	 *            Business Location id
+	 * @param model
+	 *            Holder for attributes
 	 * @return editLocation view
 	 */
 

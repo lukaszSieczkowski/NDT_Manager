@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+
+</head>
+<body>
+	<div th:switch="${session.logedEmployee.role}">
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+			<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+		</p>
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+			<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+		</p>
+	</div>
+
+	<h3 class="text-center">Customers</h3>
+
+	<div class="col-md-4 col-md-offset-4">
+
+		<table class="table table-condensed">
+			<tr>
+				<th>No.</th>
+				<th>Name</th>
+				<th>Address</th>
+				<th>Edit</th>
+			</tr>
+			<tr th:each="customer,id : ${customers.getCustomers()}">
+				<td th:text="${id.count}"></td>
+				<td th:text="${customer.customerName}"></td>
+				<td th:if="${customer.localNumber != '0'}">	
+					<div th:text="${customer.street} + ' ' +${customer.houseNumber}+' / ' + ${customer.localNumber} " ></div>
+					<div th:text="${customer.city} + ' ' +${customer.zipCode}"></div>
+				</td>
+				<td th:if="${customer.localNumber == '0'}" >
+					<div th:text="${customer.street} + ' ' +${customer.houseNumber}"></div>
+					<div th:text="${customer.city} + ' ' +${customer.zipCode}"></div>
+				 </td>
+				 <td><a th:href="@{/editCustomer(id=${customer.id})}">Update</a>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

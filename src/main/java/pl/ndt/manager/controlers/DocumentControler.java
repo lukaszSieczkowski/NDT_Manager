@@ -25,6 +25,7 @@ import pl.ndt.manager.dto.NdtCertificateDTO;
 import pl.ndt.manager.dto.PersonalDocumentDTO;
 import pl.ndt.manager.dto.TechnicalDocumentDTO;
 import pl.ndt.manager.dto.VcaCertificateDTO;
+
 import pl.ndt.manager.model.enums.DocumentIsValid;
 import pl.ndt.manager.services.DocumentService;
 import pl.ndt.manager.services.EmployeeService;
@@ -606,6 +607,7 @@ public class DocumentControler {
 		List<DocumentDTO> documents = documentService.getTechnicalDocuments();
 
 		documentList.setDocuments(documents);
+		
 		model.addAttribute("documents", documentList);
 		return "technical_docs/show_norm/showNorms";
 	}

@@ -37,7 +37,8 @@
 				<td th:text="${document.typeOfTesting.getValue()}"></td>
 				<td><a id="document_dawnload"
 					th:href="@{${document.fileDirectory}}">Download</a></td>
-				<td><a th:href="@{/editNorm(id=${document.id})}">Update</a>
+				<td>
+				<a th:href="@{/editNorm(id=${document.id})}">Update</a>
 				</td>
 		</table>
 		

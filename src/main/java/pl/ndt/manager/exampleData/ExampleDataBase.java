@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.ndt.manager.model.Address;
+import pl.ndt.manager.model.Customer;
 import pl.ndt.manager.model.Document;
 import pl.ndt.manager.model.Employee;
 import pl.ndt.manager.model.JaegerTest;
@@ -25,6 +26,7 @@ import pl.ndt.manager.model.enums.NdtMethod;
 import pl.ndt.manager.model.enums.Sector;
 import pl.ndt.manager.model.enums.TypeOfTesting;
 import pl.ndt.manager.model.enums.UserRole;
+import pl.ndt.manager.repository.CustomerRepository;
 import pl.ndt.manager.repository.EmployeeRepository;
 import pl.ndt.manager.repository.JaegerTestRepository;
 import pl.ndt.manager.repository.LocationRepository;
@@ -53,6 +55,8 @@ public class ExampleDataBase {
 	private LocationRepository locationRepository;
 	@Autowired
 	private TechnicalDocumentRepository technicalDocumentRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	public void prepareDataBase() {
 		List<PersonalDocument> documentsList1 = new ArrayList<>();
@@ -87,6 +91,73 @@ public class ExampleDataBase {
 
 		locationRepository.save(location1);
 		locationRepository.save(location2);
+		
+		
+		Address address3 = new Address();
+		Customer customer1 = new Customer();
+		address3.setStreet("Budyniowa");
+		address3.setHouseNumber(20);
+		address3.setLocalNumber(0);
+		address3.setCity("Katowice");
+		address3.setZipCode("41-000");
+
+		customer1.setCustomerName("Company No.1");
+		address3.setCustomer(customer1);
+		customer1.setAddress(address3);
+
+		Address address4 = new Address();
+		Customer customer2 = new Customer();
+		address4.setStreet("Zakorkowana");
+		address4.setHouseNumber(22);
+		address4.setLocalNumber(8);
+		address4.setCity("Gliwice");
+		address4.setZipCode("43-200");
+
+		customer2.setCustomerName("Company No.2");
+		address4.setCustomer(customer2);
+		customer2.setAddress(address4);
+		
+		Address address5 = new Address();
+		Customer customer3 = new Customer();
+		address5.setStreet("Leœna");
+		address5.setHouseNumber(45);
+		address5.setLocalNumber(0);
+		address5.setCity("Myslowice");
+		address5.setZipCode("41-400");
+
+		customer3.setCustomerName("Company No.3");
+		address5.setCustomer(customer3);
+		customer3.setAddress(address5);
+
+		Address address6 = new Address();
+		Customer customer4 = new Customer();
+		address6.setStreet("Kopaniana");
+		address6.setHouseNumber(123);
+		address6.setLocalNumber(0);
+		address6.setCity("Zabrze");
+		address6.setZipCode("45-200");
+
+		customer4.setCustomerName("Company No.4");
+		address6.setCustomer(customer4);
+		customer4.setAddress(address6);
+		
+		Address address7 = new Address();
+		Customer customer5 = new Customer();
+		address7.setStreet("Brukowana");
+		address7.setHouseNumber(67);
+		address7.setLocalNumber(5);
+		address7.setCity("Sosnowiec");
+		address7.setZipCode("41-200");
+
+		customer5.setCustomerName("Company No.5");
+		address7.setCustomer(customer5);
+		customer5.setAddress(address7);
+	
+		customerRepository.save(customer1);
+		customerRepository.save(customer2);
+		customerRepository.save(customer3);
+		customerRepository.save(customer4);
+		customerRepository.save(customer5);
 
 		Employee employee1 = new Employee();
 		User user1 = new User();

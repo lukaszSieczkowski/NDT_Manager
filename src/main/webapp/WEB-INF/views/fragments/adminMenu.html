@@ -90,12 +90,16 @@
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">Technical Documents <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
-
 					<li><a th:href="@{/showNorms}"> Show Standards</a></li>
 					<li><a th:href="@{/addNorm}">Add Standard</a></li>
 					<li><a th:href="@{/removeNorm}">Delete Standard</a></li>
 				</ul></li>
-
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown">Customers <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a th:href="@{/showCustomers}"> Show Customers</a></li>
+					<li><a th:href="@{/addCustomer}">Add Customer</a></li>
+				</ul></li>
 		</ul>
 		<div class="navbar-right user">
 			<span th:text="${session.logedEmployee.firstName}"></span> <span

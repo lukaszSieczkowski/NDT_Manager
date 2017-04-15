@@ -24,6 +24,8 @@ public class Address {
 	private String zipCode;
 	@OneToOne(mappedBy="address")
 	private Location locaton;
+	@OneToOne(mappedBy="address")
+	private Customer customer;
 	
 	public Address() {
 		super();
@@ -97,6 +99,14 @@ public class Address {
 
 	public void setLocaton(Location locaton) {
 		this.locaton = locaton;
+	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	@Override
