@@ -2,7 +2,8 @@ package pl.ndt.manager.model.enums;
 
 public enum TypeOfTesting {
 	
-	VT("Visual Testig"),PT("Penetrant Testing"),UT("Ultrasonic Testing"),RT("Radiographic Testing"),MT("Magnetic Testing");
+	VT("Visual Testig"),PT("Penetrant Testing"),UT("Ultrasonic Testing"),RT("Radiographic Testing"),MT("Magnetic Testing"),
+	OTHERS("Other");
 	
 	private String value;
 	

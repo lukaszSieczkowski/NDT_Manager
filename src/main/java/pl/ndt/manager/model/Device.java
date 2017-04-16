@@ -29,22 +29,23 @@ public class Device {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
-	@Column(name = "name")
+	@Column(name = "name",length=30)
 	protected String name;
-	@Column(name = "producer")
+	@Column(name = "producer",length=30)
 	protected String producer;
 	@Column(name = "production_year")
 	protected Integer productionYear;
-	@Column(name = "model")
+	@Column(name = "model",length=30)
 	protected String model;
-	@Column(name = "serial_number")
+	@Column(name = "serial_number",length=30)
 	protected String serialNumber;
 	@Column(name = "start_of_use")
 	protected LocalDateTime startOfUse;
 	@ManyToOne
 	@JoinColumn(name = "device_id")
 	protected Location location;
-	
+	@Column(name = "type_of_testing")
+	protected TypeOfTesting typeOfTesting;
 
 	
 	public Device() {
@@ -54,7 +55,7 @@ public class Device {
 	
 
 	public Device(Long id, String name, String producer, Integer productionYear, String model, String serialNumber,
-			LocalDateTime startOfUse, Location location) {
+			LocalDateTime startOfUse, Location location,TypeOfTesting typeOfTesting) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -64,6 +65,7 @@ public class Device {
 		this.serialNumber = serialNumber;
 		this.startOfUse = startOfUse;
 		this.location = location;
+		this.typeOfTesting= typeOfTesting;
 	}
 
 
@@ -125,6 +127,19 @@ public class Device {
 	public void setStartOfUse(LocalDateTime startOfUse) {
 		this.startOfUse = startOfUse;
 	}
+
+	
+	public TypeOfTesting getTypeOfTesting() {
+		return typeOfTesting;
+	}
+
+
+
+	public void setTypeOfTesting(TypeOfTesting typeOfTesting) {
+		this.typeOfTesting = typeOfTesting;
+	}
+
+
 
 	public Location getLocation() {
 		return location;

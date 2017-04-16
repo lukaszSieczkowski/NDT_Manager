@@ -25,13 +25,7 @@ public class Probe extends Device {
 		super();
 	}
 
-	public Probe(Long id, String name, String producer, Integer productionYear, String model, String serialNumber,
-			LocalDateTime startOfUse, Location location,Double frequency,Integer angle,TypeOfTesting typeOfTesting) {
-		super(id, name, producer, productionYear, model, serialNumber, startOfUse, location);
-		this.frequency = frequency;
-		this.angle = angle;
-		this.typeOfTesting = typeOfTesting;
-	}
+	
 
 	public Double getFrequency() {
 		return frequency;
@@ -57,13 +51,7 @@ public class Probe extends Device {
 		this.typeOfTesting = typeOfTesting;
 	}
 
-	@Override
-	public String toString() {
-		return "Probe [frequency=" + frequency + ", angle=" + angle + ", typeOfTesting=" + typeOfTesting + ", id=" + id
-				+ ", name=" + name + ", producer=" + producer + ", productionYear=" + productionYear + ", model="
-				+ model + ", serialNumber=" + serialNumber + ", startOfUse=" + startOfUse + ", location=" + location
-				+ "]";
-	}
+	
 
 	
 

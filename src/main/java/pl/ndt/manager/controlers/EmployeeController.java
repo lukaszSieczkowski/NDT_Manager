@@ -90,14 +90,14 @@ public class EmployeeController {
 			Optional<EmployeeDTO> optionalEmployeeDTO = employessDTO.stream()
 					.filter(a -> (a.getEmail().equals(employeeDTO.getEmail()))).findAny();
 			if (!optionalEmployeeDTO.isPresent()) {
-			//	try {
+				try {
 					employeeService.saveEmployee(employeeDTO);
-			//	} catch (Exception e) {
+				} catch (Exception e) {
 				alert = "Something went wrong. Employee wasn't saved successfully";
-			//		model.addAttribute("alert", alert);
-			//		return "personel/add_employee/addEmployee";
-			//	}
-			//	alert = "Employee was saved successfully";
+					model.addAttribute("alert", alert);
+					return "personel/add_employee/addEmployee";
+				}
+				alert = "Employee was saved successfully";
 
 			} else {
 				alert = "Employee already exist. Change email address";

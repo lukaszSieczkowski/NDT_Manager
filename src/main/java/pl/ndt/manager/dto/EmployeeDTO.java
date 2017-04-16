@@ -18,7 +18,7 @@ public class EmployeeDTO {
 	@NotNull(message = "Select employee possition ")
 	private EmployeePositon employeePositon;
 	@NotBlank(message = "This field may not be empty")
-	@Size(max=80, message="To long sentence. Only 60 signs allowed")
+	@Size(max=60, message="To long sentence. Only 60 signs allowed")
 	private String locationName;
 	@NotBlank(message = "This field may not be empty")
 	@Size(max=30, message="To long sentence. Only 30 signs allowed")

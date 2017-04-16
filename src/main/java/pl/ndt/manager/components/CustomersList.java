@@ -9,11 +9,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import pl.ndt.manager.dto.CustomerDTO;
 
-
 @Component
 @Scope(scopeName = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CustomersList {
-	
+
 	private List<CustomerDTO> customers;
 
 	public CustomersList(List<CustomerDTO> customers) {

@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import pl.ndt.manager.model.Address;
 import pl.ndt.manager.model.Customer;
-import pl.ndt.manager.model.Document;
+
 import pl.ndt.manager.model.Employee;
+import pl.ndt.manager.model.Verification;
 import pl.ndt.manager.model.JaegerTest;
 import pl.ndt.manager.model.Location;
+import pl.ndt.manager.model.MeasuringEquipment;
 import pl.ndt.manager.model.MedicalExamination;
 import pl.ndt.manager.model.NdtCertificate;
 import pl.ndt.manager.model.PersonalDocument;
@@ -24,12 +26,15 @@ import pl.ndt.manager.model.enums.CorerctlyEyeCondition;
 import pl.ndt.manager.model.enums.EmployeePositon;
 import pl.ndt.manager.model.enums.NdtMethod;
 import pl.ndt.manager.model.enums.Sector;
+import pl.ndt.manager.model.enums.TypeOfControl;
 import pl.ndt.manager.model.enums.TypeOfTesting;
 import pl.ndt.manager.model.enums.UserRole;
 import pl.ndt.manager.repository.CustomerRepository;
+
 import pl.ndt.manager.repository.EmployeeRepository;
 import pl.ndt.manager.repository.JaegerTestRepository;
 import pl.ndt.manager.repository.LocationRepository;
+import pl.ndt.manager.repository.MeasuringEquipmentRepository;
 import pl.ndt.manager.repository.MedicalExaminationRepository;
 import pl.ndt.manager.repository.NdtCertificateRepository;
 import pl.ndt.manager.repository.TechnicalDocumentRepository;
@@ -57,6 +62,8 @@ public class ExampleDataBase {
 	private TechnicalDocumentRepository technicalDocumentRepository;
 	@Autowired
 	private CustomerRepository customerRepository;
+	@Autowired
+	private MeasuringEquipmentRepository measuringEquipmentRepository;
 
 	public void prepareDataBase() {
 		List<PersonalDocument> documentsList1 = new ArrayList<>();
@@ -91,8 +98,7 @@ public class ExampleDataBase {
 
 		locationRepository.save(location1);
 		locationRepository.save(location2);
-		
-		
+
 		Address address3 = new Address();
 		Customer customer1 = new Customer();
 		address3.setStreet("Budyniowa");
@@ -116,7 +122,7 @@ public class ExampleDataBase {
 		customer2.setCustomerName("Company No.2");
 		address4.setCustomer(customer2);
 		customer2.setAddress(address4);
-		
+
 		Address address5 = new Address();
 		Customer customer3 = new Customer();
 		address5.setStreet("Leœna");
@@ -140,7 +146,7 @@ public class ExampleDataBase {
 		customer4.setCustomerName("Company No.4");
 		address6.setCustomer(customer4);
 		customer4.setAddress(address6);
-		
+
 		Address address7 = new Address();
 		Customer customer5 = new Customer();
 		address7.setStreet("Brukowana");
@@ -152,7 +158,7 @@ public class ExampleDataBase {
 		customer5.setCustomerName("Company No.5");
 		address7.setCustomer(customer5);
 		customer5.setAddress(address7);
-	
+
 		customerRepository.save(customer1);
 		customerRepository.save(customer2);
 		customerRepository.save(customer3);
@@ -494,6 +500,144 @@ public class ExampleDataBase {
 		technicalDocument5.setIssueDate(LocalDateTime.of(2013, 1, 1, 0, 0));
 		technicalDocument5.setTypeOfTesting(TypeOfTesting.RT);
 
+		MeasuringEquipment measuringEquipment1 = new MeasuringEquipment();
+		measuringEquipment1.setLocation(location1);
+		measuringEquipment1.setModel("Epoch 600");
+		measuringEquipment1.setName("Flaw Detector");
+		measuringEquipment1.setProducer("Olympus");
+		measuringEquipment1.setProductionYear(2010);
+		measuringEquipment1.setSerialNumber("IOE-201");
+		measuringEquipment1.setStartOfUse(LocalDateTime.of(2010, 1, 1, 0, 0));
+		measuringEquipment1.setFerquencyOfVerification(1);
+		measuringEquipment1.setDeviceCode("shds-67");
+		measuringEquipment1.setTypeOfTesting(TypeOfTesting.UT);
+
+		List<Verification> verificationList1 = new ArrayList<>();
+
+		Verification equipmentVerification1 = new Verification();
+		equipmentVerification1.setCertificateNumber("Cert-1");
+		LocalDateTime dateOfVer1 = LocalDateTime.of(2010, 1, 1, 0, 0);
+		LocalDateTime dateOfValid1 = dateOfVer1.plusYears(measuringEquipment1.getFerquencyOfVerification());
+		equipmentVerification1.setDateOfVerification(dateOfVer1);
+		equipmentVerification1.setFinalDateOfVerification(dateOfValid1);
+		equipmentVerification1.setTypeOfControl(TypeOfControl.CHECK);
+		equipmentVerification1.setMeasuringEquipment(measuringEquipment1);
+		verificationList1.add(equipmentVerification1);
+
+		Verification equipmentVerification2 = new Verification();
+		equipmentVerification2.setCertificateNumber("Cert-2");
+		LocalDateTime dateOfVer2 = dateOfValid1;
+		LocalDateTime dateOfValid2 = dateOfVer2.plusYears(measuringEquipment1.getFerquencyOfVerification());
+		equipmentVerification2.setDateOfVerification(dateOfValid2);
+		equipmentVerification2.setFinalDateOfVerification(dateOfValid2);
+		equipmentVerification2.setTypeOfControl(TypeOfControl.CHECK);
+		equipmentVerification2.setMeasuringEquipment(measuringEquipment1);
+		verificationList1.add(equipmentVerification2);
+
+		Verification equipmentVerification3 = new Verification();
+		equipmentVerification3.setCertificateNumber("Cert-2");
+		LocalDateTime dateOfVer3 = dateOfValid2;
+		LocalDateTime dateOfValid3 = dateOfVer3.plusYears(measuringEquipment1.getFerquencyOfVerification());
+		equipmentVerification3.setDateOfVerification(dateOfValid3);
+		equipmentVerification3.setFinalDateOfVerification(dateOfValid3);
+		equipmentVerification3.setTypeOfControl(TypeOfControl.CHECK);
+		equipmentVerification3.setMeasuringEquipment(measuringEquipment1);
+		verificationList1.add(equipmentVerification3);
+
+		measuringEquipment1.setEquipmentVerificationList(verificationList1);
+
+		MeasuringEquipment measuringEquipment2 = new MeasuringEquipment();
+		measuringEquipment2.setLocation(location1);
+		measuringEquipment2.setModel("Flux2");
+		measuringEquipment2.setName("Yoke");
+		measuringEquipment2.setProducer("Carrl_Dutsch");
+		measuringEquipment2.setProductionYear(2012);
+		measuringEquipment2.setSerialNumber("201/321/SE");
+		measuringEquipment2.setStartOfUse(LocalDateTime.of(2013, 1, 1, 0, 0));
+		measuringEquipment2.setFerquencyOfVerification(1);
+		measuringEquipment2.setDeviceCode("shds-65");
+		measuringEquipment2.setTypeOfTesting(TypeOfTesting.MT);
+
+		List<Verification> verificationList2 = new ArrayList<>();
+
+		Verification equipmentVerification4 = new Verification();
+		equipmentVerification4.setCertificateNumber("Cert-1");
+		dateOfVer1 = LocalDateTime.of(2013, 1, 1, 0, 0);
+		dateOfValid1 = dateOfVer1.plusYears(measuringEquipment2.getFerquencyOfVerification());
+		equipmentVerification4.setDateOfVerification(dateOfVer1);
+		equipmentVerification4.setFinalDateOfVerification(dateOfValid1);
+		equipmentVerification4.setTypeOfControl(TypeOfControl.CHECK);
+		equipmentVerification4.setMeasuringEquipment(measuringEquipment2);
+		verificationList2.add(equipmentVerification4);
+
+		Verification equipmentVerification5 = new Verification();
+		equipmentVerification5.setCertificateNumber("Cert-2");
+		dateOfVer2 = dateOfValid1;
+		dateOfValid2 = dateOfVer2.plusYears(measuringEquipment1.getFerquencyOfVerification());
+		equipmentVerification5.setDateOfVerification(dateOfValid2);
+		equipmentVerification5.setFinalDateOfVerification(dateOfValid2);
+		equipmentVerification5.setTypeOfControl(TypeOfControl.CHECK);
+		equipmentVerification5.setMeasuringEquipment(measuringEquipment2);
+		verificationList2.add(equipmentVerification5);
+
+		Verification equipmentVerification6 = new Verification();
+		equipmentVerification6.setCertificateNumber("Cert-3");
+		dateOfVer3 = dateOfValid2;
+		dateOfValid3 = dateOfVer3.plusYears(measuringEquipment1.getFerquencyOfVerification());
+		equipmentVerification6.setDateOfVerification(dateOfValid3);
+		equipmentVerification6.setFinalDateOfVerification(dateOfValid3);
+		equipmentVerification6.setTypeOfControl(TypeOfControl.CHECK);
+		equipmentVerification6.setMeasuringEquipment(measuringEquipment2);
+		verificationList2.add(equipmentVerification5);
+
+		measuringEquipment2.setEquipmentVerificationList(verificationList2);
+
+		MeasuringEquipment measuringEquipment3 = new MeasuringEquipment();
+		measuringEquipment3.setLocation(location2);
+		measuringEquipment3.setModel("USM-25");
+		measuringEquipment3.setName("Flaw Detector");
+		measuringEquipment3.setProducer("Krautkramer");
+		measuringEquipment3.setProductionYear(2013);
+		measuringEquipment3.setSerialNumber("A-345-54");
+		measuringEquipment3.setStartOfUse(LocalDateTime.of(2014, 1, 1, 0, 0));
+		measuringEquipment3.setFerquencyOfVerification(1);
+		measuringEquipment3.setDeviceCode("shds-65");
+		measuringEquipment3.setTypeOfTesting(TypeOfTesting.UT);
+
+		List<Verification> verificationList3 = new ArrayList<>();
+
+		Verification equipmentVerification7 = new Verification();
+		equipmentVerification7.setCertificateNumber("Cert-1");
+		dateOfVer1 = LocalDateTime.of(2014, 1, 1, 0, 0);
+		dateOfValid1 = dateOfVer1.plusYears(measuringEquipment2.getFerquencyOfVerification());
+		equipmentVerification7.setDateOfVerification(dateOfVer1);
+		equipmentVerification7.setFinalDateOfVerification(dateOfValid1);
+		equipmentVerification7.setTypeOfControl(TypeOfControl.CHECK);
+		equipmentVerification7.setMeasuringEquipment(measuringEquipment2);
+		verificationList3.add(equipmentVerification7);
+
+		Verification equipmentVerification8 = new Verification();
+		equipmentVerification8.setCertificateNumber("Cert-2");
+		dateOfVer2 = dateOfValid1;
+		dateOfValid2 = dateOfVer2.plusYears(measuringEquipment1.getFerquencyOfVerification());
+		equipmentVerification8.setDateOfVerification(dateOfValid2);
+		equipmentVerification8.setFinalDateOfVerification(dateOfValid2);
+		equipmentVerification8.setTypeOfControl(TypeOfControl.CHECK);
+		equipmentVerification8.setMeasuringEquipment(measuringEquipment2);
+		verificationList3.add(equipmentVerification8);
+
+		Verification equipmentVerification9 = new Verification();
+		equipmentVerification9.setCertificateNumber("Cert-3");
+		dateOfVer3 = dateOfValid2;
+		dateOfValid3 = dateOfVer3.plusYears(measuringEquipment1.getFerquencyOfVerification());
+		equipmentVerification9.setDateOfVerification(dateOfValid3);
+		equipmentVerification9.setFinalDateOfVerification(dateOfValid3);
+		equipmentVerification9.setTypeOfControl(TypeOfControl.CHECK);
+		equipmentVerification9.setMeasuringEquipment(measuringEquipment2);
+		verificationList3.add(equipmentVerification9);
+
+		measuringEquipment3.setEquipmentVerificationList(verificationList3);
+
 		userRepository.save(user1);
 		userRepository.save(user2);
 		userRepository.save(user3);
@@ -534,5 +678,10 @@ public class ExampleDataBase {
 		technicalDocumentRepository.save(technicalDocument3);
 		technicalDocumentRepository.save(technicalDocument4);
 		technicalDocumentRepository.save(technicalDocument5);
+
+		measuringEquipmentRepository.save(measuringEquipment1);
+		measuringEquipmentRepository.save(measuringEquipment2);
+		measuringEquipmentRepository.save(measuringEquipment3);
+
 	}
 }

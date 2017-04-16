@@ -27,8 +27,8 @@
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">Personel <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
-					<li><a href="showEmployees">Show Employees</a></li>
-					<li><a href="addEmployee">Add Employee</a></li>
+					<li><a th:href="@{/showEmployees}">Show Employees</a></li>
+					<li><a th:href="@{/addEmployee}">Add Employee</a></li>
 					<li class="divider"></li>
 					<li class="dropdown-submenu"><a class="test" tabindex="-1"
 						href="#">Show Employees Documents <span class="caret"></span></a>
@@ -56,31 +56,21 @@
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">Equipment <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
-					<li><a href="showMeasuringDevices">Show Equipment</a></li>
-					<li class="divider"></li>
 					<li class="dropdown-submenu"><a class="test" tabindex="-1"
-						href="#">Show Employees Documents <span class="caret"></span></a>
+						href="#">Show Equipment <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a th:href="@{/showValidNdtCertificates}"> NDT
-									Certificates</a></li>
-							<li><a th:href="@{/showValidVcaCertificates}"> VCA
-									Certificates</a></li>
-							<li><a th:href="@{/showValidMedicalExaminations}">
-									Medical Examinations</a></li>
-							<li><a th:href="@{/showValidJaegerTests}"> Jaeger Tests</a></li>
+							<li><a th:href="@{/showMeasuringDevices}">Devices </a></li>
+							<li><a th:href="@{/showProbes}"> Probes</a></li>
 						</ul></li>
 					<li class="dropdown-submenu"><a class="test" tabindex="-1"
-						href="#">Add Employee Document <span class="caret"></span></a>
+						href="#">Add Equipment <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a th:href="@{/adddNdtCertificate}"> Add NDT
-									Certificate</a></li>
-							<li><a th:href="@{/addVcaCertificate}"> Add VCA
-									Certificate</a></li>
-							<li><a th:href="@{/addMedicalExamination}"> Add Medical
-									Examination</a></li>
-							<li><a th:href="@{/addJaegerTest}"> Add Jaeger Test</a></li>
+							<li><a th:href="@{/adddMeasuringDevice}"> Add Device</a></li>
+							<li><a th:href="@{/addProbe}"> Add Probe</a></li>
 						</ul></li>
 				</ul></li>
+					
+					
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">Locations <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">

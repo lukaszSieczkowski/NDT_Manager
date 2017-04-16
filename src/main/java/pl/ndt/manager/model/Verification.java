@@ -15,7 +15,7 @@ import pl.ndt.manager.model.enums.TypeOfControl;
 
 @Entity
 @Table(name = "equimnet_verification")
-public class EquipmentVerification {
+public class Verification {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -25,13 +25,15 @@ public class EquipmentVerification {
 	private LocalDateTime finalDateOfVerification;
 	@Column(name = "type_of_control")
 	private TypeOfControl typeOfControl;
-	@Column(name = "certificate_number")
+	@Column(name = "certificate_number",length=30)
 	private String certificateNumber;
+	@Column(name="done_by",length=30)
+	private String doneBy;
 	@ManyToOne
 	@JoinColumn(name = "equipment_id")
-	private Device device;
+	private MeasuringEquipment measuringEquipment;
 	
-	public EquipmentVerification() {
+	public Verification() {
 		super();
 	}
 
@@ -67,13 +69,32 @@ public class EquipmentVerification {
 		this.certificateNumber = certificateNumber;
 	}
 
-	public Device getDevice() {
-		return device;
+	public Long getId() {
+		return id;
 	}
 
-	public void setDevice(Device device) {
-		this.device = device;
+	public void setId(Long id) {
+		this.id = id;
 	}
+	
+	
+
+	public String getDoneBy() {
+		return doneBy;
+	}
+
+	public void setDoneBy(String doneBy) {
+		this.doneBy = doneBy;
+	}
+
+	public MeasuringEquipment getMeasuringEquipment() {
+		return measuringEquipment;
+	}
+
+	public void setMeasuringEquipment(MeasuringEquipment measuringEquipment) {
+		this.measuringEquipment = measuringEquipment;
+	}
+	
 
 	
 }
