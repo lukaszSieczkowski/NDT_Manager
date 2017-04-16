@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	th:fragment="verificationForm">
+<head>
+
+</head>
+
+<body>
+		<div class="col-md-12">
+			<div class="form-group col-md-6">
+				<label for="dateOfVerification">Date of Control</label> 
+				<input type="text" class="form-control" id="issueDate" th:field="*{dateOfVerification}" placeholder="dd-mm-yyyy">
+				<p class="text-center alert" th:if="${#fields.hasErrors('dateOfVerification')}" th:errors="*{dateOfVerification}"></p>
+			</div>
+		
+			<div class="form-group col-md-6">
+				<label for="typeOfControl">Type of Control</label> 
+				<select class="form-control" th:field="*{typeOfControl}">
+			 		<option value="">----  Select Type of Control  ----</option>
+					<option  th:each="type: ${T(pl.ndt.manager.model.enums.TypeOfControl).values()}"
+				 		th:value="${type}" th:text="${type.getValue()}"></option>
+				</select>
+				<p class="text-center alert" th:if="${#fields.hasErrors('typeOfControl')}" th:errors="*{typeOfControl}"></p>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group col-md-6">
+				<label for="certificateNumber">Certificate Number</label>
+				<input type="text" class="form-control" id="certificateNumber" th:field="*{certificateNumber}" placeholder="Number">
+				<p class="text-center alert" th:if="${#fields.hasErrors('certificateNumber')}" th:errors="*{certificateNumber}"></p>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="doneBy">Checked By</label>
+				<input type="text" class="form-control" id="doneBy" th:field="*{doneBy}" placeholder="Employee or institution name">
+				<p class="text-center alert" th:if="${#fields.hasErrors('doneBy')}" th:errors="*{doneBy}"></p>
+			</div>
+	
+		</div>
+		<p class="alert text-center" th:text="${alert}"></p>
+		<div class="form-group col-md-6">
+			<label ></label>
+		</div>
+			
+		
+</body>
+</html>

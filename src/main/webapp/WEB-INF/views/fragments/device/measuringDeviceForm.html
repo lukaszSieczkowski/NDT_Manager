@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	th:fragment="measuringDeviceForm">
+<head>
+
+</head>
+
+<body>
+	<div class="col-md-12">
+			<div class="date form-group col-md-6 ">
+				<label for="name">Device Name</label>
+				<input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Device name(Flaw Detector, Yoke ...)">
+				<p class="text-center alert" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>	
+			</div>
+			<div class="date form-group col-md-6">
+				<label for="producer">Device Producer</label>
+				<input type="text" class="form-control" id="producer" th:field="*{producer}" placeholder="Device producer name">
+				<p class="text-center alert" th:if="${#fields.hasErrors('producer')}" th:errors="*{producer}"></p>	
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group col-md-6">
+				<label for="productionYear">Year of Production</label> 
+				<select size="1" class="form-control" th:field="*{productionYear}" >
+			 		<option value="">----  Select Year  ----</option>
+					<option  th:each="n : ${#numbers.sequence(1980,2040)}" th:value="${n}" th:text="${n}"/>
+				</select>
+				<p class="text-center alert" th:if="${#fields.hasErrors('productionYear')}" th:errors="*{productionYear}"></p>
+			</div>
+			<div class="date form-group col-md-6">
+				<label for="model">Device Model</label>
+				<input type="text" class="form-control" id="model" th:field="*{model}" placeholder="Device model">
+				<p class="text-center alert" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></p>	
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group col-md-4">
+				<label for="startOfUse">Start of Use</label> 
+				<input type="text" class="form-control" id="issueDate" th:field="*{startOfUse}" placeholder="dd-mm-yyyy">
+				<p class="text-center alert" th:if="${#fields.hasErrors('startOfUse')}" th:errors="*{startOfUse}"></p>
+			</div>
+			<div class="form-group col-md-4">
+			<label for="validityPeriod">Periodical Verification</label> 
+				<select size="1" class="form-control" th:field="*{validityPeriod}" >
+			 		<option value="">----  Select Year  ----</option>
+					<option  th:each="n : ${#numbers.sequence(1,5)}" th:value="${n}" th:text="${n}"/>
+				</select>
+				<p class="text-center alert" th:if="${#fields.hasErrors('validityPeriod')}" th:errors="*{validityPeriod}"></p>
+			</div>
+			<div class="date form-group col-md-4">
+				<label for="serialNumber">Serial Number</label>
+				<input type="text" class="form-control" id="serialNumber" th:field="*{serialNumber}" placeholder="Number">
+				<p class="text-center alert" th:if="${#fields.hasErrors('serialNumber')}" th:errors="*{serialNumber}"></p>	
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="date form-group col-md-4">
+				<label for="locationName">Location</label>
+				<select class="form-control" th:field="*{locationName}" >
+			 		<option value="">----  Select Location  ----</option>
+					<option  th:each="location : ${locations.getLocations()}"
+						th:value="${location.institutionName}" th:text="${location.institutionName}"></option>
+				</select>
+				<p class="text-center alert" th:if="${#fields.hasErrors('locationName')}" th:errors="*{locationName}"></p>
+			</div>
+			<div class="date form-group col-md-4">
+			<label for="typeOfTesting">Type of Testing</label>
+			 	<select class="form-control" th:field="*{typeOfTesting}">
+			 		<option value="">----  Select NDT Method  ----</option>
+					<option  th:each="type: ${T(pl.ndt.manager.model.enums.TypeOfTesting).values()}"
+				 		th:value="${type}" th:text="${type.getValue()}"></option>
+				</select>
+				<p class="text-center alert" th:if="${#fields.hasErrors('typeOfTesting')}" th:errors="*{typeOfTesting}"></p>
+			</div>
+			<div class="date form-group col-md-4">
+				<label for="deviceCode">Device Code</label>
+				<input type="text" class="form-control" id="deviceCode" th:field="*{deviceCode}" placeholder="Code">
+				<p class="text-center alert" th:if="${#fields.hasErrors('deviceCode')}" th:errors="*{deviceCode}"></p>	
+			</div>
+		</div>
+		
+		<p class="alert text-center" th:text="${alert}"></p>
+		<div class="form-group col-md-6">
+			<label ></label>
+		</div>
+	</body>
+</html>
