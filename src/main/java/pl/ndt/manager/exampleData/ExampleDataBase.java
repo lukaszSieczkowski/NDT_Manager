@@ -19,6 +19,7 @@ import pl.ndt.manager.model.MeasuringEquipment;
 import pl.ndt.manager.model.MedicalExamination;
 import pl.ndt.manager.model.NdtCertificate;
 import pl.ndt.manager.model.PersonalDocument;
+import pl.ndt.manager.model.Probe;
 import pl.ndt.manager.model.TechnicalDocument;
 import pl.ndt.manager.model.User;
 import pl.ndt.manager.model.VcaCertificate;
@@ -37,6 +38,7 @@ import pl.ndt.manager.repository.LocationRepository;
 import pl.ndt.manager.repository.MeasuringEquipmentRepository;
 import pl.ndt.manager.repository.MedicalExaminationRepository;
 import pl.ndt.manager.repository.NdtCertificateRepository;
+import pl.ndt.manager.repository.ProbeRepository;
 import pl.ndt.manager.repository.TechnicalDocumentRepository;
 import pl.ndt.manager.repository.UserRepository;
 import pl.ndt.manager.repository.VcaCertificateRepository;
@@ -64,6 +66,8 @@ public class ExampleDataBase {
 	private CustomerRepository customerRepository;
 	@Autowired
 	private MeasuringEquipmentRepository measuringEquipmentRepository;
+	@Autowired
+	private ProbeRepository probeRepository;
 
 	public void prepareDataBase() {
 		List<PersonalDocument> documentsList1 = new ArrayList<>();
@@ -522,6 +526,7 @@ public class ExampleDataBase {
 		equipmentVerification1.setFinalDateOfVerification(dateOfValid1);
 		equipmentVerification1.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification1.setMeasuringEquipment(measuringEquipment1);
+		equipmentVerification1.setDoneBy("Company");
 		verificationList1.add(equipmentVerification1);
 
 		Verification equipmentVerification2 = new Verification();
@@ -532,6 +537,7 @@ public class ExampleDataBase {
 		equipmentVerification2.setFinalDateOfVerification(dateOfValid2);
 		equipmentVerification2.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification2.setMeasuringEquipment(measuringEquipment1);
+		equipmentVerification2.setDoneBy("Company");
 		verificationList1.add(equipmentVerification2);
 
 		Verification equipmentVerification3 = new Verification();
@@ -542,6 +548,7 @@ public class ExampleDataBase {
 		equipmentVerification3.setFinalDateOfVerification(dateOfValid3);
 		equipmentVerification3.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification3.setMeasuringEquipment(measuringEquipment1);
+		equipmentVerification3.setDoneBy("Company");
 		verificationList1.add(equipmentVerification3);
 
 		measuringEquipment1.setEquipmentVerificationList(verificationList1);
@@ -568,6 +575,7 @@ public class ExampleDataBase {
 		equipmentVerification4.setFinalDateOfVerification(dateOfValid1);
 		equipmentVerification4.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification4.setMeasuringEquipment(measuringEquipment2);
+		equipmentVerification4.setDoneBy("Company");
 		verificationList2.add(equipmentVerification4);
 
 		Verification equipmentVerification5 = new Verification();
@@ -578,6 +586,7 @@ public class ExampleDataBase {
 		equipmentVerification5.setFinalDateOfVerification(dateOfValid2);
 		equipmentVerification5.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification5.setMeasuringEquipment(measuringEquipment2);
+		equipmentVerification5.setDoneBy("Company");
 		verificationList2.add(equipmentVerification5);
 
 		Verification equipmentVerification6 = new Verification();
@@ -588,6 +597,7 @@ public class ExampleDataBase {
 		equipmentVerification6.setFinalDateOfVerification(dateOfValid3);
 		equipmentVerification6.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification6.setMeasuringEquipment(measuringEquipment2);
+		equipmentVerification6.setDoneBy("Company");
 		verificationList2.add(equipmentVerification5);
 
 		measuringEquipment2.setEquipmentVerificationList(verificationList2);
@@ -614,6 +624,7 @@ public class ExampleDataBase {
 		equipmentVerification7.setFinalDateOfVerification(dateOfValid1);
 		equipmentVerification7.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification7.setMeasuringEquipment(measuringEquipment2);
+		equipmentVerification7.setDoneBy("Company");
 		verificationList3.add(equipmentVerification7);
 
 		Verification equipmentVerification8 = new Verification();
@@ -624,6 +635,7 @@ public class ExampleDataBase {
 		equipmentVerification8.setFinalDateOfVerification(dateOfValid2);
 		equipmentVerification8.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification8.setMeasuringEquipment(measuringEquipment2);
+		equipmentVerification8.setDoneBy("Company");
 		verificationList3.add(equipmentVerification8);
 
 		Verification equipmentVerification9 = new Verification();
@@ -634,9 +646,71 @@ public class ExampleDataBase {
 		equipmentVerification9.setFinalDateOfVerification(dateOfValid3);
 		equipmentVerification9.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification9.setMeasuringEquipment(measuringEquipment2);
+		equipmentVerification9.setDoneBy("Company");
 		verificationList3.add(equipmentVerification9);
 
 		measuringEquipment3.setEquipmentVerificationList(verificationList3);
+		
+		Probe probe1 = new Probe();
+		probe1.setName("Probe");
+		probe1.setAngle(45);
+		probe1.setFrequency(4.0);
+		probe1.setLocation(location1);
+		probe1.setModel("Model-45-4");
+		probe1.setProducer("Olympus");
+		probe1.setProductionYear(2011);
+		probe1.setSerialNumber("234-43-21");
+		probe1.setStartOfUse(LocalDateTime.of(2012, 1,1,0,0));
+		probe1.setTypeOfTesting(TypeOfTesting.UT);
+		
+		Probe probe2 = new Probe();
+		probe2.setName("Probe");
+		probe2.setAngle(60);
+		probe2.setFrequency(2.0);
+		probe2.setLocation(location1);
+		probe2.setModel("Model-60-2");
+		probe2.setProducer("Olympus");
+		probe2.setProductionYear(2013);
+		probe2.setSerialNumber("234-43-01");
+		probe2.setStartOfUse(LocalDateTime.of(2014, 1,1,0,0));
+		probe2.setTypeOfTesting(TypeOfTesting.UT);
+
+		Probe probe3 = new Probe();
+		probe3.setName("Probe");
+		probe3.setAngle(70);
+		probe3.setFrequency(4.0);
+		probe3.setLocation(location2);
+		probe3.setModel("Model-70-4");
+		probe3.setProducer("Krautkramer");
+		probe3.setProductionYear(2011);
+		probe3.setSerialNumber("124-46-21");
+		probe3.setStartOfUse(LocalDateTime.of(2012, 1,1,0,0));
+		probe3.setTypeOfTesting(TypeOfTesting.UT);
+
+		Probe probe4 = new Probe();
+		probe4.setName("Probe");
+		probe4.setAngle(0);
+		probe4.setFrequency(4.0);
+		probe4.setLocation(location2);
+		probe4.setModel("Model-0-4");
+		probe4.setProducer("Olympus");
+		probe4.setProductionYear(2011);
+		probe4.setSerialNumber("256-12-23");
+		probe4.setStartOfUse(LocalDateTime.of(2012, 1,1,0,0));
+		probe4.setTypeOfTesting(TypeOfTesting.UT);
+
+		Probe probe5 = new Probe();
+		probe5.setName("Probe");
+		probe5.setAngle(0);
+		probe5.setFrequency(2.0);
+		probe5.setLocation(location1);
+		probe5.setModel("Model-0-2");
+		probe5.setProducer("Olympus");
+		probe5.setProductionYear(2014);
+		probe5.setSerialNumber("564-42-11");
+		probe5.setStartOfUse(LocalDateTime.of(2015, 1,1,0,0));
+		probe5.setTypeOfTesting(TypeOfTesting.UT);
+
 
 		userRepository.save(user1);
 		userRepository.save(user2);
@@ -682,6 +756,12 @@ public class ExampleDataBase {
 		measuringEquipmentRepository.save(measuringEquipment1);
 		measuringEquipmentRepository.save(measuringEquipment2);
 		measuringEquipmentRepository.save(measuringEquipment3);
+		
+		probeRepository.save(probe1);
+		probeRepository.save(probe2);
+		probeRepository.save(probe3);
+		probeRepository.save(probe4);
+		probeRepository.save(probe5);
 
 	}
 }

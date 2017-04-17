@@ -118,7 +118,8 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/editEmployee")
 	public String editEmployee(@RequestParam("id") Long id, Model model) {
-		List<EmployeeDTO> employees = employeeService.getAllEmployees();
+		
+		List<EmployeeDTO> employees = employeeList.getEmployees();
 		Optional<EmployeeDTO> optionalEmployeeDTO = employees.stream().filter(a -> (a.getId() == id)).findAny();
 		EmployeeDTO employeeDTO = (EmployeeDTO) optionalEmployeeDTO.get();
 		List<LocationDTO> locationsDTO = locationService.getLocations();

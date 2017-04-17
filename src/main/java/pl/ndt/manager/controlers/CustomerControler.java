@@ -27,7 +27,7 @@ import pl.ndt.manager.services.CustomerService;
 public class CustomerControler {
 
 	@Autowired
-	private CustomersList customers;
+	private CustomersList customersList;
 	@Autowired
 	private CustomerService customerService;
 
@@ -40,9 +40,9 @@ public class CustomerControler {
 	 */
 	@RequestMapping("/showCustomers")
 	public String showAllCustomers(Model model) {
-		List<CustomerDTO> customersList = customerService.getCustomers();
-		customers.setCustomers(customersList);
-		model.addAttribute("customers", customers);
+		List<CustomerDTO> customers = customerService.getCustomers();
+		customersList.setCustomers(customers);
+		model.addAttribute("customers", customersList);
 		return "customers/show_customers/showCustomers";
 
 	}
@@ -101,7 +101,7 @@ public class CustomerControler {
 
 	@GetMapping("/editCustomer")
 	public String editCustomer(@RequestParam("id") Long id, Model model) {
-		List<CustomerDTO> customers = customerService.getCustomers();
+		List<CustomerDTO> customers = customersList.getCustomers();
 		Optional<CustomerDTO> optionalCustomerDTO = customers.stream().filter(a -> (a.getId() == id)).findAny();
 		CustomerDTO customerDTO = (CustomerDTO) optionalCustomerDTO.get();
 

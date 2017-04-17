@@ -28,7 +28,7 @@ public class LocationControler {
 	private LocationService locationService;
 
 	@Autowired
-	private LocationsList locations;
+	private LocationsList locationsList;
 
 	/**
 	 * Shows list of all Business locations saved in system
@@ -39,9 +39,9 @@ public class LocationControler {
 	 */
 	@RequestMapping("/showLocations")
 	public String showAllLocations(Model model) {
-		List<LocationDTO> locationsList = locationService.getLocations();
-		locations.setLocations(locationsList);
-		model.addAttribute("locations", locations);
+		List<LocationDTO> locations = locationService.getLocations();
+		locationsList.setLocations(locations);
+		model.addAttribute("locations", locationsList);
 		return "locations/show_location/showLocation";
 
 	}
@@ -101,7 +101,8 @@ public class LocationControler {
 
 	@GetMapping("/editLocation")
 	public String editLocation(@RequestParam("id") Long id, Model model) {
-		List<LocationDTO> locations = locationService.getLocations();
+		
+		List<LocationDTO> locations = locationsList.getLocations();
 		Optional<LocationDTO> optionalLocationDTO = locations.stream().filter(a -> (a.getId() == id)).findAny();
 		LocationDTO locationDTO = (LocationDTO) optionalLocationDTO.get();
 

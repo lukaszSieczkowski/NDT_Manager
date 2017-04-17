@@ -56,9 +56,8 @@ public class DocumentControler {
 	public String showAllNdtCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getNdtCertificates();
 		documents = documents.stream()
-				.sorted((a,
-						b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
-								.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
+				.sorted((a,b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
+				.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -76,9 +75,8 @@ public class DocumentControler {
 	public String showAllVcaCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getVcaCertificates();
 		documents = documents.stream()
-				.sorted((a,
-						b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
-								.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
+				.sorted((a,b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
+				.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -384,7 +382,7 @@ public class DocumentControler {
 
 	@RequestMapping("/editNdtCertificate")
 	public String editNdtCertificate(@RequestParam("id") Long id, Model model) {
-		List<DocumentDTO> documents = documentService.getNdtCertificates();
+		List<DocumentDTO> documents = documentList.getDocuments();
 		Optional<DocumentDTO> optionalNdtCertificateDTO = documents.stream().filter(a -> (a.getId() == id)).findAny();
 		NdtCertificateDTO ndtCertificateDTO = (NdtCertificateDTO) optionalNdtCertificateDTO.get();
 
@@ -437,8 +435,8 @@ public class DocumentControler {
 	 */
 	@RequestMapping("/editJaegerTest")
 	public String editJaegerTest(@RequestParam("id") Long id, Model model) {
-
-		List<DocumentDTO> documents = documentService.getJaegerTests();
+		
+		List<DocumentDTO> documents = documentList.getDocuments();
 		Optional<DocumentDTO> optionalJaegerTestDTO = documents.stream().filter(a -> (a.getId() == id)).findAny();
 		JaegerTestDTO jaegerTestDTO = (JaegerTestDTO) optionalJaegerTestDTO.get();
 
@@ -492,8 +490,8 @@ public class DocumentControler {
 	 */
 	@RequestMapping("/editVcaCertificate")
 	public String editVcaCertificate(@RequestParam("id") Long id, Model model) {
-
-		List<DocumentDTO> documents = documentService.getVcaCertificates();
+		
+		List<DocumentDTO> documents = documentList.getDocuments();
 		Optional<DocumentDTO> optionalVcaCertificateDTO = documents.stream().filter(a -> (a.getId() == id)).findAny();
 		VcaCertificateDTO vcaCertificateDTO = (VcaCertificateDTO) optionalVcaCertificateDTO.get();
 
@@ -549,8 +547,8 @@ public class DocumentControler {
 
 	@RequestMapping("/editMedicalExamination")
 	public String editMedicalExamination(@RequestParam("id") Long id, Model model) {
-
-		List<DocumentDTO> documents = documentService.getMedicalExaminations();
+		
+		List<DocumentDTO> documents = documentList.getDocuments();
 		Optional<DocumentDTO> optionalMedicalExaminationDTO = documents.stream().filter(a -> (a.getId() == id))
 				.findAny();
 		MedicalExaminationDTO medicalExaminationDTO = (MedicalExaminationDTO) optionalMedicalExaminationDTO.get();

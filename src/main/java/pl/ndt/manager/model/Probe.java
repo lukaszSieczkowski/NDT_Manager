@@ -7,25 +7,21 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import pl.ndt.manager.model.enums.TypeOfTesting;
+
 
 @Entity
-@Table(name="probes")
+@Table(name = "probes")
 @PrimaryKeyJoinColumn(name = "device_id")
 public class Probe extends Device {
-	
-	@Column(name="frequency")
+
+	@Column(name = "frequency")
 	private Double frequency;
-	@Column(name="angle")
+	@Column(name = "angle")
 	private Integer angle;
-	@Column(name="type_of_testing")
-	private TypeOfTesting typeOfTesting;
-	
+
 	public Probe() {
 		super();
 	}
-
-	
 
 	public Double getFrequency() {
 		return frequency;
@@ -43,19 +39,12 @@ public class Probe extends Device {
 		this.angle = angle;
 	}
 
-	public TypeOfTesting getTypeOfTesting() {
-		return typeOfTesting;
+	@Override
+	public String toString() {
+		return "Probe [frequency=" + frequency + ", angle=" + angle + ", id=" + id + ", name=" + name + ", producer="
+				+ producer + ", productionYear=" + productionYear + ", model=" + model + ", serialNumber="
+				+ serialNumber + ", startOfUse=" + startOfUse + ", location=" + location + ", typeOfTesting="
+				+ typeOfTesting + "]";
 	}
 
-	public void setTypeOfTesting(TypeOfTesting typeOfTesting) {
-		this.typeOfTesting = typeOfTesting;
-	}
-
-	
-
-	
-
-
-	
-	
 }

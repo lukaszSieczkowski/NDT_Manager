@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 import pl.ndt.manager.dto.DeviceDTO;
 import pl.ndt.manager.dto.MeasuringEquipmentDTO;
-
+import pl.ndt.manager.dto.ProbeDTO;
 import pl.ndt.manager.model.Location;
 import pl.ndt.manager.model.MeasuringEquipment;
-
+import pl.ndt.manager.model.Probe;
 import pl.ndt.manager.repository.LocationRepository;
 import pl.ndt.manager.repository.MeasuringEquipmentRepository;
-
+import pl.ndt.manager.repository.ProbeRepository;
 import pl.ndt.manager.utils.DateConverter;
 
 @Service
@@ -24,6 +24,8 @@ public class DeviceService {
 	private MeasuringEquipmentRepository measuringEquipmentRepository;
 	@Autowired
 	private LocationRepository locationRepository;
+	@Autowired
+	private ProbeRepository probeRepository;
 
 	private DateConverter dateConverter;
 	private List<DeviceDTO> devices;
@@ -38,7 +40,7 @@ public class DeviceService {
 		devices = new ArrayList<>();
 		dateConverter = new DateConverter();
 		List<MeasuringEquipment> devicesList = (List<MeasuringEquipment>) measuringEquipmentRepository.findAll();
-		System.out.println(devicesList);
+
 		for (MeasuringEquipment equipment : devicesList) {
 			MeasuringEquipmentDTO equipmentDTO = new MeasuringEquipmentDTO();
 			equipmentDTO.setId(equipment.getId());
@@ -89,6 +91,69 @@ public class DeviceService {
 		measuringEquipment.setFerquencyOfVerification(measuringEquipmentDTO.getValidityPeriod());
 
 		measuringEquipmentRepository.save(measuringEquipment);
+
+	}
+
+	/**
+	 * Creates list of all Probes
+	 * 
+	 * @return
+	 */
+
+	public List<DeviceDTO> getProbes() {
+		devices = new ArrayList<>();
+		dateConverter = new DateConverter();
+		List<Probe> probesList = (List<Probe>) probeRepository.findAll();
+
+		for (Probe probe : probesList) {
+			ProbeDTO probeDTO = new ProbeDTO();
+			probeDTO.setId(probe.getId());
+			probeDTO.setName(probe.getName());
+			probeDTO.setProducer(probe.getProducer());
+			probeDTO.setProductionYear(String.valueOf(probe.getProductionYear()));
+			probeDTO.setModel(probe.getModel());
+			probeDTO.setSerialNumber(probe.getSerialNumber());
+			probeDTO.setStartOfUse(dateConverter.createDateToString(probe.getStartOfUse()));
+			probeDTO.setLocationName(probe.getLocation().getInstitutionName());
+			probeDTO.setTypeOfTesting(probe.getTypeOfTesting());
+			probeDTO.setAngle(String.valueOf(probe.getAngle()));
+			probeDTO.setFrequency(String.valueOf(probe.getFrequency()));
+			devices.add(probeDTO);
+		}
+		return devices;
+	}
+
+	/**
+	 * Saves Probe in database
+	 * 
+	 * @param probeDTO
+	 *            Transfer object with values transfered from input form into
+	 *            the database
+	 */
+
+	public void saveProbe(ProbeDTO probeDTO) {
+
+		DateConverter dateConverter = new DateConverter();
+
+		String institutionName = probeDTO.getLocationName();
+		Location location = locationRepository.getByInstitutionName(institutionName);
+
+		Probe probe = new Probe();
+		probe.setId(probeDTO.getId());
+		probe.setLocation(location);
+		probe.setModel(probeDTO.getModel());
+		probe.setName(probeDTO.getName());
+		probe.setProducer(probeDTO.getProducer());
+		probe.setProductionYear(Integer.parseInt(probeDTO.getProductionYear()));
+		probe.setSerialNumber(probeDTO.getSerialNumber());
+		probe.setStartOfUse(dateConverter.createDateFromString(probeDTO.getStartOfUse(), 0, 0));
+		probe.setTypeOfTesting(probeDTO.getTypeOfTesting());
+		probe.setAngle(Integer.parseInt(probeDTO.getAngle()));
+		probe.setFrequency(Double.parseDouble(probeDTO.getFrequency()));
+
+		System.out.println(probe);
+
+		probeRepository.save(probe);
 
 	}
 
