@@ -16,9 +16,11 @@ public class DevicesList {
 
 	
 	private List<DeviceDTO> devices;
+	private DeviceDTO device;
 	
-	public DevicesList (List<DeviceDTO> devices){
+	public DevicesList (List<DeviceDTO> devices,DeviceDTO deviceDTO){
 		this.devices=devices;
+		this.device = device;
 	}
 
 	public List<DeviceDTO> getDevices() {
@@ -27,6 +29,14 @@ public class DevicesList {
 
 	public void setDevices(List<DeviceDTO> devices) {
 		this.devices = devices;
+	}
+
+	public DeviceDTO getDevice() {
+		return device;
+	}
+
+	public void setDevice(DeviceDTO device) {
+		this.device = device;
 	}
 	
 	

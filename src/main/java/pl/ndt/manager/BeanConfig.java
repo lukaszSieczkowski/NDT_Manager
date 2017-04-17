@@ -9,6 +9,7 @@ import pl.ndt.manager.dto.DeviceDTO;
 import pl.ndt.manager.dto.DocumentDTO;
 import pl.ndt.manager.dto.EmployeeDTO;
 import pl.ndt.manager.dto.LocationDTO;
+import pl.ndt.manager.dto.VerificationDTO;
 
 @Configuration
 @ComponentScan
@@ -67,6 +68,18 @@ public class BeanConfig {
 	@Bean
 	public CustomerDTO getCustomerDTO(){
 		return new CustomerDTO();
+	}
+	
+
+	/**
+	 * Registers VerificationDTO bean in Spring Container
+	 * 
+	 * @return verificationDTO;
+	 */
+	
+	@Bean
+	public VerificationDTO getVerificationDTO(){
+		return new VerificationDTO();
 	}
 
 }

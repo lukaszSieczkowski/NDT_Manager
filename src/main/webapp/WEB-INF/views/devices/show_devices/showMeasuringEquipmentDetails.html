@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+</head>
+<body>
+	<div th:switch="${session.logedEmployee.role}">
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+			<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+		</p>
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+			<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+		</p>
+	</div>
+
+	<h3 class="text-center">Equipment Details</h3>
+
+	<div class="col-md-10 col-md-offset-1">
+
+		<table class="table table-condensed">
+			<tr>
+				
+				<th>Code</th>
+				<th>Name</th>
+				<th>Producer</th>
+				<th>Production Year</th>
+				<th>Model</th>
+				<th>Serial No.</th>
+				<th>Start of use</th>
+				<th>Location</th>
+				<th></th>
+			</tr>
+			<tr>
+				<td th:text="${measuringEquipmentDTO.deviceCode}"></td>
+				<td th:text="${measuringEquipmentDTO.name}"></td>
+				<td th:text="${measuringEquipmentDTO.producer}"></td>
+				<td th:text="${measuringEquipmentDTO.productionYear}"></td>
+				<td th:text="${measuringEquipmentDTO.model}"></td>
+				<td th:text="${measuringEquipmentDTO.serialNumber}"></td>
+				<td th:text="${measuringEquipmentDTO.startOfUse}"></td>
+				<td th:text="${measuringEquipmentDTO.locationName}"></td>
+				<td><a th:href="@{/addVerification(id=${measuringEquipmentDTO.id})}">Add New Verification</a>
+			<td>
+		</table>
+		
+		<h4 class="text-center">Periodic Verification</h4> 
+		<div class="col-md-8 col-md-offset-2">
+			<table class="table table-condensed">
+				<tr>
+					<th>Id</th>
+					<th>Code</th>
+					<th>Conducted By</th>
+					<th>Type of Control</th>
+					<th>Date of Control</th>
+					<th>Valid until</th>
+					<th>Validity</th>
+					<th>Edit</th>
+				</tr>
+				<tr th:each="verification,id : ${verifications.getVerifications()}">
+					<td th:text="${id.count}"></td>
+					<td th:text="${verification.certificateNumber}"></td>
+					<td th:text="${verification.doneBy}"></td>
+					<td th:text="${verification.typeOfControl}"></td>
+					<td th:text="${verification.dateOfVerification}"></td>
+					<td th:text="${verification.finalDateOfVerification}"></td>
+					<td th:switch="${verification.documentIsValid}">
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).VALID}"
+						class="valid">Valid</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).SIXTY_DAYS}"
+						class="sixty_days">Less than 60 days</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).THIRTY_DAYS}"
+						class="thirty_days">Less than 30 days</div>
+					<div
+						th:case="${T(pl.ndt.manager.model.enums.DocumentIsValid).EXPIRED}"
+						class="expired">Expired</div>
+					</td>
+					<td><a th:href="@{/editVerification(verId=${verification.id}, equId=${measuringEquipmentDTO.id})}">Update</a>
+				</tr>
+			</table>
+		</div>	
+	</div>
+</body>
+</html>

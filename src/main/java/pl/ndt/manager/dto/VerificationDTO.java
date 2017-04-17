@@ -1,15 +1,11 @@
 package pl.ndt.manager.dto;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import pl.ndt.manager.model.enums.DocumentIsValid;
 import pl.ndt.manager.model.enums.TypeOfControl;
 
 public class VerificationDTO {
@@ -26,10 +22,12 @@ public class VerificationDTO {
 	@NotBlank(message = "This field may not be empty")
 	@Size(max=30, message="To long sentence. Only 30 signs allowed")
 	private String doneBy;
-	private MeasuringEquipmentDTO measuringEquipmentDTO;
+	private String finalDateOfVerification;
+	private DocumentIsValid documentIsValid;
+	
 	
 	public VerificationDTO() {
-		super();
+		
 	}
 	public Long getId() {
 		return id;
@@ -56,23 +54,34 @@ public class VerificationDTO {
 	public void setCertificateNumber(String certificateNumber) {
 		this.certificateNumber = certificateNumber;
 	}
-	public MeasuringEquipmentDTO getMeasuringEquipmentDTO() {
-		return measuringEquipmentDTO;
-	}
-	public void setMeasuringEquipmentDTO(MeasuringEquipmentDTO measuringEquipmentDTO) {
-		this.measuringEquipmentDTO = measuringEquipmentDTO;
-	}
+
 	public String getDoneBy() {
 		return doneBy;
 	}
 	public void setDoneBy(String doneBy) {
 		this.doneBy = doneBy;
 	}
+
+	
+	public String getFinalDateOfVerification() {
+		return finalDateOfVerification;
+	}
+	public void setFinalDateOfVerification(String finalDateOfVerification) {
+		this.finalDateOfVerification = finalDateOfVerification;
+	}
+	public DocumentIsValid getDocumentIsValid() {
+		return documentIsValid;
+	}
+	public void setDocumentIsValid(DocumentIsValid documentIsValid) {
+		this.documentIsValid = documentIsValid;
+	}
 	@Override
 	public String toString() {
 		return "VerificationDTO [id=" + id + ", dateOfVerification=" + dateOfVerification + ", typeOfControl="
-				+ typeOfControl + ", certificateNumber=" + certificateNumber + ", measuringEquipmentDTO="
-				+ measuringEquipmentDTO + ", doneBy=" + doneBy + "]";
+				+ typeOfControl + ", certificateNumber=" + certificateNumber + ", doneBy=" + doneBy
+				+ ", finalDateOfVerification=" + finalDateOfVerification + ", documentIsValid=" + documentIsValid + "]";
 	}
+	
+	
 	
 }
