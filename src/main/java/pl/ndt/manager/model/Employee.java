@@ -28,7 +28,11 @@ public class Employee {
 	@ManyToOne
 	@JoinColumn(name = "location_id")
 	private Location location;
-
+	@OneToMany(mappedBy="performer",fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<Report> performedReportsList;
+	@OneToMany(mappedBy="aprover",fetch=FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<Report> approvedReportsList;
+	
 	public Employee() {
 		super();
 	}
