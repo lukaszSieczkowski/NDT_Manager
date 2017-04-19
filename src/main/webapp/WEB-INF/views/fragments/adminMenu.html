@@ -74,8 +74,8 @@
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">Locations <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu">
-					<li><a href="showLocations">Show Locations </a></li>
-					<li><a href="addLocation">Add New Location</a></li>
+					<li><a th:href="@{/showLocations}">Show Locations </a></li>
+					<li><a href="@/{addLocation}">Add New Location</a></li>
 				</ul></li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle"
 				data-toggle="dropdown">Technical Documents <span class="caret"></span></a>
@@ -89,6 +89,12 @@
 				<ul class="dropdown-menu" role="menu">
 					<li><a th:href="@{/showCustomers}"> Show Customers</a></li>
 					<li><a th:href="@{/addCustomer}">Add Customer</a></li>
+				</ul></li>
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown">Reports <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a th:href="@{/showReports}">Show Reports</a></li>
+					<li><a href="@{/addReport}">Add Report</a></li>
 				</ul></li>
 		</ul>
 		<div class="navbar-right user">

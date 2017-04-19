@@ -25,6 +25,9 @@ public class TechnicalDocument extends Document {
 	private String number;
 	@Column(name="ndt_method")
 	private TypeOfTesting typeOfTesting;
+	@ManyToOne
+	@JoinColumn(name="id_technical_document")
+	private Report report;
 
 	public TechnicalDocument() {
 		super();
@@ -60,6 +63,16 @@ public class TechnicalDocument extends Document {
 
 	public void setTypeOfTesting(TypeOfTesting typeOfTesting) {
 		this.typeOfTesting = typeOfTesting;
+	}
+	
+	
+
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
 	}
 
 	@Override

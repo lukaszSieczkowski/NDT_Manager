@@ -39,16 +39,19 @@ import pl.ndt.manager.model.enums.UserRole;
 import pl.ndt.manager.repository.CustomerRepository;
 
 import pl.ndt.manager.repository.EmployeeRepository;
+
 import pl.ndt.manager.repository.JaegerTestRepository;
 import pl.ndt.manager.repository.LocationRepository;
 import pl.ndt.manager.repository.MeasuringEquipmentRepository;
 import pl.ndt.manager.repository.MedicalExaminationRepository;
 import pl.ndt.manager.repository.NdtCertificateRepository;
 import pl.ndt.manager.repository.ProbeRepository;
+import pl.ndt.manager.repository.ResultOfExaminationRepository;
 import pl.ndt.manager.repository.TechnicalDocumentRepository;
 import pl.ndt.manager.repository.UserRepository;
 import pl.ndt.manager.repository.VTReportRepository;
 import pl.ndt.manager.repository.VcaCertificateRepository;
+import pl.ndt.manager.repository.VerificationRepository;
 
 @Service
 
@@ -78,7 +81,11 @@ public class ExampleDataBase {
 	private ProbeRepository probeRepository;
 	@Autowired
 	private VTReportRepository vtReportRepository;
-	
+	@Autowired
+	private ResultOfExaminationRepository resultOfExaminationRepository;
+	@Autowired
+	private VerificationRepository verificationRepository;
+
 	public void prepareDataBase() {
 		List<PersonalDocument> documentsList1 = new ArrayList<>();
 		List<PersonalDocument> documentsList2 = new ArrayList<>();
@@ -476,7 +483,7 @@ public class ExampleDataBase {
 		medicalExamination5.setFileName("eeeee");
 
 		TechnicalDocument technicalDocument1 = new TechnicalDocument();
-	
+
 		technicalDocument1.setNumber("EN-10160:1999");
 		technicalDocument1.setTitle(
 				"Ultrasonic testing of steel flat product of thickness equal or greater than 6 mm (reflection method)");
@@ -502,7 +509,7 @@ public class ExampleDataBase {
 		technicalDocument3.setTypeOfTesting(TypeOfTesting.UT);
 
 		TechnicalDocument technicalDocument4 = new TechnicalDocument();
-	
+
 		technicalDocument4.setNumber("PN-EN ISO 23278:2010");
 		technicalDocument4
 				.setTitle("Non-destructive testing of welds - Magnetic particle testing of welds - Acceptance levels");
@@ -518,22 +525,20 @@ public class ExampleDataBase {
 		technicalDocument5.setIssuedBy("PKN");
 		technicalDocument5.setIssueDate(LocalDateTime.of(2013, 1, 1, 0, 0));
 		technicalDocument5.setTypeOfTesting(TypeOfTesting.RT);
-		
+
 		TechnicalDocument technicalDocument6 = new TechnicalDocument();
-	
+
 		technicalDocument6.setNumber("ISO 5817:2003");
 		technicalDocument6.setTitle(
 				"Welding — Fusion-welded joints in steel, nickel, titanium and their alloys (beam welding excluded) — Quality levels for imperfections");
 		technicalDocument6.setIssuedBy("PKN");
 		technicalDocument6.setIssueDate(LocalDateTime.of(2014, 1, 1, 0, 0));
 		technicalDocument6.setTypeOfTesting(TypeOfTesting.VT);
-		
 
 		TechnicalDocument technicalDocument7 = new TechnicalDocument();
-	
+
 		technicalDocument7.setNumber("ISO 17637:2016");
-		technicalDocument7.setTitle(
-				"Non-destructive testing of welds — Visual testing of fusion-welded joints");
+		technicalDocument7.setTitle("Non-destructive testing of welds — Visual testing of fusion-welded joints");
 		technicalDocument7.setIssuedBy("PKN");
 		technicalDocument7.setIssueDate(LocalDateTime.of(2016, 1, 1, 0, 0));
 		technicalDocument7.setTypeOfTesting(TypeOfTesting.VT);
@@ -550,8 +555,6 @@ public class ExampleDataBase {
 		measuringEquipment1.setFerquencyOfVerification(1);
 		measuringEquipment1.setDeviceCode("shds-67");
 		measuringEquipment1.setTypeOfTesting(TypeOfTesting.UT);
-		
-		
 
 		Verification equipmentVerification1 = new Verification();
 		equipmentVerification1.setCertificateNumber("Cert-1");
@@ -562,7 +565,7 @@ public class ExampleDataBase {
 		equipmentVerification1.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification1.setMeasuringEquipment(measuringEquipment1);
 		equipmentVerification1.setDoneBy("Company");
-		
+
 		Verification equipmentVerification2 = new Verification();
 		equipmentVerification2.setCertificateNumber("Cert-2");
 		LocalDateTime dateOfVer2 = dateOfValid1;
@@ -572,7 +575,7 @@ public class ExampleDataBase {
 		equipmentVerification2.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification2.setMeasuringEquipment(measuringEquipment1);
 		equipmentVerification2.setDoneBy("Company");
-		
+
 		Verification equipmentVerification3 = new Verification();
 		equipmentVerification3.setCertificateNumber("Cert-2");
 		LocalDateTime dateOfVer3 = dateOfValid2;
@@ -582,10 +585,7 @@ public class ExampleDataBase {
 		equipmentVerification3.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification3.setMeasuringEquipment(measuringEquipment1);
 		equipmentVerification3.setDoneBy("Company");
-		
-		
-		
-		
+
 		MeasuringEquipment measuringEquipment2 = new MeasuringEquipment();
 		measuringEquipment2.setId(1L);
 		measuringEquipment2.setLocation(location1);
@@ -599,8 +599,6 @@ public class ExampleDataBase {
 		measuringEquipment2.setDeviceCode("shds-65");
 		measuringEquipment2.setTypeOfTesting(TypeOfTesting.MT);
 
-	
-
 		Verification equipmentVerification4 = new Verification();
 		equipmentVerification4.setCertificateNumber("Cert-1");
 		dateOfVer1 = LocalDateTime.of(2013, 1, 1, 0, 0);
@@ -610,7 +608,7 @@ public class ExampleDataBase {
 		equipmentVerification4.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification4.setMeasuringEquipment(measuringEquipment2);
 		equipmentVerification4.setDoneBy("Company");
-		
+
 		Verification equipmentVerification5 = new Verification();
 		equipmentVerification5.setCertificateNumber("Cert-2");
 		dateOfVer2 = dateOfValid1;
@@ -620,7 +618,7 @@ public class ExampleDataBase {
 		equipmentVerification5.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification5.setMeasuringEquipment(measuringEquipment2);
 		equipmentVerification5.setDoneBy("Company");
-		
+
 		Verification equipmentVerification6 = new Verification();
 		equipmentVerification6.setCertificateNumber("Cert-3");
 		dateOfVer3 = dateOfValid2;
@@ -630,7 +628,7 @@ public class ExampleDataBase {
 		equipmentVerification6.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification6.setMeasuringEquipment(measuringEquipment2);
 		equipmentVerification6.setDoneBy("Company");
-		
+
 		MeasuringEquipment measuringEquipment3 = new MeasuringEquipment();
 		measuringEquipment3.setId(3L);
 		measuringEquipment3.setLocation(location2);
@@ -653,7 +651,7 @@ public class ExampleDataBase {
 		equipmentVerification7.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification7.setMeasuringEquipment(measuringEquipment3);
 		equipmentVerification7.setDoneBy("Company");
-		
+
 		Verification equipmentVerification8 = new Verification();
 		equipmentVerification8.setCertificateNumber("Cert-2");
 		dateOfVer2 = dateOfValid1;
@@ -663,7 +661,6 @@ public class ExampleDataBase {
 		equipmentVerification8.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification8.setMeasuringEquipment(measuringEquipment3);
 		equipmentVerification8.setDoneBy("Company");
-	
 
 		Verification equipmentVerification9 = new Verification();
 		equipmentVerification9.setCertificateNumber("Cert-3");
@@ -674,9 +671,9 @@ public class ExampleDataBase {
 		equipmentVerification9.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification9.setMeasuringEquipment(measuringEquipment3);
 		equipmentVerification9.setDoneBy("Company");
-	
+
 		MeasuringEquipment measuringEquipment4 = new MeasuringEquipment();
-		
+
 		measuringEquipment4.setLocation(location1);
 		measuringEquipment4.setModel("XYZ 399");
 		measuringEquipment4.setName("Ruller");
@@ -687,9 +684,7 @@ public class ExampleDataBase {
 		measuringEquipment4.setFerquencyOfVerification(5);
 		measuringEquipment4.setDeviceCode("code-54");
 		measuringEquipment4.setTypeOfTesting(TypeOfTesting.VT);
-	
-		
-		
+
 		Verification equipmentVerification10 = new Verification();
 		equipmentVerification10.setCertificateNumber("Cert-1");
 		dateOfVer3 = dateOfValid2;
@@ -699,9 +694,7 @@ public class ExampleDataBase {
 		equipmentVerification10.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification10.setMeasuringEquipment(measuringEquipment4);
 		equipmentVerification10.setDoneBy("Company");
-		
-		
-		
+
 		MeasuringEquipment measuringEquipment5 = new MeasuringEquipment();
 
 		measuringEquipment5.setLocation(location1);
@@ -714,7 +707,7 @@ public class ExampleDataBase {
 		measuringEquipment5.setFerquencyOfVerification(5);
 		measuringEquipment5.setDeviceCode("code-55");
 		measuringEquipment5.setTypeOfTesting(TypeOfTesting.VT);
-		
+
 		Verification equipmentVerification11 = new Verification();
 		equipmentVerification11.setCertificateNumber("Cert-2");
 		dateOfVer3 = dateOfValid2;
@@ -724,8 +717,7 @@ public class ExampleDataBase {
 		equipmentVerification11.setTypeOfControl(TypeOfControl.CHECK);
 		equipmentVerification11.setMeasuringEquipment(measuringEquipment5);
 		equipmentVerification11.setDoneBy("Company");
-		
-	
+
 		List<Verification> verificationList1 = new ArrayList<>();
 		verificationList1.add(equipmentVerification1);
 		verificationList1.add(equipmentVerification2);
@@ -737,17 +729,17 @@ public class ExampleDataBase {
 		verificationList2.add(equipmentVerification5);
 		verificationList2.add(equipmentVerification6);
 		measuringEquipment2.setEquipmentVerificationList(verificationList2);
-	
+
 		List<Verification> verificationList3 = new ArrayList<>();
 		verificationList3.add(equipmentVerification7);
 		verificationList3.add(equipmentVerification8);
 		verificationList3.add(equipmentVerification9);
 		measuringEquipment3.setEquipmentVerificationList(verificationList3);
-	
+
 		List<Verification> verificationList4 = new ArrayList<>();
 		verificationList4.add(equipmentVerification10);
 		measuringEquipment4.setEquipmentVerificationList(verificationList4);
-		
+
 		List<Verification> verificationList5 = new ArrayList<>();
 		verificationList5.add(equipmentVerification11);
 		measuringEquipment5.setEquipmentVerificationList(verificationList5);
@@ -811,16 +803,9 @@ public class ExampleDataBase {
 		probe5.setSerialNumber("564-42-11");
 		probe5.setStartOfUse(LocalDateTime.of(2015, 1, 1, 0, 0));
 		probe5.setTypeOfTesting(TypeOfTesting.UT);
-		
-		List<MeasuringEquipment> vtMeasuringEquipments = new ArrayList<>();
-		vtMeasuringEquipments.add(measuringEquipment4);
-		vtMeasuringEquipments.add(measuringEquipment5);
-		
-		List<TechnicalDocument> vtTechnicalDocuments = new ArrayList<>();
-		vtTechnicalDocuments.add(technicalDocument6);
-		vtTechnicalDocuments.add(technicalDocument7);
-		
+
 		VTReport vtReport1 = new VTReport();
+		
 		vtReport1.setIssueDate(LocalDateTime.now());
 		vtReport1.setIssuedBy("Company");
 		vtReport1.setFileName("file_name");
@@ -833,10 +818,24 @@ public class ExampleDataBase {
 		vtReport1.setAprover(employee1);
 		vtReport1.setPerformer(employee2);
 		vtReport1.setLighting(1200);
+			
+		List<MeasuringEquipment> vtMeasuringEquipments = new ArrayList<>();
+		vtMeasuringEquipments.add(measuringEquipment4);
+		vtMeasuringEquipments.add(measuringEquipment5);
+		
 		vtReport1.setMeasuringEquipmentList(vtMeasuringEquipments);
+		
+		technicalDocument6.setReport(vtReport1);
+		technicalDocument7.setReport(vtReport1);
+		
+		List<TechnicalDocument> vtTechnicalDocuments = new ArrayList<>();
+		vtTechnicalDocuments.add(technicalDocument6);
+		vtTechnicalDocuments.add(technicalDocument7);
+		
 		vtReport1.setTechnicalDocumentList(vtTechnicalDocuments);
 		vtReport1.setQualityLevel(QualityLevel.B);
-		
+		vtReport1.setTypeOfTesting(TypeOfTesting.VT);
+
 		ResultsOfExamination resultsOfExamination1 = new ResultsOfExamination();
 		resultsOfExamination1.setElementNumber("S1");
 		resultsOfExamination1.setDistanceFromReferencePoint("-");
@@ -845,7 +844,7 @@ public class ExampleDataBase {
 		resultsOfExamination1.setResult(ExaminationResult.OK);
 		resultsOfExamination1.setRemarks("-");
 		resultsOfExamination1.setReport(vtReport1);
-		
+
 		ResultsOfExamination resultsOfExamination2 = new ResultsOfExamination();
 		resultsOfExamination2.setElementNumber("S1");
 		resultsOfExamination2.setDistanceFromReferencePoint("-");
@@ -854,7 +853,7 @@ public class ExampleDataBase {
 		resultsOfExamination2.setResult(ExaminationResult.OK);
 		resultsOfExamination2.setRemarks("-");
 		resultsOfExamination2.setReport(vtReport1);
-		
+
 		ResultsOfExamination resultsOfExamination3 = new ResultsOfExamination();
 		resultsOfExamination3.setElementNumber("S3");
 		resultsOfExamination3.setDistanceFromReferencePoint("20");
@@ -863,63 +862,80 @@ public class ExampleDataBase {
 		resultsOfExamination3.setResult(ExaminationResult.NOK);
 		resultsOfExamination3.setRemarks("-");
 		resultsOfExamination3.setReport(vtReport1);
-		
+
 		List<ResultsOfExamination> resultsOfExaminationtsList = new ArrayList<>();
 		resultsOfExaminationtsList.add(resultsOfExamination1);
 		resultsOfExaminationtsList.add(resultsOfExamination2);
 		resultsOfExaminationtsList.add(resultsOfExamination3);
 		
 		VTReport vtReport2 = new VTReport();
-		vtReport2.setIssueDate(LocalDateTime.now().minusDays(5));
+		
+		vtReport2.setIssueDate(LocalDateTime.now().minusDays(6));
 		vtReport2.setIssuedBy("Company");
 		vtReport2.setFileName("file_name");
 		vtReport2.setCustomer(customer2);
 		vtReport2.setReportNumber("34/NDT/17/2");
 		vtReport2.setPlace("Workshop");
 		vtReport2.setOrderNumber("Order no.2");
-		vtReport2.setExaminatedObject("Pipline");
-		vtReport2.setExaminationDate(LocalDateTime.now().minusDays(6));
+		vtReport2.setExaminatedObject("Pipeline");
+		vtReport2.setExaminationDate(LocalDateTime.now().minusDays(8));
 		vtReport2.setAprover(employee2);
 		vtReport2.setPerformer(employee3);
 		vtReport2.setLighting(1000);
-		vtReport2.setMeasuringEquipmentList(vtMeasuringEquipments);
-		vtReport2.setTechnicalDocumentList(vtTechnicalDocuments);
-		vtReport2.setQualityLevel(QualityLevel.C);
 		
+		measuringEquipment4.setReport(vtReport2);
+		measuringEquipment5.setReport(vtReport2);
+		
+		List<MeasuringEquipment> vtMeasuringEquipments2 = new ArrayList<>();
+		vtMeasuringEquipments2.add(measuringEquipment4);
+		vtMeasuringEquipments2.add(measuringEquipment5);
+		
+		vtReport2.setMeasuringEquipmentList(vtMeasuringEquipments2);
+		
+		technicalDocument6.setReport(vtReport2);
+		technicalDocument7.setReport(vtReport2);
+		
+		List<TechnicalDocument> vtTechnicalDocuments2 = new ArrayList<>();
+		vtTechnicalDocuments2.add(technicalDocument6);
+		vtTechnicalDocuments2.add(technicalDocument7);
+		
+		vtReport2.setTechnicalDocumentList(vtTechnicalDocuments2);
+		vtReport2.setQualityLevel(QualityLevel.B);
+		vtReport2.setTypeOfTesting(TypeOfTesting.VT);
+
 		ResultsOfExamination resultsOfExamination4 = new ResultsOfExamination();
-		resultsOfExamination4.setElementNumber("A1");
+		resultsOfExamination4.setElementNumber("P1");
 		resultsOfExamination4.setDistanceFromReferencePoint("-");
 		resultsOfExamination4.setIndicationLength("-");
 		resultsOfExamination4.setImperfectionSymbol("-");
 		resultsOfExamination4.setResult(ExaminationResult.OK);
 		resultsOfExamination4.setRemarks("-");
 		resultsOfExamination4.setReport(vtReport2);
-		
+
 		ResultsOfExamination resultsOfExamination5 = new ResultsOfExamination();
-		resultsOfExamination5.setElementNumber("A2");
+		resultsOfExamination5.setElementNumber("P2");
 		resultsOfExamination5.setDistanceFromReferencePoint("-");
 		resultsOfExamination5.setIndicationLength("-");
 		resultsOfExamination5.setImperfectionSymbol("-");
 		resultsOfExamination5.setResult(ExaminationResult.OK);
 		resultsOfExamination5.setRemarks("-");
 		resultsOfExamination5.setReport(vtReport2);
-		
+
 		ResultsOfExamination resultsOfExamination6 = new ResultsOfExamination();
-		resultsOfExamination6.setElementNumber("A3");
-		resultsOfExamination6.setDistanceFromReferencePoint("-");
-		resultsOfExamination6.setIndicationLength("-");
-		resultsOfExamination6.setImperfectionSymbol("-");
-		resultsOfExamination6.setResult(ExaminationResult.OK);
+		resultsOfExamination6.setElementNumber("P3");
+		resultsOfExamination6.setDistanceFromReferencePoint("20");
+		resultsOfExamination6.setIndicationLength("10");
+		resultsOfExamination6.setImperfectionSymbol("2011");
+		resultsOfExamination6.setResult(ExaminationResult.NOK);
 		resultsOfExamination6.setRemarks("-");
 		resultsOfExamination6.setReport(vtReport2);
-		
+
 		List<ResultsOfExamination> resultsOfExaminationtsList2 = new ArrayList<>();
 		resultsOfExaminationtsList2.add(resultsOfExamination4);
 		resultsOfExaminationtsList2.add(resultsOfExamination5);
 		resultsOfExaminationtsList2.add(resultsOfExamination6);
+	
 		
-		vtReport2.setResultsOfExaminationtsList(resultsOfExaminationtsList);
-
 		userRepository.save(user1);
 		userRepository.save(user2);
 		userRepository.save(user3);
@@ -954,28 +970,31 @@ public class ExampleDataBase {
 		medicalExaminationRepository.save(medicalExamination3);
 		medicalExaminationRepository.save(medicalExamination4);
 		medicalExaminationRepository.save(medicalExamination5);
-		
-		
-		vtReportRepository.save(vtReport1);
-		
-		technicalDocumentRepository.save(technicalDocument1);
-		technicalDocumentRepository.save(technicalDocument2);
-		technicalDocumentRepository.save(technicalDocument3);
-		technicalDocumentRepository.save(technicalDocument4);
-		technicalDocumentRepository.save(technicalDocument5);
 	
+		vtReportRepository.save(vtReport1);
+		vtReportRepository.save(vtReport2);
 		
 		measuringEquipmentRepository.save(measuringEquipment1);
 		measuringEquipmentRepository.save(measuringEquipment2);
 		measuringEquipmentRepository.save(measuringEquipment3);
 		measuringEquipmentRepository.save(measuringEquipment4);
 		measuringEquipmentRepository.save(measuringEquipment5);
+
+	
 		
+		resultOfExaminationRepository.save(resultsOfExamination1);
+		resultOfExaminationRepository.save(resultsOfExamination2);
+		resultOfExaminationRepository.save(resultsOfExamination3);
 		
-		
-		
-		
-		
+		resultOfExaminationRepository.save(resultsOfExamination4);
+		resultOfExaminationRepository.save(resultsOfExamination5);
+		resultOfExaminationRepository.save(resultsOfExamination6);
+
+		technicalDocumentRepository.save(technicalDocument1);
+		technicalDocumentRepository.save(technicalDocument2);
+		technicalDocumentRepository.save(technicalDocument3);
+		technicalDocumentRepository.save(technicalDocument4);
+		technicalDocumentRepository.save(technicalDocument5);
 
 		probeRepository.save(probe1);
 		probeRepository.save(probe2);
@@ -986,6 +1005,5 @@ public class ExampleDataBase {
 		
 		
 		
-
 	}
 }

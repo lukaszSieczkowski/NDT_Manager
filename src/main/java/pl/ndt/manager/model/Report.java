@@ -21,6 +21,7 @@ import javax.persistence.Table;
 
 import com.mysql.fabric.xmlrpc.Client;
 
+import pl.ndt.manager.model.enums.NdtMethod;
 import pl.ndt.manager.model.enums.QualityLevel;
 import pl.ndt.manager.model.enums.TypeOfTesting;
 
@@ -31,45 +32,47 @@ import pl.ndt.manager.model.enums.TypeOfTesting;
 public class Report extends Document {
 
 	@ManyToOne
-	@JoinColumn(name="id_client")
+	@JoinColumn(name = "id_client")
 	private Customer customer;
-	@Column(name="report_number")
+	@Column(name = "report_number")
 	private String reportNumber;
-	@Column(name="place")
+	@Column(name = "place")
 	private String place;
-	@Column(name="order_number")
+	@Column(name = "order_number")
 	private String orderNumber;
-	@Column(name="examinated_object")
+	@Column(name = "examinated_object")
 	private String examinatedObject;
-	@OneToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "report", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<MeasuringEquipment> measuringEquipmentList;
-	@OneToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "report", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<TechnicalDocument> technicalDocumentList;
-	@Column(name="examination_date")
+	@Column(name = "examination_date")
 	private LocalDateTime examinationDate;
-	@Column(name="quality_level")
+	@Column(name = "quality_level")
 	private QualityLevel qualityLevel;
 	@ManyToOne
-	@JoinColumn(name="id_employe_performer")	
+	@JoinColumn(name = "id_employe_performer")
 	private Employee performer;
 	@ManyToOne
-	@JoinColumn(name="id_employe_approver")
+	@JoinColumn(name = "id_employe_approver")
 	private Employee aprover;
+	@Column(name = "type_of_testing")
+	private TypeOfTesting typeOfTesting;
 
-	
-	@OneToMany(mappedBy="report",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "report", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<ResultsOfExamination> resultsOfExaminationtsList;
-	
+
 	public Report() {
 		super();
 	}
 
-	public Report(long id, LocalDateTime issueDate, String issuedBy, String fileName,Customer customer,String reportNumber,
-			String place,String orderNumber,String examinatedObject,List<MeasuringEquipment> measuringEquipmentList,
-			List<TechnicalDocument> technicalDocumentList,LocalDateTime examinationDate,Employee performer,Employee aprover,
+	public Report(long id, LocalDateTime issueDate, String issuedBy, String fileName, Customer customer,
+			String reportNumber, String place, String orderNumber, String examinatedObject,
+			List<MeasuringEquipment> measuringEquipmentList, List<TechnicalDocument> technicalDocumentList,
+			LocalDateTime examinationDate, Employee performer, Employee aprover,
 			List<ResultsOfExamination> resultsOfExaminationtsList) {
 		super(id, issueDate, issuedBy, fileName);
-		this.customer=customer;
+		this.customer = customer;
 		this.reportNumber = reportNumber;
 		this.place = place;
 		this.orderNumber = orderNumber;
@@ -122,7 +125,6 @@ public class Report extends Document {
 		this.examinatedObject = examinatedObject;
 	}
 
-
 	public List<MeasuringEquipment> getMeasuringEquipmentList() {
 		return measuringEquipmentList;
 	}
@@ -163,7 +165,6 @@ public class Report extends Document {
 		this.aprover = aprover;
 	}
 
-
 	public List<ResultsOfExamination> getResultsOfExaminationtsList() {
 		return resultsOfExaminationtsList;
 	}
@@ -179,6 +180,13 @@ public class Report extends Document {
 	public void setQualityLevel(QualityLevel qualityLevel) {
 		this.qualityLevel = qualityLevel;
 	}
-	
+
+	public TypeOfTesting getTypeOfTesting() {
+		return typeOfTesting;
+	}
+
+	public void setTypeOfTesting(TypeOfTesting typeOfTesting) {
+		this.typeOfTesting = typeOfTesting;
+	}
 
 }

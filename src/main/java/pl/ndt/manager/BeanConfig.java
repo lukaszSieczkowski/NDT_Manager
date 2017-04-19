@@ -9,6 +9,7 @@ import pl.ndt.manager.dto.DeviceDTO;
 import pl.ndt.manager.dto.DocumentDTO;
 import pl.ndt.manager.dto.EmployeeDTO;
 import pl.ndt.manager.dto.LocationDTO;
+import pl.ndt.manager.dto.ReportDTO;
 import pl.ndt.manager.dto.VerificationDTO;
 
 @Configuration
@@ -80,6 +81,17 @@ public class BeanConfig {
 	@Bean
 	public VerificationDTO getVerificationDTO(){
 		return new VerificationDTO();
+	}
+	
+	/**
+	 * Registers ReportDTO bean in Spring Container
+	 * 
+	 * @return reportDTO;
+	 */
+	
+	@Bean
+	public ReportDTO getReportDTO(){
+		return new ReportDTO();
 	}
 
 }

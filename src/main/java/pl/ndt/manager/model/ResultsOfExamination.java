@@ -7,38 +7,40 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import pl.ndt.manager.model.enums.ExaminationResult;
 
-
 @Entity
+@Table(name = "results_of_examination")
 public class ResultsOfExamination {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="element_number")
+	@Column(name = "element_number")
 	private String elementNumber;
-	@Column(name="distance_from_reference_point")
+	@Column(name = "distance_from_reference_point")
 	private String distanceFromReferencePoint;
-	@Column(name="indication_lemgth")
+	@Column(name = "indication_lemgth")
 	private String indicationLength;
-	@Column(name="imperfection_symbol")
+	@Column(name = "imperfection_symbol")
 	private String imperfectionSymbol;
-	@Column(name="results_of_examination")
+	@Column(name = "results_of_examination")
 	private ExaminationResult result;
-	@Column(name="remarks")
+	@Column(name = "remarks")
 	private String remarks;
 	@ManyToOne
-	@JoinColumn(name="id_results_of_exmination")
+	@JoinColumn(name = "id_results_of_exmination")
 	private Report report;
-	
+
 	public ResultsOfExamination() {
 		super();
 	}
-	
-	public ResultsOfExamination(Long id, String elementNumber, String distanceFromReferencePoint, String  indicationLength, String imperfectionSymbol,
-			ExaminationResult result, String remarks, Report report) {
+
+	public ResultsOfExamination(Long id, String elementNumber, String distanceFromReferencePoint,
+			String indicationLength, String imperfectionSymbol, ExaminationResult result, String remarks,
+			Report report) {
 		super();
 		this.id = id;
 		this.elementNumber = elementNumber;
@@ -66,7 +68,6 @@ public class ResultsOfExamination {
 		this.elementNumber = elementNumber;
 	}
 
-	
 	public String getDistanceFromReferencePoint() {
 		return distanceFromReferencePoint;
 	}
@@ -115,10 +116,4 @@ public class ResultsOfExamination {
 		this.report = report;
 	}
 
-	
-	
-	
-	
-	
-	
 }
