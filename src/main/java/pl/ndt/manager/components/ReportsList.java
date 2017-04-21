@@ -1,5 +1,6 @@
 package pl.ndt.manager.components;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Scope;
@@ -14,9 +15,10 @@ import pl.ndt.manager.dto.ReportDTO;
 public class ReportsList {
 
 	private List<ReportDTO> reports;
-
-	public ReportsList(List<ReportDTO> reports) {
-		this.reports = reports;
+	private ReportDTO reportDTO;
+	
+	public ReportsList() {
+		reports = new ArrayList<>();
 	}
 
 	public List<ReportDTO> getReports() {
@@ -27,4 +29,13 @@ public class ReportsList {
 		this.reports = reports;
 	}
 
+	public ReportDTO getReportDTO() {
+		return reportDTO;
+	}
+
+	public void setReportDTO(ReportDTO reportDTO) {
+		this.reportDTO = reportDTO;
+	}
+
+	
 }

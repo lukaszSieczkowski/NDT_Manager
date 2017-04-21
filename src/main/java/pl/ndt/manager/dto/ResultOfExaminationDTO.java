@@ -50,6 +50,12 @@ public class ResultOfExaminationDTO {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	@Override
+	public String toString() {
+		return "ResultOfExaminationDTO [elementNumber=" + elementNumber + ", distanceFromReferencePoint="
+				+ distanceFromReferencePoint + ", indicationLength=" + indicationLength + ", imperfectionSymbol="
+				+ imperfectionSymbol + ", result=" + result + ", remarks=" + remarks + "]";
+	}
 	
 	
 	

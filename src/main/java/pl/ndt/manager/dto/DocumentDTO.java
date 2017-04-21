@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
 public class DocumentDTO {
-	protected long id;
+	protected Long id;
 	@NotBlank(message = "This field may not be empty")
 	@Size(max = 10, min = 10, message = "Incorect date format")
 	protected String issueDate;

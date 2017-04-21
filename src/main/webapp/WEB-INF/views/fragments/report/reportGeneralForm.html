@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	th:fragment="reportGeneralForm">
+<head>
+
+</head>
+
+<body>
+	<div class="col-md-12">
+		<div class="form-group col-md-6">
+			<label for="customerId">Customer</label>
+			 <select class="form-control" th:field="*{customerId}" >
+			 	<option value="">----  Select Customer  ----</option>
+				<option  th:each="customer : ${customers.getCustomers()}"
+						th:value="${customer.id}" th:text="${customer.customerName}" ></option>
+			</select>
+			<p class="text-center alert" th:if="${#fields.hasErrors('customerId')}" th:errors="*{customerId}"></p>
+		</div>
+		<div class="form-group col-md-6">
+			<label for="orderNumber">Order number</label> 
+			<input type="text" class="form-control" id="orderNumber" th:field="*{orderNumber}" placeholder="Order number">
+			<p class="text-center alert" th:if="${#fields.hasErrors('orderNumber')}" th:errors="*{orderNumber}"></p>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group col-md-6">
+			<label for="place">Examiantion place</label> 
+			<input type="text" class="form-control" id="place" th:field="*{place}" placeholder="Adress or place description">
+			<p class="text-center alert" th:if="${#fields.hasErrors('place')}" th:errors="*{place}"></p>
+		</div>
+		<div class="date form-group col-md-6 ">
+				<label for="examinationDate">Examination Date</label>
+				<input type="text" class="form-control" id="issueDate" th:field="*{examinationDate}" placeholder="dd-mm-yyyy">
+				<p class="text-center alert" th:if="${#fields.hasErrors('examinationDate')}" th:errors="*{examinationDate}"></p>	
+			</div>
+	</div>
+	<div class="col-md-12">
+		<div class="form-group col-md-6">
+			<label for="qualityLevel">Quality Level acc. ISO 5817</label>
+			<select class="form-control" th:field="*{qualityLevel}">
+				<option value="">----  Select Quality Level  ----</option>
+				<option  th:each="level: ${T(pl.ndt.manager.model.enums.QualityLevel).values()}"
+				 		th:value="${level}" th:text="${level.getValue()}"></option>
+			</select>
+			<p class="text-center alert" th:if="${#fields.hasErrors('qualityLevel')}" th:errors="*{qualityLevel}"></p>
+		</div>
+		<div class="form-group col-md-6">
+		<label for="typeOfTesting">MDT Method</label>
+		<select class="form-control" th:field="*{typeOfTesting}">
+			<option value="">----  Select NDT Method  ----</option>
+			<option  th:each="ndtMethod: ${T(pl.ndt.manager.model.enums.TypeOfTesting).values()}"
+				 		th:value="${ndtMethod}" th:text="${ndtMethod.getValue()}"></option>
+		</select>
+		<p class="text-center alert" th:if="${#fields.hasErrors('typeOfTesting')}" th:errors="*{typeOfTesting}"></p>
+		</div>
+	</div>
+	
+	
+	<p class="alert text-center" th:text="${alert}"></p>
+	<div class="form-group col-md-6">
+		<label ></label>
+	</div>
+			
+</body>
+</html>

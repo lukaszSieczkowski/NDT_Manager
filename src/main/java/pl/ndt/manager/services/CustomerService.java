@@ -64,6 +64,9 @@ public class CustomerService {
 		customer.setId(customerDTO.getId());
 		customer.setCustomerName(customerDTO.getCustomerName());
 		customer.setAddress(address);
+		
+		Long customerNumber =customerRepository.count();
+		customer.setCustomerNumber(customerNumber);
 
 		customerRepository.save(customer);
 	}

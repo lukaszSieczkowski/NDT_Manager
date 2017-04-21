@@ -10,6 +10,7 @@ import pl.ndt.manager.dto.DocumentDTO;
 import pl.ndt.manager.dto.EmployeeDTO;
 import pl.ndt.manager.dto.LocationDTO;
 import pl.ndt.manager.dto.ReportDTO;
+import pl.ndt.manager.dto.ResultOfExaminationDTO;
 import pl.ndt.manager.dto.VerificationDTO;
 
 @Configuration
@@ -94,4 +95,14 @@ public class BeanConfig {
 		return new ReportDTO();
 	}
 
+	
+	/**
+	 * Registers ResultsOfExaminationDTO bean in Spring Container
+	 * 
+	 * @return reportDTO;
+	 */
+	@Bean
+	public ResultOfExaminationDTO getResultsOfExaminationDTO(){
+		return new ResultOfExaminationDTO();
+	}
 }

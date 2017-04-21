@@ -36,11 +36,11 @@ public class Report extends Document {
 	private Customer customer;
 	@Column(name = "report_number")
 	private String reportNumber;
-	@Column(name = "place")
+	@Column(name = "place",length=200)
 	private String place;
-	@Column(name = "order_number")
+	@Column(name = "order_number",length=50)
 	private String orderNumber;
-	@Column(name = "examinated_object")
+	@Column(name = "examinated_object",length=200)
 	private String examinatedObject;
 	@OneToMany(mappedBy = "report", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<MeasuringEquipment> measuringEquipmentList;
@@ -189,4 +189,13 @@ public class Report extends Document {
 		this.typeOfTesting = typeOfTesting;
 	}
 
+	@Override
+	public String toString() {
+		return "Report [customer=" + customer + ", reportNumber=" + reportNumber + ", place=" + place + ", orderNumber="
+				+ orderNumber + ", examinatedObject=" + examinatedObject + ", examinationDate="
+				+ examinationDate + ", qualityLevel=" + qualityLevel + ", performer=" + performer + ", aprover="
+				+ aprover + ", typeOfTesting=" + typeOfTesting + "]";
+	}
+
+	
 }

@@ -129,6 +129,7 @@ public class ExampleDataBase {
 		address3.setZipCode("41-000");
 
 		customer1.setCustomerName("Company No.1");
+		customer1.setCustomerNumber(1L);
 		address3.setCustomer(customer1);
 		customer1.setAddress(address3);
 
@@ -141,6 +142,7 @@ public class ExampleDataBase {
 		address4.setZipCode("43-200");
 
 		customer2.setCustomerName("Company No.2");
+		customer2.setCustomerNumber(2L);
 		address4.setCustomer(customer2);
 		customer2.setAddress(address4);
 
@@ -153,6 +155,7 @@ public class ExampleDataBase {
 		address5.setZipCode("41-400");
 
 		customer3.setCustomerName("Company No.3");
+		customer3.setCustomerNumber(3L);
 		address5.setCustomer(customer3);
 		customer3.setAddress(address5);
 
@@ -165,6 +168,7 @@ public class ExampleDataBase {
 		address6.setZipCode("45-200");
 
 		customer4.setCustomerName("Company No.4");
+		customer4.setCustomerNumber(4L);
 		address6.setCustomer(customer4);
 		customer4.setAddress(address6);
 
@@ -177,6 +181,7 @@ public class ExampleDataBase {
 		address7.setZipCode("41-200");
 
 		customer5.setCustomerName("Company No.5");
+		customer5.setCustomerNumber(5L);
 		address7.setCustomer(customer5);
 		customer5.setAddress(address7);
 

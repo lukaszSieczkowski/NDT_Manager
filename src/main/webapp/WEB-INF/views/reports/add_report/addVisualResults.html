@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<link href="resources/css/main.css" rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="jquery.timepicker.js"></script>
+
+<script src="resources/js/datepicker.js">
+
+	
+</script>
+
+</head>
+
+</body>
+<div th:switch="${session.logedEmployee.role}">
+	<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+		<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+	</p>
+	<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+		<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+	</p>
+</div>
+
+<div class="col-md-12 ">
+	<th:block
+			th:include="fragments/report/showResults :: showResults"></th:block>
+</div>
+<div class="col-md-12 ">
+	<form th:action="@{addExaminationResult}" th:object="${resultsOfExaminationDTO}"
+		method="post" enctype="multipart/form-data">
+			<th:block th:include="fragments/report/reportVisualResultsForm :: reportVisualResultsForm"></th:block>
+		<div class="col-md-8 ">
+			
+		</div>
+	</form>
+	<div class="col-md-8 ">
+				<a th:href="@{saveVisualCertificate}"><input type="submit"
+				class="action_button" value="Save"></a>
+			</div>
+</div>
+</body>
+</html>

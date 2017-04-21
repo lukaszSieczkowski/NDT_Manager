@@ -210,3 +210,15 @@ h3{
 .margin{
 	height: 100px;
 }
+.small_label{
+	font-size: 12px;	
+
+}
+.table-borderless>tbody>tr>td, 
+.table-borderless>tbody>tr>th, 
+.table-borderless>tfoot>tr>td, 
+.table-borderless>tfoot>tr>th, 
+.table-borderless>thead>tr>td, 
+.table-borderless>thead>tr>th {
+    border:0;
+}

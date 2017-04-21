@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	th:fragment="reportVisualResultsForm">
+<head>
+
+</head>
+
+<body>
+
+	<table class="table table-borderless>">
+		<tr>
+			<th><label class="small_label" for="elementNumber">Element number</label></th>
+			<th><label class="small_label" for="distanceFromReferencePoint">Distance
+					from 0</label></th>
+			<th><label class="small_label" for="indicationLength">Indication length</label></th>
+			<th><label class="small_label" for="imperfectionSymbol">Defect Symbol
+					acc.ISO 5817</label></th>
+			<th><label class="small_label" for="remarks">Remarks</label></th>
+			<th><label class="small_label" for="result">Result</label></th>
+			<th></th>
+		</tr>
+		<tr>
+			<td><input class="form-control input-sm" type="text"  id="elementNumber"
+				th:field="*{elementNumber}" placeholder="Order number">
+				<p class="text-center alert"
+					th:if="${#fields.hasErrors('elementNumber')}"
+					th:errors="*{elementNumber}"></p></td>
+			<td><input type="text" class="form-control input-sm"
+				id="distanceFromReferencePoint"
+				th:field="*{distanceFromReferencePoint}" placeholder="Length (mm)">
+				<p class="text-center alert"
+					th:if="${#fields.hasErrors('distanceFromReferencePoint')}"
+					th:errors="*{distanceFromReferencePoint}"></p></td>
+			<td><input type="text" class="form-control input-sm"
+				id="indicationLength" th:field="*{indicationLength}"
+				placeholder="Length (mm)">
+				<p class="text-center alert"
+					th:if="${#fields.hasErrors('indicationLength')}"
+					th:errors="*{indicationLength}"></p></td>
+			<td><input type="text" class="form-control input-sm"
+				id="imperfectionSymbol" th:field="*{imperfectionSymbol}"
+				placeholder="Enter code">
+				<p class="text-center alert"
+					th:if="${#fields.hasErrors('imperfectionSymbol')}"
+					th:errors="*{imperfectionSymbol}"></p></td>
+			<td><input type="text" class="form-control input-sm" id="remarks"
+				th:field="*{remarks}" placeholder="Remarks">
+				<p class="text-center alert" th:if="${#fields.hasErrors('remarks')}"
+					th:errors="*{remarks}"></p></td>
+			<td><select class="form-control input-sm" th:field="*{result}">
+					<option value="">---- Select Quality Level ----</option>
+					<option
+						th:each="result: ${T(pl.ndt.manager.model.enums.ExaminationResult).values()}"
+						th:value="${result}" th:text="${result.getValue()}"></option>
+			</select>
+				<p class="text-center alert" th:if="${#fields.hasErrors('result')}"
+					th:errors="*{result}"></p></td>
+			<td><input type="submit"
+					class="action_button action_button1" value="Add Next"></td>
+
+
+		</tr>
+	</table>
+
+
+
+	<p class="alert text-center" th:text="${alert}"></p>
+	<div class="form-group col-md-6">
+		<label></label>
+	</div>
+
+</body>
+</html>

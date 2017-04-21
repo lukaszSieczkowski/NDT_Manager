@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	th:fragment="showResults">
+
+<head>
+<meta charset="UTF-8">
+
+</head>
+<body>
+	<div class="col-md-8 col-md-offset-2" >
+	
+	<table class="table table-borderless">
+		<tr th:each="result : ${results.getResults()}">
+			<td th:text="${result.elementNumber}"></td>
+			<td th:text="${result.distanceFromReferencePoint}"></td>
+			<td th:text="${result.indicationLength}"></td>
+			<td th:text="${result.imperfectionSymbol}"></td>
+			<td th:text="${result.remarks}"></td>
+			<td th:text="${result.result}"></td>
+		</tr>
+	</table>
+	</div>
+</body>
+</html>

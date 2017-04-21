@@ -28,6 +28,7 @@ public class Customer {
 	private Address address;
 	@OneToMany(mappedBy="customer",fetch=FetchType.LAZY,cascade = CascadeType.ALL)
 	private List <Report> reports;
+	private Long customerNumber;
 	
 	public Customer() {
 		super();
@@ -55,6 +56,20 @@ public class Customer {
 	}
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+	
+	
+	public List<Report> getReports() {
+		return reports;
+	}
+	public void setReports(List<Report> reports) {
+		this.reports = reports;
+	}
+	public Long getCustomerNumber() {
+		return customerNumber;
+	}
+	public void setCustomerNumber(Long customerNumber) {
+		this.customerNumber = customerNumber;
 	}
 	@Override
 	public String toString() {

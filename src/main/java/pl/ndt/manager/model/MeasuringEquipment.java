@@ -84,4 +84,10 @@ public class MeasuringEquipment extends Device {
 		this.report = report;
 	}
 
+	@Override
+	public String toString() {
+		return "MeasuringEquipment [deviceCode=" + deviceCode + ", ferquencyOfVerification=" + ferquencyOfVerification
+				+ "]";
+	}
+
 }

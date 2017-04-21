@@ -3,52 +3,51 @@ package pl.ndt.manager.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import pl.ndt.manager.model.enums.NdtMethod;
+import pl.ndt.manager.model.enums.TypeOfTesting;
 
 public class ReportDTO {
 
-	private long id;
-	private String customer;
-	private String reportNumber;
+	private Long id;
+	private String customerName;
+	private Long customerId;
 	private String place;
 	private String orderNumber;
+	private String qualityLevel;
+	private TypeOfTesting typeOfTesting;
+	private String reportNumber;
 	private String examinatedObject;
-	private List<EquipmentDTO> measuringEquipmentList;
+	private List<String> measuringEquipmentList;
 	private List<String> technicalDocumentList;
 	private String examinationDate;
-	private String qualityLevel;
 	private String performer;
 	private String aprover;
-	private String typeOfTesting;
-
 	private List<ResultOfExaminationDTO> resultsOfExaminationtsList;
 
 	public ReportDTO() {
 		super();
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getCustomer() {
-		return customer;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setCustomer(String customer) {
-		this.customer = customer;
-	}
-
-	public String getReportNumber() {
-		return reportNumber;
-	}
-
-	public void setReportNumber(String reportNumber) {
-		this.reportNumber = reportNumber;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 	public String getPlace() {
@@ -67,6 +66,30 @@ public class ReportDTO {
 		this.orderNumber = orderNumber;
 	}
 
+	public String getQualityLevel() {
+		return qualityLevel;
+	}
+
+	public void setQualityLevel(String qualityLevel) {
+		this.qualityLevel = qualityLevel;
+	}
+
+	public TypeOfTesting getTypeOfTesting() {
+		return typeOfTesting;
+	}
+
+	public void setTypeOfTesting(TypeOfTesting typeOfTesting) {
+		this.typeOfTesting = typeOfTesting;
+	}
+
+	public String getReportNumber() {
+		return reportNumber;
+	}
+
+	public void setReportNumber(String reportNumber) {
+		this.reportNumber = reportNumber;
+	}
+
 	public String getExaminatedObject() {
 		return examinatedObject;
 	}
@@ -75,11 +98,30 @@ public class ReportDTO {
 		this.examinatedObject = examinatedObject;
 	}
 
-	public List<EquipmentDTO> getMeasuringEquipmentList() {
+	
+
+	
+	public String getPerformer() {
+		return performer;
+	}
+
+	public void setPerformer(String performer) {
+		this.performer = performer;
+	}
+
+	public String getAprover() {
+		return aprover;
+	}
+
+	public void setAprover(String aprover) {
+		this.aprover = aprover;
+	}
+
+	public List<String> getMeasuringEquipmentList() {
 		return measuringEquipmentList;
 	}
 
-	public void setMeasuringEquipmentList(List<EquipmentDTO> measuringEquipmentList) {
+	public void setMeasuringEquipmentList(List<String> measuringEquipmentList) {
 		this.measuringEquipmentList = measuringEquipmentList;
 	}
 
@@ -99,29 +141,6 @@ public class ReportDTO {
 		this.examinationDate = examinationDate;
 	}
 
-	public String getQualityLevel() {
-		return qualityLevel;
-	}
-
-	public void setQualityLevel(String qualityLevel) {
-		this.qualityLevel = qualityLevel;
-	}
-
-	public String getPerformer() {
-		return performer;
-	}
-
-	public void setPerformer(String performer) {
-		this.performer = performer;
-	}
-
-	public String getAprover() {
-		return aprover;
-	}
-
-	public void setAprover(String aprover) {
-		this.aprover = aprover;
-	}
 
 	public List<ResultOfExaminationDTO> getResultsOfExaminationtsList() {
 		return resultsOfExaminationtsList;
@@ -131,22 +150,15 @@ public class ReportDTO {
 		this.resultsOfExaminationtsList = resultsOfExaminationtsList;
 	}
 
-	public String getTypeOfTesting() {
-		return typeOfTesting;
+	
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setTypeOfTesting(String typeOfTesting) {
-		this.typeOfTesting = typeOfTesting;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
-	@Override
-	public String toString() {
-		return "ReportDTO [customer=" + customer + ", reportNumber=" + reportNumber + ", place=" + place
-				+ ", orderNumber=" + orderNumber + ", examinatedObject=" + examinatedObject
-				+ ", measuringEquipmentList=" + measuringEquipmentList + ", technicalDocumentList="
-				+ technicalDocumentList + ", examinationDate=" + examinationDate + ", qualityLevel=" + qualityLevel
-				+ ", performer=" + performer + ", aprover=" + aprover + ", neMethod=" + typeOfTesting
-				+ ", resultsOfExaminationtsList=" + resultsOfExaminationtsList + "]";
-	}
-
+	
+	
 }
