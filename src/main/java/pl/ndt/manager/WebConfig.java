@@ -1,6 +1,5 @@
 package pl.ndt.manager;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.BeansException;

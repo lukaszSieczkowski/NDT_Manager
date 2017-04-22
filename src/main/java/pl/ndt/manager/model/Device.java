@@ -28,6 +28,7 @@ import pl.ndt.manager.model.enums.TypeOfTesting;
 public class Device {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_device")
 	protected Long id;
 	@Column(name = "name",length=30)
 	protected String name;

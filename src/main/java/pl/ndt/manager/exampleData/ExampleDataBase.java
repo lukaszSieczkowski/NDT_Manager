@@ -22,6 +22,7 @@ import pl.ndt.manager.model.MedicalExamination;
 import pl.ndt.manager.model.NdtCertificate;
 import pl.ndt.manager.model.PersonalDocument;
 import pl.ndt.manager.model.Probe;
+import pl.ndt.manager.model.Report;
 import pl.ndt.manager.model.ResultsOfExamination;
 import pl.ndt.manager.model.TechnicalDocument;
 import pl.ndt.manager.model.User;
@@ -591,6 +592,12 @@ public class ExampleDataBase {
 		equipmentVerification3.setMeasuringEquipment(measuringEquipment1);
 		equipmentVerification3.setDoneBy("Company");
 
+		List<Verification> verificationList1 = new ArrayList<>();
+		verificationList1.add(equipmentVerification1);
+		verificationList1.add(equipmentVerification2);
+		verificationList1.add(equipmentVerification3);
+		measuringEquipment1.setEquipmentVerificationList(verificationList1);
+
 		MeasuringEquipment measuringEquipment2 = new MeasuringEquipment();
 		measuringEquipment2.setId(1L);
 		measuringEquipment2.setLocation(location1);
@@ -723,12 +730,6 @@ public class ExampleDataBase {
 		equipmentVerification11.setMeasuringEquipment(measuringEquipment5);
 		equipmentVerification11.setDoneBy("Company");
 
-		List<Verification> verificationList1 = new ArrayList<>();
-		verificationList1.add(equipmentVerification1);
-		verificationList1.add(equipmentVerification2);
-		verificationList1.add(equipmentVerification3);
-		measuringEquipment1.setEquipmentVerificationList(verificationList1);
-
 		List<Verification> verificationList2 = new ArrayList<>();
 		verificationList2.add(equipmentVerification4);
 		verificationList2.add(equipmentVerification5);
@@ -810,7 +811,7 @@ public class ExampleDataBase {
 		probe5.setTypeOfTesting(TypeOfTesting.UT);
 
 		VTReport vtReport1 = new VTReport();
-		
+
 		vtReport1.setIssueDate(LocalDateTime.now());
 		vtReport1.setIssuedBy("Company");
 		vtReport1.setFileName("file_name");
@@ -823,21 +824,8 @@ public class ExampleDataBase {
 		vtReport1.setAprover(employee1);
 		vtReport1.setPerformer(employee2);
 		vtReport1.setLighting(1200);
-			
-		List<MeasuringEquipment> vtMeasuringEquipments = new ArrayList<>();
-		vtMeasuringEquipments.add(measuringEquipment4);
-		vtMeasuringEquipments.add(measuringEquipment5);
-		
-		vtReport1.setMeasuringEquipmentList(vtMeasuringEquipments);
-		
-		technicalDocument6.setReport(vtReport1);
-		technicalDocument7.setReport(vtReport1);
-		
-		List<TechnicalDocument> vtTechnicalDocuments = new ArrayList<>();
-		vtTechnicalDocuments.add(technicalDocument6);
-		vtTechnicalDocuments.add(technicalDocument7);
-		
-		vtReport1.setTechnicalDocumentList(vtTechnicalDocuments);
+		vtReport1.setMeasuringEquipment(measuringEquipment5);
+		vtReport1.setTechnicalDocument(technicalDocument7);
 		vtReport1.setQualityLevel(QualityLevel.B);
 		vtReport1.setTypeOfTesting(TypeOfTesting.VT);
 
@@ -872,9 +860,9 @@ public class ExampleDataBase {
 		resultsOfExaminationtsList.add(resultsOfExamination1);
 		resultsOfExaminationtsList.add(resultsOfExamination2);
 		resultsOfExaminationtsList.add(resultsOfExamination3);
-		
+
 		VTReport vtReport2 = new VTReport();
-		
+
 		vtReport2.setIssueDate(LocalDateTime.now().minusDays(6));
 		vtReport2.setIssuedBy("Company");
 		vtReport2.setFileName("file_name");
@@ -887,24 +875,9 @@ public class ExampleDataBase {
 		vtReport2.setAprover(employee2);
 		vtReport2.setPerformer(employee3);
 		vtReport2.setLighting(1000);
-		
-		measuringEquipment4.setReport(vtReport2);
-		measuringEquipment5.setReport(vtReport2);
-		
-		List<MeasuringEquipment> vtMeasuringEquipments2 = new ArrayList<>();
-		vtMeasuringEquipments2.add(measuringEquipment4);
-		vtMeasuringEquipments2.add(measuringEquipment5);
-		
-		vtReport2.setMeasuringEquipmentList(vtMeasuringEquipments2);
-		
-		technicalDocument6.setReport(vtReport2);
-		technicalDocument7.setReport(vtReport2);
-		
-		List<TechnicalDocument> vtTechnicalDocuments2 = new ArrayList<>();
-		vtTechnicalDocuments2.add(technicalDocument6);
-		vtTechnicalDocuments2.add(technicalDocument7);
-		
-		vtReport2.setTechnicalDocumentList(vtTechnicalDocuments2);
+		vtReport2.setMeasuringEquipment(measuringEquipment4);
+		vtReport2.setTechnicalDocument(technicalDocument6);
+
 		vtReport2.setQualityLevel(QualityLevel.B);
 		vtReport2.setTypeOfTesting(TypeOfTesting.VT);
 
@@ -939,8 +912,7 @@ public class ExampleDataBase {
 		resultsOfExaminationtsList2.add(resultsOfExamination4);
 		resultsOfExaminationtsList2.add(resultsOfExamination5);
 		resultsOfExaminationtsList2.add(resultsOfExamination6);
-	
-		
+
 		userRepository.save(user1);
 		userRepository.save(user2);
 		userRepository.save(user3);
@@ -975,25 +947,6 @@ public class ExampleDataBase {
 		medicalExaminationRepository.save(medicalExamination3);
 		medicalExaminationRepository.save(medicalExamination4);
 		medicalExaminationRepository.save(medicalExamination5);
-	
-		vtReportRepository.save(vtReport1);
-		vtReportRepository.save(vtReport2);
-		
-		measuringEquipmentRepository.save(measuringEquipment1);
-		measuringEquipmentRepository.save(measuringEquipment2);
-		measuringEquipmentRepository.save(measuringEquipment3);
-		measuringEquipmentRepository.save(measuringEquipment4);
-		measuringEquipmentRepository.save(measuringEquipment5);
-
-	
-		
-		resultOfExaminationRepository.save(resultsOfExamination1);
-		resultOfExaminationRepository.save(resultsOfExamination2);
-		resultOfExaminationRepository.save(resultsOfExamination3);
-		
-		resultOfExaminationRepository.save(resultsOfExamination4);
-		resultOfExaminationRepository.save(resultsOfExamination5);
-		resultOfExaminationRepository.save(resultsOfExamination6);
 
 		technicalDocumentRepository.save(technicalDocument1);
 		technicalDocumentRepository.save(technicalDocument2);
@@ -1001,14 +954,28 @@ public class ExampleDataBase {
 		technicalDocumentRepository.save(technicalDocument4);
 		technicalDocumentRepository.save(technicalDocument5);
 
+		vtReportRepository.save(vtReport1);
+		vtReportRepository.save(vtReport2);
+
+		measuringEquipmentRepository.save(measuringEquipment1);
+		measuringEquipmentRepository.save(measuringEquipment2);
+		measuringEquipmentRepository.save(measuringEquipment3);
+		measuringEquipmentRepository.save(measuringEquipment4);
+		measuringEquipmentRepository.save(measuringEquipment5);
+
+		resultOfExaminationRepository.save(resultsOfExamination1);
+		resultOfExaminationRepository.save(resultsOfExamination2);
+		resultOfExaminationRepository.save(resultsOfExamination3);
+
+		resultOfExaminationRepository.save(resultsOfExamination4);
+		resultOfExaminationRepository.save(resultsOfExamination5);
+		resultOfExaminationRepository.save(resultsOfExamination6);
+
 		probeRepository.save(probe1);
 		probeRepository.save(probe2);
 		probeRepository.save(probe3);
 		probeRepository.save(probe4);
 		probeRepository.save(probe5);
-		
-		
-		
-		
+
 	}
 }

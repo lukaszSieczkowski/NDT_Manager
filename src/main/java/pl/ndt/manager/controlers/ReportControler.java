@@ -136,8 +136,8 @@ public class ReportControler {
 		if (!bindingResult.hasErrors()) {
 			VisualReportDTO visualReportDTO = (VisualReportDTO) reportsList.getReportDTO();
 			visualReportDTO.setExaminatedObject(visualReportDetailsDTO.getExaminatedObject());
-			visualReportDTO.setTechnicalDocumentList(visualReportDetailsDTO.getTechnicalDocumentList());
-			visualReportDTO.setMeasuringEquipmentList(visualReportDetailsDTO.getMeasuringEquipmentList());
+			visualReportDTO.setTechnicalDocument(visualReportDetailsDTO.getTechnicalDocument());
+			visualReportDTO.setMeasuringEquipment(visualReportDetailsDTO.getMeasuringEquipment());
 			visualReportDTO.setAprover(visualReportDetailsDTO.getAproverEmail());
 			visualReportDTO.setPerformer(visualReportDetailsDTO.getPerformerEmail());
 			visualReportDTO.setLighting(visualReportDetailsDTO.getLighting());

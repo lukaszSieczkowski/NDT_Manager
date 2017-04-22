@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -42,10 +44,12 @@ public class Report extends Document {
 	private String orderNumber;
 	@Column(name = "examinated_object",length=200)
 	private String examinatedObject;
-	@OneToMany(mappedBy = "report", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<MeasuringEquipment> measuringEquipmentList;
-	@OneToMany(mappedBy = "report", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<TechnicalDocument> technicalDocumentList;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "equipment_id")
+	private MeasuringEquipment measuringEquipment;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "technical_id")
+	private TechnicalDocument technicalDocument;
 	@Column(name = "examination_date")
 	private LocalDateTime examinationDate;
 	@Column(name = "quality_level")
@@ -66,24 +70,6 @@ public class Report extends Document {
 		super();
 	}
 
-	public Report(long id, LocalDateTime issueDate, String issuedBy, String fileName, Customer customer,
-			String reportNumber, String place, String orderNumber, String examinatedObject,
-			List<MeasuringEquipment> measuringEquipmentList, List<TechnicalDocument> technicalDocumentList,
-			LocalDateTime examinationDate, Employee performer, Employee aprover,
-			List<ResultsOfExamination> resultsOfExaminationtsList) {
-		super(id, issueDate, issuedBy, fileName);
-		this.customer = customer;
-		this.reportNumber = reportNumber;
-		this.place = place;
-		this.orderNumber = orderNumber;
-		this.examinatedObject = examinatedObject;
-		this.measuringEquipmentList = measuringEquipmentList;
-		this.technicalDocumentList = technicalDocumentList;
-		this.examinationDate = examinationDate;
-		this.performer = performer;
-		this.aprover = aprover;
-		this.resultsOfExaminationtsList = resultsOfExaminationtsList;
-	}
 
 	public Customer getCustomer() {
 		return customer;
@@ -125,21 +111,26 @@ public class Report extends Document {
 		this.examinatedObject = examinatedObject;
 	}
 
-	public List<MeasuringEquipment> getMeasuringEquipmentList() {
-		return measuringEquipmentList;
+	
+	public MeasuringEquipment getMeasuringEquipment() {
+		return measuringEquipment;
 	}
 
-	public void setMeasuringEquipmentList(List<MeasuringEquipment> measuringEquipmentList) {
-		this.measuringEquipmentList = measuringEquipmentList;
+
+	public void setMeasuringEquipment(MeasuringEquipment measuringEquipment) {
+		this.measuringEquipment = measuringEquipment;
 	}
 
-	public List<TechnicalDocument> getTechnicalDocumentList() {
-		return technicalDocumentList;
+
+	public TechnicalDocument getTechnicalDocument() {
+		return technicalDocument;
 	}
 
-	public void setTechnicalDocumentList(List<TechnicalDocument> technicalDocumentList) {
-		this.technicalDocumentList = technicalDocumentList;
+
+	public void setTechnicalDocument(TechnicalDocument technicalDocument) {
+		this.technicalDocument = technicalDocument;
 	}
+
 
 	public LocalDateTime getExaminationDate() {
 		return examinationDate;

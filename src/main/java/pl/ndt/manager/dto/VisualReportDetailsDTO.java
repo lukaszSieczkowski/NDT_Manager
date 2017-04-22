@@ -14,9 +14,9 @@ public class VisualReportDetailsDTO {
 	@NotBlank(message = "This field may not be empty")
 	private String examinatedObject;
 	@NotEmpty(message = "Select equipment")
-	private List<String> measuringEquipmentList;
+	private String measuringEquipment;
 	@NotEmpty(message = "Select standard")
-	private List<String> technicalDocumentList;
+	private String technicalDocument;
 	@NotEmpty(message = "Select employeer")
 	private String performerEmail;
 	@NotEmpty(message = "Select employee")
@@ -34,17 +34,20 @@ public class VisualReportDetailsDTO {
 	public void setExaminatedObject(String examinatedObject) {
 		this.examinatedObject = examinatedObject;
 	}
-	public List<String> getMeasuringEquipmentList() {
-		return measuringEquipmentList;
+	
+	
+	
+	public String getMeasuringEquipment() {
+		return measuringEquipment;
 	}
-	public void setMeasuringEquipmentList(List<String> measuringEquipmentList) {
-		this.measuringEquipmentList = measuringEquipmentList;
+	public void setMeasuringEquipment(String measuringEquipment) {
+		this.measuringEquipment = measuringEquipment;
 	}
-	public List<String> getTechnicalDocumentList() {
-		return technicalDocumentList;
+	public String getTechnicalDocument() {
+		return technicalDocument;
 	}
-	public void setTechnicalDocumentList(List<String> technicalDocumentList) {
-		this.technicalDocumentList = technicalDocumentList;
+	public void setTechnicalDocument(String technicalDocument) {
+		this.technicalDocument = technicalDocument;
 	}
 	public String getPerformerEmail() {
 		return performerEmail;

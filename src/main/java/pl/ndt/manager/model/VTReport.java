@@ -23,16 +23,7 @@ public class VTReport extends Report {
 
 	}
 
-	public VTReport(long id, LocalDateTime issueDate, String issuedBy, String fileName, Customer customer,
-			String reportNumber, String place, String orderNumber, String examinatedObject,
-			List<MeasuringEquipment> measuringEquipmentList, List<TechnicalDocument> technicalDocumentList,
-			LocalDateTime examinationDate, Employee performer, Employee aprover,
-			List<ResultsOfExamination> resultsOfExaminationtsList, Integer lighting) {
-		super(id, issueDate, issuedBy, fileName, customer, reportNumber, place, orderNumber, examinatedObject,
-				measuringEquipmentList, technicalDocumentList, examinationDate, performer, aprover,
-				resultsOfExaminationtsList);
-		this.lighting = lighting;
-	}
+	
 
 	public Integer getLighting() {
 		return lighting;

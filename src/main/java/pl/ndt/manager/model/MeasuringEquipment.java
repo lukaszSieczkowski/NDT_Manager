@@ -9,8 +9,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -26,9 +29,10 @@ public class MeasuringEquipment extends Device {
 	private Integer ferquencyOfVerification;
 	@OneToMany(mappedBy = "measuringEquipment", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private List<Verification> equipmentVerificationList;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_measuring_equipment")
-	private Report report;
+
+	@OneToOne(mappedBy="measuringEquipment")
+    private Report report;
+
 
 	public MeasuringEquipment() {
 		super();
@@ -75,6 +79,12 @@ public class MeasuringEquipment extends Device {
 	public void setEquipmentVerificationList(List<Verification> equipmentVerificationList) {
 		this.equipmentVerificationList = equipmentVerificationList;
 	}
+	
+
+
+	
+
+
 
 	public Report getReport() {
 		return report;

@@ -40,7 +40,7 @@ public class ReportService {
 	private TechnicalDocumentRepository technicalDocumentRepository;
 	@Autowired
 	private ResultOfExaminationRepository resultsOfExaminationRepository;
-	@Autowired 
+	@Autowired
 	private CustomerRepository customerRepository;
 	@Autowired
 	private ResultsList resultsList;
@@ -50,6 +50,7 @@ public class ReportService {
 	private EmployeeRepository employeeRepository;
 
 	private DateConverter dateConverter;
+
 	/**
 	 * Creates list of Reports
 	 * 
@@ -72,24 +73,10 @@ public class ReportService {
 			reportDTO.setTypeOfTesting(report.getTypeOfTesting());
 			reportDTO.setReportNumber(report.getReportNumber());
 			reportDTO.setExaminatedObject(report.getExaminatedObject());
-		
-
-			List<String> equipmentDTOs = new ArrayList<>();
-			List<MeasuringEquipment> measuringEquipments = measuringEquipmentRepository.findByReport(report);
-
-			for (MeasuringEquipment measuringEquipment : measuringEquipments) {
-				String nameCode =measuringEquipment.getName()+" "+measuringEquipment.getModel();
-				equipmentDTOs.add(nameCode);
-			}
-			reportDTO.setMeasuringEquipmentList(equipmentDTOs);
-
-			List<TechnicalDocument> technicalDocuments = technicalDocumentRepository.findByReport(report);
-			List<String> norms = new ArrayList<>();
-			for (TechnicalDocument technicalDocument : technicalDocuments) {
-				String norm = technicalDocument.getNumber() + " " + technicalDocument.getTitle();
-				norms.add(norm);
-			}
-			reportDTO.setTechnicalDocumentList(norms);
+			reportDTO.setMeasuringEquipment(
+					report.getMeasuringEquipment().getName() + " " + report.getMeasuringEquipment().getDeviceCode());
+			reportDTO.setTechnicalDocument(
+					report.getTechnicalDocument().getNumber() + " " + report.getTechnicalDocument().getTitle());
 
 			reportDTO.setExaminationDate(dateConverter.createDateToString(report.getExaminationDate()));
 			reportDTO.setPerformer(report.getPerformer().getFirstName() + " " + report.getPerformer().getLastName());
@@ -117,58 +104,52 @@ public class ReportService {
 		return reportDTOs;
 
 	}
-	
-	public void saveVisualReport(){
-		
+
+	public void saveVisualReport() {
+
 		dateConverter = new DateConverter();
-		
+
 		ReportDTO reportDTO = reportsList.getReportDTO();
 		Report report = new Report();
-		
+
 		Customer customer = customerRepository.findOne(reportDTO.getCustomerId());
 		report.setCustomer(customer);
-		report.setReportNumber(createReportNumber(customer));
+		String reportNumber = createReportNumber(customer);
+		///znajdowanie raportu w bazie///
+		
+		report.setReportNumber(reportNumber);
 		report.setPlace(reportDTO.getPlace());
 		report.setOrderNumber(reportDTO.getOrderNumber());
 		report.setExaminatedObject(reportDTO.getExaminatedObject());
 		report.setTypeOfTesting(reportDTO.getTypeOfTesting());
 		report.setIssueDate(LocalDateTime.now());
 		report.setIssuedBy("Company");
-		reportsRepository.save(report);
 		report = reportsRepository.findByReportNumber(report.getReportNumber());
-		
-		List<String> equipmentId = reportDTO.getMeasuringEquipmentList();
-		List<MeasuringEquipment> measuringEquipments = new ArrayList<>();
-		for(String id: equipmentId){
-			MeasuringEquipment measuringEquipment = measuringEquipmentRepository.findOne(Long.parseLong(id));
-			measuringEquipment.setReport(report);
-			measuringEquipments.add(measuringEquipment);
-		}
-		
-		report.setMeasuringEquipmentList(measuringEquipments);
-		
-		List<String> technicalDocumentId = reportDTO.getTechnicalDocumentList();
-		List<TechnicalDocument> technicalDocuments = new ArrayList<>();
-		for(String id: technicalDocumentId ){
-			TechnicalDocument technicalDocument = technicalDocumentRepository.findOne(Long.parseLong(id));
-			technicalDocuments.add(technicalDocument);
-			System.out.println("Technical ="+ technicalDocument);
-		}
 
-		report.setExaminationDate(dateConverter.createDateFromString(reportDTO.getExaminationDate(), 0 ,0));
-		report.setQualityLevel(QualityLevel.valueOf(reportDTO.getQualityLevel()));
+		String idEqu = reportDTO.getMeasuringEquipment();
 		
+		
+		MeasuringEquipment measuringEquipment = measuringEquipmentRepository.findOne(Long.parseLong(idEqu));
+		report.setMeasuringEquipment(measuringEquipment);
+		String idDoc = reportDTO.getTechnicalDocument();
+		
+
+		TechnicalDocument technicalDocument = technicalDocumentRepository.findOne(Long.parseLong(idDoc));
+		report.setTechnicalDocument(technicalDocument);
+		report.setExaminationDate(dateConverter.createDateFromString(reportDTO.getExaminationDate(), 0, 0));
+		report.setQualityLevel(QualityLevel.valueOf(reportDTO.getQualityLevel()));
+
 		Employee performer = employeeRepository.findOne(Long.parseLong(reportDTO.getPerformer()));
 		report.setPerformer(performer);
-		
+
 		Employee aprover = employeeRepository.findOne(Long.parseLong(reportDTO.getAprover()));
 		report.setAprover(aprover);
-		
+
 		ResultsOfExamination resultsOfExamination = new ResultsOfExamination();
 		List<ResultsOfExamination> resultsOfExaminations = new ArrayList<>();
-		
-		List<ResultOfExaminationDTO> resultOfExaminationDTOs =resultsList.getResults();
-		for(ResultOfExaminationDTO resultOfExaminationDTO:resultOfExaminationDTOs){
+
+		List<ResultOfExaminationDTO> resultOfExaminationDTOs = resultsList.getResults();
+		for (ResultOfExaminationDTO resultOfExaminationDTO : resultOfExaminationDTOs) {
 			resultsOfExamination.setElementNumber(resultOfExaminationDTO.getElementNumber());
 			resultsOfExamination.setDistanceFromReferencePoint(resultOfExaminationDTO.getDistanceFromReferencePoint());
 			resultsOfExamination.setIndicationLength(resultOfExaminationDTO.getIndicationLength());
@@ -178,18 +159,19 @@ public class ReportService {
 			resultsOfExaminations.add(resultsOfExamination);
 		}
 		report.setResultsOfExaminationtsList(resultsOfExaminations);
-		
+
 		reportsRepository.save(report);
-		
+
 	}
-	
-	public String createReportNumber(Customer customer ){
+
+	public String createReportNumber(Customer customer) {
 		List<Report> reportsList = reportsRepository.findByCustomer(customer);
-		System.out.println("Reports"+reportsList);
-		String reportNumber = customer.getCustomerNumber()+"/34/NDT/"+LocalDateTime.now().getYear()+"/"+(reportsList.size()+1);
-		System.out.println( "ReportNumber  "+reportNumber);
+		System.out.println("Reports" + reportsList);
+		String reportNumber = customer.getCustomerNumber() + "/34/NDT/" + LocalDateTime.now().getYear() + "/"
+				+ (reportsList.size() + 1);
+		System.out.println("ReportNumber  " + reportNumber);
 		return null;
-		
+
 	}
 
 }

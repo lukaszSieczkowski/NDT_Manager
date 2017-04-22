@@ -23,8 +23,8 @@ public class ReportDTO {
 	private TypeOfTesting typeOfTesting;
 	private String reportNumber;
 	private String examinatedObject;
-	private List<String> measuringEquipmentList;
-	private List<String> technicalDocumentList;
+	private String measuringEquipment;
+	private String technicalDocument;
 	private String examinationDate;
 	private String performer;
 	private String aprover;
@@ -48,6 +48,14 @@ public class ReportDTO {
 
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
+	}
+
+	public Long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getPlace() {
@@ -98,9 +106,30 @@ public class ReportDTO {
 		this.examinatedObject = examinatedObject;
 	}
 
-	
+	public String getMeasuringEquipment() {
+		return measuringEquipment;
+	}
 
-	
+	public void setMeasuringEquipment(String measuringEquipment) {
+		this.measuringEquipment = measuringEquipment;
+	}
+
+	public String getTechnicalDocument() {
+		return technicalDocument;
+	}
+
+	public void setTechnicalDocument(String technicalDocument) {
+		this.technicalDocument = technicalDocument;
+	}
+
+	public String getExaminationDate() {
+		return examinationDate;
+	}
+
+	public void setExaminationDate(String examinationDate) {
+		this.examinationDate = examinationDate;
+	}
+
 	public String getPerformer() {
 		return performer;
 	}
@@ -117,31 +146,6 @@ public class ReportDTO {
 		this.aprover = aprover;
 	}
 
-	public List<String> getMeasuringEquipmentList() {
-		return measuringEquipmentList;
-	}
-
-	public void setMeasuringEquipmentList(List<String> measuringEquipmentList) {
-		this.measuringEquipmentList = measuringEquipmentList;
-	}
-
-	public List<String> getTechnicalDocumentList() {
-		return technicalDocumentList;
-	}
-
-	public void setTechnicalDocumentList(List<String> technicalDocumentList) {
-		this.technicalDocumentList = technicalDocumentList;
-	}
-
-	public String getExaminationDate() {
-		return examinationDate;
-	}
-
-	public void setExaminationDate(String examinationDate) {
-		this.examinationDate = examinationDate;
-	}
-
-
 	public List<ResultOfExaminationDTO> getResultsOfExaminationtsList() {
 		return resultsOfExaminationtsList;
 	}
@@ -150,15 +154,5 @@ public class ReportDTO {
 		this.resultsOfExaminationtsList = resultsOfExaminationtsList;
 	}
 
-	
-	public Long getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(Long customerId) {
-		this.customerId = customerId;
-	}
-
-	
 	
 }
