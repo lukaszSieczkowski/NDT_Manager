@@ -150,6 +150,15 @@ public class Device {
 		this.location = location;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "Device [id=" + id + ", name=" + name + ", producer=" + producer + ", productionYear=" + productionYear
+				+ ", model=" + model + ", serialNumber=" + serialNumber + ", startOfUse=" + startOfUse
+				+ ", typeOfTesting=" + typeOfTesting + "]";
+	}
+
 	
 	
 	

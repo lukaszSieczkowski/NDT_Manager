@@ -953,16 +953,18 @@ public class ExampleDataBase {
 		technicalDocumentRepository.save(technicalDocument3);
 		technicalDocumentRepository.save(technicalDocument4);
 		technicalDocumentRepository.save(technicalDocument5);
-
-		vtReportRepository.save(vtReport1);
-		vtReportRepository.save(vtReport2);
-
+		
 		measuringEquipmentRepository.save(measuringEquipment1);
 		measuringEquipmentRepository.save(measuringEquipment2);
 		measuringEquipmentRepository.save(measuringEquipment3);
 		measuringEquipmentRepository.save(measuringEquipment4);
 		measuringEquipmentRepository.save(measuringEquipment5);
 
+
+		vtReportRepository.save(vtReport1);
+		vtReportRepository.save(vtReport2);
+
+		
 		resultOfExaminationRepository.save(resultsOfExamination1);
 		resultOfExaminationRepository.save(resultsOfExamination2);
 		resultOfExaminationRepository.save(resultsOfExamination3);

@@ -1,9 +1,13 @@
 package pl.ndt.manager.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -18,7 +22,8 @@ public class Probe extends Device {
 	private Double frequency;
 	@Column(name = "angle")
 	private Integer angle;
-
+	@OneToMany(mappedBy="probe",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List <UTReport> reports;
 	public Probe() {
 		super();
 	}

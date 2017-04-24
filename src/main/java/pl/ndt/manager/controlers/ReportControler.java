@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.ndt.manager.components.CustomersList;
 import pl.ndt.manager.components.DevicesList;
@@ -31,7 +32,9 @@ import pl.ndt.manager.dto.ReportDTO;
 import pl.ndt.manager.dto.VisualReportDetailsDTO;
 import pl.ndt.manager.dto.ReportGeneralDTO;
 import pl.ndt.manager.dto.ResultOfExaminationDTO;
+import pl.ndt.manager.dto.UserDTO;
 import pl.ndt.manager.dto.VisualReportDTO;
+import pl.ndt.manager.model.User;
 import pl.ndt.manager.model.enums.TypeOfTesting;
 import pl.ndt.manager.services.CustomerService;
 import pl.ndt.manager.services.DeviceService;
@@ -114,7 +117,9 @@ public class ReportControler {
 				visualReportDTO.setQualityLevel(reportGeneralDTO.getQualityLevel());
 				visualReportDTO.setTypeOfTesting(reportGeneralDTO.getTypeOfTesting());
 				visualReportDTO.setExaminationDate(reportGeneralDTO.getExaminationDate());
+			
 				reportsList.setReportDTO(visualReportDTO);
+				deviceService.sortDeviceByMethood(reportGeneralDTO.getTypeOfTesting());
 				model.addAttribute("employess", employeeList);
 				model.addAttribute("documents", documentList);
 				model.addAttribute("devices", devicesList);
@@ -130,16 +135,17 @@ public class ReportControler {
 	}
 
 	@RequestMapping("/addVisualResults")
-	public String addVisualResults(@Valid @ModelAttribute VisualReportDetailsDTO visualReportDetailsDTO, BindingResult bindingResult,
+	public String addVisualResults(@Valid @ModelAttribute VisualReportDetailsDTO visualReportDetailsDTO,@RequestParam Long id, UserDTO userDto, BindingResult bindingResult,
 			Model model) {
-		System.out.println("Errory"+bindingResult.getFieldErrorCount());
+		
+		
 		if (!bindingResult.hasErrors()) {
 			VisualReportDTO visualReportDTO = (VisualReportDTO) reportsList.getReportDTO();
 			visualReportDTO.setExaminatedObject(visualReportDetailsDTO.getExaminatedObject());
 			visualReportDTO.setTechnicalDocument(visualReportDetailsDTO.getTechnicalDocument());
 			visualReportDTO.setMeasuringEquipment(visualReportDetailsDTO.getMeasuringEquipment());
 			visualReportDTO.setAprover(visualReportDetailsDTO.getAproverEmail());
-			visualReportDTO.setPerformer(visualReportDetailsDTO.getPerformerEmail());
+			visualReportDTO.setPerformer(String.valueOf(id));
 			visualReportDTO.setLighting(visualReportDetailsDTO.getLighting());
 			reportsList.setReportDTO(visualReportDTO);
 			
@@ -167,9 +173,8 @@ public class ReportControler {
 	@RequestMapping("/saveVisualCertificate")
 	public String saveReport(@ModelAttribute ResultOfExaminationDTO resultOfExaminationDTO, Model model){
 		
-		
 		reportService.saveVisualReport();
-		
+		resultsList.setResults(new ArrayList<>());
 		
 		List<ReportDTO> reports = reportService.getAllReports();
 		reportsList.setReports(reports);

@@ -32,7 +32,7 @@ public class UserService {
 		} else {
 			if (user.getPassword().equals(password)) {
 				UserDTO userDto = new UserDTO(user.getEmployee().getFirstName(), user.getEmployee().getLastName(),
-						user.getRole());
+						user.getRole(),user.getId());
 				return userDto;
 			} else {
 				return null;

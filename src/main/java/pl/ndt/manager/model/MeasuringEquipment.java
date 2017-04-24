@@ -30,8 +30,8 @@ public class MeasuringEquipment extends Device {
 	@OneToMany(mappedBy = "measuringEquipment", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private List<Verification> equipmentVerificationList;
 
-	@OneToOne(mappedBy="measuringEquipment")
-    private Report report;
+	@OneToMany(mappedBy="measuringEquipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List <Report> report;
 
 
 	public MeasuringEquipment() {
@@ -79,25 +79,24 @@ public class MeasuringEquipment extends Device {
 	public void setEquipmentVerificationList(List<Verification> equipmentVerificationList) {
 		this.equipmentVerificationList = equipmentVerificationList;
 	}
-	
 
 
-	
-
-
-
-	public Report getReport() {
+	public List<Report> getReport() {
 		return report;
 	}
 
-	public void setReport(Report report) {
+	public void setReport(List<Report> report) {
 		this.report = report;
 	}
 
 	@Override
 	public String toString() {
 		return "MeasuringEquipment [deviceCode=" + deviceCode + ", ferquencyOfVerification=" + ferquencyOfVerification
-				+ "]";
+				+ ", report=" + report + ", id=" + id
+				+ ", name=" + name + ", producer=" + producer + ", productionYear=" + productionYear + ", model="
+				+ model + ", serialNumber=" + serialNumber + ", startOfUse=" + startOfUse + ", location=" + location
+				+ ", typeOfTesting=" + typeOfTesting + "]";
 	}
 
+	
 }

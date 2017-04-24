@@ -27,7 +27,7 @@
 
 <div class="col-md-6 col-md-offset-3">
 
-	<form th:action="@{addVisualResults}" th:object="${visualReportDetailsDTO}"
+	<form th:action="@{addVisualResults(id=${session.logedEmployee.id})}"  th:object="${visualReportDetailsDTO}"
 		method="post" enctype="multipart/form-data">
 	 	<th:block th:include="fragments/report/reportVisualForm :: reportVisualForm"></th:block>  
 

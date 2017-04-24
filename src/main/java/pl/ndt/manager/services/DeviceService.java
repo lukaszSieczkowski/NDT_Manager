@@ -2,16 +2,21 @@ package pl.ndt.manager.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pl.ndt.manager.components.DevicesList;
 import pl.ndt.manager.dto.DeviceDTO;
 import pl.ndt.manager.dto.MeasuringEquipmentDTO;
 import pl.ndt.manager.dto.ProbeDTO;
+import pl.ndt.manager.model.Device;
 import pl.ndt.manager.model.Location;
 import pl.ndt.manager.model.MeasuringEquipment;
 import pl.ndt.manager.model.Probe;
+import pl.ndt.manager.model.enums.TypeOfTesting;
 import pl.ndt.manager.repository.LocationRepository;
 import pl.ndt.manager.repository.MeasuringEquipmentRepository;
 import pl.ndt.manager.repository.ProbeRepository;
@@ -26,6 +31,8 @@ public class DeviceService {
 	private LocationRepository locationRepository;
 	@Autowired
 	private ProbeRepository probeRepository;
+	@Autowired
+	private DevicesList devicesList;
 
 	private DateConverter dateConverter;
 	private List<DeviceDTO> devices;
@@ -155,6 +162,18 @@ public class DeviceService {
 
 		probeRepository.save(probe);
 
+	}
+
+	/**
+	 * Sorts measuring Devices by Type of Testing
+	 * 
+	 * @param typeOfTesting
+	 */
+	public void sortDeviceByMethood(TypeOfTesting typeOfTesting) {
+		List<DeviceDTO> equipmet = devicesList.getDevices();
+		equipmet = equipmet.stream().filter(a -> a.getTypeOfTesting().equals(typeOfTesting))
+				.collect(Collectors.toList());
+		devicesList.setDevices(equipmet);
 	}
 
 }

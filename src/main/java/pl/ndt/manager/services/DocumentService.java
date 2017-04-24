@@ -3,6 +3,7 @@ package pl.ndt.manager.services;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pl.ndt.manager.components.DocumentList;
 import pl.ndt.manager.dto.*;
 import pl.ndt.manager.model.*;
 import pl.ndt.manager.model.enums.DocumentIsValid;
+import pl.ndt.manager.model.enums.TypeOfTesting;
 import pl.ndt.manager.repository.*;
 
 import pl.ndt.manager.utils.DateConverter;
@@ -33,6 +36,8 @@ public class DocumentService implements FileDirectory {
 	private TechnicalDocumentRepository technicalDocumentRepository;
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private DocumentList documentList;
 
 	private DateConverter dateConverter;
 	private List<DocumentDTO> documents;
@@ -553,5 +558,5 @@ public class DocumentService implements FileDirectory {
 		technicalDocumentRepository.delete(id);
 
 	}
-
+	
 }

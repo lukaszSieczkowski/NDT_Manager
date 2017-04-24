@@ -19,6 +19,7 @@ import pl.ndt.manager.model.MeasuringEquipment;
 import pl.ndt.manager.model.Report;
 import pl.ndt.manager.model.ResultsOfExamination;
 import pl.ndt.manager.model.TechnicalDocument;
+import pl.ndt.manager.model.User;
 import pl.ndt.manager.model.enums.NdtMethod;
 import pl.ndt.manager.model.enums.QualityLevel;
 import pl.ndt.manager.repository.CustomerRepository;
@@ -27,6 +28,7 @@ import pl.ndt.manager.repository.MeasuringEquipmentRepository;
 import pl.ndt.manager.repository.ReportsRepository;
 import pl.ndt.manager.repository.ResultOfExaminationRepository;
 import pl.ndt.manager.repository.TechnicalDocumentRepository;
+import pl.ndt.manager.repository.UserRepository;
 import pl.ndt.manager.utils.DateConverter;
 
 @Service
@@ -48,6 +50,8 @@ public class ReportService {
 	private ReportsList reportsList;
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	private DateConverter dateConverter;
 
@@ -107,6 +111,7 @@ public class ReportService {
 
 	public void saveVisualReport() {
 
+	
 		dateConverter = new DateConverter();
 
 		ReportDTO reportDTO = reportsList.getReportDTO();
@@ -114,9 +119,8 @@ public class ReportService {
 
 		Customer customer = customerRepository.findOne(reportDTO.getCustomerId());
 		report.setCustomer(customer);
-		String reportNumber = createReportNumber(customer);
-		///znajdowanie raportu w bazie///
 		
+		String reportNumber = createReportNumber(customer);
 		report.setReportNumber(reportNumber);
 		report.setPlace(reportDTO.getPlace());
 		report.setOrderNumber(reportDTO.getOrderNumber());
@@ -124,23 +128,13 @@ public class ReportService {
 		report.setTypeOfTesting(reportDTO.getTypeOfTesting());
 		report.setIssueDate(LocalDateTime.now());
 		report.setIssuedBy("Company");
-		report = reportsRepository.findByReportNumber(report.getReportNumber());
-
-		String idEqu = reportDTO.getMeasuringEquipment();
-		
-		
-		MeasuringEquipment measuringEquipment = measuringEquipmentRepository.findOne(Long.parseLong(idEqu));
-		report.setMeasuringEquipment(measuringEquipment);
-		String idDoc = reportDTO.getTechnicalDocument();
-		
-
-		TechnicalDocument technicalDocument = technicalDocumentRepository.findOne(Long.parseLong(idDoc));
-		report.setTechnicalDocument(technicalDocument);
+	
 		report.setExaminationDate(dateConverter.createDateFromString(reportDTO.getExaminationDate(), 0, 0));
 		report.setQualityLevel(QualityLevel.valueOf(reportDTO.getQualityLevel()));
 
-		Employee performer = employeeRepository.findOne(Long.parseLong(reportDTO.getPerformer()));
-		report.setPerformer(performer);
+		User userPerformer = userRepository.findOne(Long.parseLong(reportDTO.getPerformer()));
+		report.setPerformer(userPerformer.getEmployee());
+		System.out.println("USer" +report.getPerformer());
 
 		Employee aprover = employeeRepository.findOne(Long.parseLong(reportDTO.getAprover()));
 		report.setAprover(aprover);
@@ -156,21 +150,28 @@ public class ReportService {
 			resultsOfExamination.setImperfectionSymbol(resultOfExaminationDTO.getImperfectionSymbol());
 			resultsOfExamination.setRemarks(resultOfExaminationDTO.getRemarks());
 			resultsOfExamination.setResult(resultOfExaminationDTO.getResult());
+			resultsOfExamination.setReport(report);
 			resultsOfExaminations.add(resultsOfExamination);
 		}
 		report.setResultsOfExaminationtsList(resultsOfExaminations);
 
+		String idDoc = reportDTO.getTechnicalDocument();
+		TechnicalDocument technicalDocument = technicalDocumentRepository.findOne(Long.parseLong(idDoc));
+		report.setTechnicalDocument(technicalDocument);
+		
+		String idEqu = reportDTO.getMeasuringEquipment();
+		MeasuringEquipment measuringEquipment = measuringEquipmentRepository.findOne(Long.parseLong(idEqu));
+		report.setMeasuringEquipment(measuringEquipment);
+		
 		reportsRepository.save(report);
 
 	}
 
 	public String createReportNumber(Customer customer) {
 		List<Report> reportsList = reportsRepository.findByCustomer(customer);
-		System.out.println("Reports" + reportsList);
 		String reportNumber = customer.getCustomerNumber() + "/34/NDT/" + LocalDateTime.now().getYear() + "/"
 				+ (reportsList.size() + 1);
-		System.out.println("ReportNumber  " + reportNumber);
-		return null;
+		return reportNumber;
 
 	}
 

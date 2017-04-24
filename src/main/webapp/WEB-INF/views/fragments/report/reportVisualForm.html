@@ -7,22 +7,10 @@
 
 <body>
 	<div class="col-md-12">
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-12">
 			<label for="examinatedObject">Examinated object descripion</label> 
 			<input type="text" class="form-control" id="place" th:field="*{examinatedObject}" placeholder="What is examinated">
 			<p class="text-center alert" th:if="${#fields.hasErrors('examinatedObject')}" th:errors="*{examinatedObject}"></p>
-		</div>
-		<div class="form-group col-md-6">
-			<label for="technicalDocument">Standards</label> <select
-				class="form-control" th:field="*{technicalDocument}">
-				<option value="">---- Select Standard ----</option>
-				<option th:each="document : ${documents.getDocuments()}"
-					th:value="${document.id}"
-					th:text="${document.number}"></option>
-			</select>
-			<p class="text-center alert"
-				th:if="${#fields.hasErrors('technicalDocument')}"
-				th:errors="*{technicalDocument}"></p>
 		</div>
 	</div>
 	<div class="col-md-12">
@@ -47,16 +35,16 @@
 	
 	<div class="col-md-12">
 		<div class="form-group col-md-6">
-			<label for=" performerEmail">Conducted By</label> <select
-				class="form-control" th:field="*{performerEmail}">
-				<option value="">---- Select Employee ----</option>
-				<option th:each="employee : ${employess.getEmployees()}"
-					th:value="${employee.id}"
-					th:text="${employee.firstName+' '+employee.lastName}"></option>
+			<label for="technicalDocument">Standards</label> <select
+				class="form-control" th:field="*{technicalDocument}">
+				<option value="">---- Select Standard ----</option>
+				<option th:each="document : ${documents.getDocuments()}"
+					th:value="${document.id}"
+					th:text="${document.number}"></option>
 			</select>
 			<p class="text-center alert"
-				th:if="${#fields.hasErrors('performerEmail')}"
-				th:errors="*{performerEmail}"></p>
+				th:if="${#fields.hasErrors('technicalDocument')}"
+				th:errors="*{technicalDocument}"></p>
 		</div>
 		<div class="form-group col-md-6">
 			<label for="aproverEmail">Approved By</label> <select

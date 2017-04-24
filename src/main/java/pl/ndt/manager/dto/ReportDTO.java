@@ -154,5 +154,15 @@ public class ReportDTO {
 		this.resultsOfExaminationtsList = resultsOfExaminationtsList;
 	}
 
+	@Override
+	public String toString() {
+		return "ReportDTO [id=" + id + ", customerName=" + customerName + ", customerId=" + customerId + ", place="
+				+ place + ", orderNumber=" + orderNumber + ", qualityLevel=" + qualityLevel + ", typeOfTesting="
+				+ typeOfTesting + ", reportNumber=" + reportNumber + ", examinatedObject=" + examinatedObject
+				+ ", measuringEquipment=" + measuringEquipment + ", technicalDocument=" + technicalDocument
+				+ ", examinationDate=" + examinationDate + ", performer=" + performer + ", aprover=" + aprover
+				+ ", resultsOfExaminationtsList=" + resultsOfExaminationtsList + "]";
+	}
+
 	
 }

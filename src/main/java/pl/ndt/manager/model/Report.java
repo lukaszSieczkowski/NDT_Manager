@@ -44,10 +44,11 @@ public class Report extends Document {
 	private String orderNumber;
 	@Column(name = "examinated_object",length=200)
 	private String examinatedObject;
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "equipment_id")
 	private MeasuringEquipment measuringEquipment;
-	@OneToOne(cascade = CascadeType.ALL)
+	///when create data base use PERSIST //
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "technical_id")
 	private TechnicalDocument technicalDocument;
 	@Column(name = "examination_date")

@@ -8,23 +8,31 @@ import org.hibernate.validator.constraints.NotBlank;
 import pl.ndt.manager.model.enums.UserRole;
 
 public class UserDTO {
+	
+	private Long id;
 
 	private String firstName;
 
 	private String lastName;
 	
 	private UserRole role;
+	
+	
 
 	public UserDTO() {
 		super();
 	}
 
-	public UserDTO(String firstName, String lastName, UserRole role) {
+	public UserDTO(String firstName, String lastName, UserRole role, Long id) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.role = role;
+		this.id=id;
 	}
+
+
+
 
 	public String getFirstName() {
 		return firstName;
@@ -48,6 +56,17 @@ public class UserDTO {
 
 	public void setRole(UserRole role) {
 		this.role = role;
+	}
+	
+	
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@Override
