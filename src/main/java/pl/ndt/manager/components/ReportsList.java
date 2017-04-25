@@ -9,12 +9,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import pl.ndt.manager.dto.ReportDTO;
+import pl.ndt.manager.dto.ReportGeneralDTO;
 
 @Component
 @Scope(scopeName = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ReportsList {
 
 	private List<ReportDTO> reports;
+	private ReportGeneralDTO reporGeneralDTO;
 	private ReportDTO reportDTO;
 	
 	public ReportsList() {
@@ -29,6 +31,14 @@ public class ReportsList {
 		this.reports = reports;
 	}
 
+	public ReportGeneralDTO getReporGeneralDTO() {
+		return reporGeneralDTO;
+	}
+
+	public void setReporGeneralDTO(ReportGeneralDTO reporGeneralDTO) {
+		this.reporGeneralDTO = reporGeneralDTO;
+	}
+
 	public ReportDTO getReportDTO() {
 		return reportDTO;
 	}
@@ -37,5 +47,7 @@ public class ReportsList {
 		this.reportDTO = reportDTO;
 	}
 
+
+	
 	
 }

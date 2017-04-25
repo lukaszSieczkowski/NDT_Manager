@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+</head>
+<body>
+	<div th:switch="${session.logedEmployee.role}">
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).ADMIN}">
+			<th:block th:include="fragments/adminMenu :: adminMenu"></th:block>
+		</p>
+		<p th:case="${T(pl.ndt.manager.model.enums.UserRole).USER}">
+			<th:block th:include="fragments/userMenu :: userMenu"></th:block>
+		</p>
+	</div>
+
+	<h3 class="text-center">Chemicals</h3>
+	<div class="col-md-8 col-md-offset-2">
+		<table class="table table-condensed">
+			<tr>
+				<th>No.</th>
+				<th>Name</th>
+				<th>Producer</th>
+				<th>Can Batch</th>
+				<th>Type</th>
+				<th>NDT method</th>
+				<th></th>
+			</tr>
+			<tr th:each="chemical,id : ${chemicals.getChemicals()}">
+				<td th:text="${id.count}"></td>
+				<td th:text="${chemical.name}"></td>
+				<td th:text="${chemical.producer}"></td>
+				<td th:text="${chemical.batch}"></td>
+				<td th:text="${chemical.chemicalType.getValue()}"></td>
+				<td th:text="${chemical.typeOfTesting.getValue()}"></td>
+				<td><a th:href="@{/editChemical(id=${chemical.id})}">Edit</a>
+		</table>
+	</div>
+</body>
+</html>

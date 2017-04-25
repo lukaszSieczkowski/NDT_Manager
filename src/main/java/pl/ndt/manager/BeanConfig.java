@@ -12,6 +12,7 @@ import pl.ndt.manager.dto.LocationDTO;
 import pl.ndt.manager.dto.ReportDTO;
 import pl.ndt.manager.dto.ResultOfExaminationDTO;
 import pl.ndt.manager.dto.VerificationDTO;
+import pl.ndt.manager.model.Chemical;
 
 @Configuration
 @ComponentScan
@@ -104,5 +105,14 @@ public class BeanConfig {
 	@Bean
 	public ResultOfExaminationDTO getResultsOfExaminationDTO(){
 		return new ResultOfExaminationDTO();
+	}
+	/**
+	 * Registers ChemicalDTO bean in Spring Container
+	 * 
+	 * @return chemicalDTO;
+	 */
+	@Bean
+	public Chemical getChemical(){
+		return new Chemical();
 	}
 }
