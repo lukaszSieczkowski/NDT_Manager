@@ -175,6 +175,5 @@ public class DeviceService {
 				.collect(Collectors.toList());
 		devicesList.setDevices(equipmet);
 	}
-	
 
 }

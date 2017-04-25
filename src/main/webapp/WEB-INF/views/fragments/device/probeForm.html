@@ -9,12 +9,12 @@
 		<div class="col-md-12">
 			<div class="date form-group col-md-4">
 				<label for="model">Probe Model</label>
-				<input type="text" class="form-control" id="model" th:field="*{model}" placeholder="Probe model">
+				<input type="text" class="form-control" id="model" th:field="*{model}" placeholder="Device model">
 				<p class="text-center alert" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></p>	
 			</div>
 			<div class="date form-group col-md-4">
 				<label for="producer">Probe Producer</label>
-				<input type="text" class="form-control" id="producer" th:field="*{producer}" placeholder="Probe producer name">
+				<input type="text" class="form-control" id="producer" th:field="*{producer}" placeholder="Device producer name">
 				<p class="text-center alert" th:if="${#fields.hasErrors('producer')}" th:errors="*{producer}"></p>	
 			</div>
 			<div class="date form-group col-md-4">

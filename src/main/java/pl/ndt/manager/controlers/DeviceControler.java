@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import pl.ndt.manager.components.ChemicalsList;
 import pl.ndt.manager.components.DevicesList;
 import pl.ndt.manager.components.EmployeeList;
 import pl.ndt.manager.components.LocationsList;
@@ -27,7 +26,6 @@ import pl.ndt.manager.dto.LocationDTO;
 import pl.ndt.manager.dto.MeasuringEquipmentDTO;
 import pl.ndt.manager.dto.ProbeDTO;
 import pl.ndt.manager.dto.VerificationDTO;
-import pl.ndt.manager.services.ChemicalsService;
 import pl.ndt.manager.services.DeviceService;
 import pl.ndt.manager.services.EmployeeService;
 import pl.ndt.manager.services.LocationService;
@@ -50,7 +48,6 @@ public class DeviceControler {
 	@Autowired
 	private VerificationService verificationService;
 
-  
 	/**
 	 * Shows list of Measuring Devices
 	 * 
@@ -371,4 +368,5 @@ public class DeviceControler {
 		}
 		return "verifications/edit_verification/editVerification";
 	}
+
 }

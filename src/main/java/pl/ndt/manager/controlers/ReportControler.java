@@ -100,32 +100,34 @@ public class ReportControler {
 		employeeList.setEmployees(employees);
 
 		model.addAttribute("customers", customersList);
-		model.addAttribute("reportGeneralDTO", new ReportGeneralDTO());
 
+		model.addAttribute("reportGeneralDTO", new ReportGeneralDTO());
 		return "reports/add_report/addReport";
 	}
 
 	@RequestMapping("/addReportDetails")
-	private String addReportDetails(@Valid @ModelAttribute ReportGeneralDTO reportGeneralDTO,
-			BindingResult bindingResult, Model model) {
+	private String addReportDetails(@Valid @ModelAttribute ReportGeneralDTO reportGeneralDTO, BindingResult bindingResult,
+			Model model) {
 		if (!bindingResult.hasErrors()) {
-			reportsList.setReporGeneralDTO(reportGeneralDTO);
+			if(reportGeneralDTO.getTypeOfTesting().equals(TypeOfTesting.VT)){
+				VisualReportDTO visualReportDTO = new VisualReportDTO();
+				visualReportDTO.setCustomerId(reportGeneralDTO.getCustomerId());
+				visualReportDTO.setOrderNumber(reportGeneralDTO.getOrderNumber());
+				visualReportDTO.setPlace(reportGeneralDTO.getPlace());
+				visualReportDTO.setQualityLevel(reportGeneralDTO.getQualityLevel());
+				visualReportDTO.setTypeOfTesting(reportGeneralDTO.getTypeOfTesting());
+				visualReportDTO.setExaminationDate(reportGeneralDTO.getExaminationDate());
 			
-			model.addAttribute("employess", employeeList);
-			model.addAttribute("documents", documentList);
-			
-			if (reportGeneralDTO.getTypeOfTesting().equals(TypeOfTesting.VT)) {
+				reportsList.setReportDTO(visualReportDTO);
 				deviceService.sortDeviceByMethood(reportGeneralDTO.getTypeOfTesting());
-				model.addAttribute("visualReportDetailsDTO", new VisualReportDetailsDTO());
+				model.addAttribute("employess", employeeList);
+				model.addAttribute("documents", documentList);
 				model.addAttribute("devices", devicesList);
+				model.addAttribute("visualReportDetailsDTO", new VisualReportDetailsDTO());
+				
 				return "reports/add_report/addVisualReport";
-			} else if (reportGeneralDTO.getTypeOfTesting().equals(TypeOfTesting.PT)) {
-				return "reports/add_report/addPenetrantReport";
-			} else if (reportGeneralDTO.getTypeOfTesting().equals(TypeOfTesting.MT)) {
-				return "reports/add_report/addMagneticReport";
-			} else if (reportGeneralDTO.getTypeOfTesting().equals(TypeOfTesting.MT)) {
-				return "reports/add_report/addUltrasonicReport";
 			}
+			
 		}
 
 		model.addAttribute("customers", customersList);
@@ -133,14 +135,11 @@ public class ReportControler {
 	}
 
 	@RequestMapping("/addVisualResults")
-	public String addVisualResults(@Valid @ModelAttribute  VisualReportDetailsDTO visualReportDetailsDTO,BindingResult bindingResult,
-			@RequestParam Long id,  Model model) {
-		System.out.println("B£êdy"+bindingResult.getErrorCount());
+	public String addVisualResults(@Valid @ModelAttribute VisualReportDetailsDTO visualReportDetailsDTO,@RequestParam Long id, UserDTO userDto, BindingResult bindingResult,
+			Model model) {
+		
+		
 		if (!bindingResult.hasErrors()) {
-			System.out.println("REPORT"+visualReportDetailsDTO);
-			
-			//DTO DTO DTO
-			
 			VisualReportDTO visualReportDTO = (VisualReportDTO) reportsList.getReportDTO();
 			visualReportDTO.setExaminatedObject(visualReportDetailsDTO.getExaminatedObject());
 			visualReportDTO.setTechnicalDocument(visualReportDetailsDTO.getTechnicalDocument());
@@ -149,7 +148,7 @@ public class ReportControler {
 			visualReportDTO.setPerformer(String.valueOf(id));
 			visualReportDTO.setLighting(visualReportDetailsDTO.getLighting());
 			reportsList.setReportDTO(visualReportDTO);
-	
+			
 			model.addAttribute("results", resultsList);
 			model.addAttribute("resultsOfExaminationDTO", new ResultOfExaminationDTO());
 			return "reports/add_report/addVisualResults";
@@ -159,29 +158,29 @@ public class ReportControler {
 		model.addAttribute("documents", documentList);
 		model.addAttribute("devices", devicesList);
 		return "reports/add_report/addVisualReport";
-
+		
 	}
-
+	
 	@RequestMapping("/addExaminationResult")
-	public String addExaminationResult(@ModelAttribute ResultOfExaminationDTO resultOfExaminationDTO, Model model) {
+	public String addExaminationResult(@ModelAttribute ResultOfExaminationDTO resultOfExaminationDTO,Model model){
 		resultsList.getResults().add(resultOfExaminationDTO);
 		model.addAttribute("resultsOfExaminationDTO", new ResultOfExaminationDTO());
 		model.addAttribute("results", resultsList);
 
 		return "reports/add_report/addVisualResults";
 	}
-
+	
 	@RequestMapping("/saveVisualCertificate")
-	public String saveReport(@ModelAttribute ResultOfExaminationDTO resultOfExaminationDTO, Model model) {
-
+	public String saveReport(@ModelAttribute ResultOfExaminationDTO resultOfExaminationDTO, Model model){
+		
 		reportService.saveVisualReport();
 		resultsList.setResults(new ArrayList<>());
-
+		
 		List<ReportDTO> reports = reportService.getAllReports();
 		reportsList.setReports(reports);
 		model.addAttribute("reports", reportsList);
 		return "reports/show_reports/showAllReports";
-
+	
 	}
-
+	
 }
