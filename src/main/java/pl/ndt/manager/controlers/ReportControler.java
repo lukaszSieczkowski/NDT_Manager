@@ -9,38 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import pl.ndt.manager.components.CustomersList;
-import pl.ndt.manager.components.DevicesList;
-import pl.ndt.manager.components.DocumentList;
-import pl.ndt.manager.components.EmployeeList;
-import pl.ndt.manager.components.ReportsList;
-import pl.ndt.manager.components.ResultsList;
-import pl.ndt.manager.dto.CustomerDTO;
-import pl.ndt.manager.dto.DeviceDTO;
-import pl.ndt.manager.dto.DocumentDTO;
-import pl.ndt.manager.dto.EmployeeDTO;
-import pl.ndt.manager.dto.EquipmentDTO;
-import pl.ndt.manager.dto.ReportDTO;
-import pl.ndt.manager.dto.VisualReportDetailsDTO;
-import pl.ndt.manager.dto.ReportGeneralDTO;
-import pl.ndt.manager.dto.ResultOfExaminationDTO;
-import pl.ndt.manager.dto.UserDTO;
-import pl.ndt.manager.dto.VisualReportDTO;
-import pl.ndt.manager.model.User;
+import org.springframework.web.bind.annotation.*;
+
+import pl.ndt.manager.components.*;
+
+import pl.ndt.manager.dto.*;
+
 import pl.ndt.manager.model.enums.TypeOfTesting;
-import pl.ndt.manager.services.CustomerService;
-import pl.ndt.manager.services.DeviceService;
-import pl.ndt.manager.services.DocumentService;
-import pl.ndt.manager.services.EmployeeService;
-import pl.ndt.manager.services.ReportService;
+import pl.ndt.manager.services.*;
 
 @Controller
 public class ReportControler {
@@ -75,7 +52,7 @@ public class ReportControler {
 	 *            Holder for attributes
 	 * @return showAllReports view
 	 */
-	@RequestMapping("/showReports")
+	@GetMapping("/showReports")
 	private String showAllReports(Model model) {
 
 		List<ReportDTO> reports = reportService.getAllReports();
@@ -85,7 +62,7 @@ public class ReportControler {
 		return "reports/show_reports/showAllReports";
 	}
 
-	@RequestMapping("/addReport")
+	@GetMapping("/addReport")
 	private String addReport(Model model) {
 		List<CustomerDTO> customers = customerService.getCustomers();
 		customersList.setCustomers(customers);
@@ -105,15 +82,15 @@ public class ReportControler {
 		return "reports/add_report/addReport";
 	}
 
-	@RequestMapping("/addReportDetails")
+	@PostMapping("/addReportDetails")
 	private String addReportDetails(@Valid @ModelAttribute ReportGeneralDTO reportGeneralDTO,
 			BindingResult bindingResult, Model model) {
 		if (!bindingResult.hasErrors()) {
 			reportsList.setReporGeneralDTO(reportGeneralDTO);
-			
+
 			model.addAttribute("employess", employeeList);
 			model.addAttribute("documents", documentList);
-			
+
 			if (reportGeneralDTO.getTypeOfTesting().equals(TypeOfTesting.VT)) {
 				deviceService.sortDeviceByMethood(reportGeneralDTO.getTypeOfTesting());
 				model.addAttribute("visualReportDetailsDTO", new VisualReportDetailsDTO());
@@ -132,15 +109,15 @@ public class ReportControler {
 		return "reports/add_report/addReport";
 	}
 
-	@RequestMapping("/addVisualResults")
-	public String addVisualResults(@Valid @ModelAttribute  VisualReportDetailsDTO visualReportDetailsDTO,BindingResult bindingResult,
-			@RequestParam Long id,  Model model) {
-		System.out.println("B£êdy"+bindingResult.getErrorCount());
+	@GetMapping("/addVisualResults")
+	public String addVisualResults(@Valid @ModelAttribute VisualReportDetailsDTO visualReportDetailsDTO,
+			BindingResult bindingResult, @RequestParam Long id, Model model) {
+		System.out.println("B£êdy" + bindingResult.getErrorCount());
 		if (!bindingResult.hasErrors()) {
-			System.out.println("REPORT"+visualReportDetailsDTO);
-			
-			//DTO DTO DTO
-			
+			System.out.println("REPORT" + visualReportDetailsDTO);
+
+			// DTO DTO DTO
+
 			VisualReportDTO visualReportDTO = (VisualReportDTO) reportsList.getReportDTO();
 			visualReportDTO.setExaminatedObject(visualReportDetailsDTO.getExaminatedObject());
 			visualReportDTO.setTechnicalDocument(visualReportDetailsDTO.getTechnicalDocument());
@@ -149,7 +126,7 @@ public class ReportControler {
 			visualReportDTO.setPerformer(String.valueOf(id));
 			visualReportDTO.setLighting(visualReportDetailsDTO.getLighting());
 			reportsList.setReportDTO(visualReportDTO);
-	
+
 			model.addAttribute("results", resultsList);
 			model.addAttribute("resultsOfExaminationDTO", new ResultOfExaminationDTO());
 			return "reports/add_report/addVisualResults";
@@ -162,7 +139,7 @@ public class ReportControler {
 
 	}
 
-	@RequestMapping("/addExaminationResult")
+	@GetMapping("/addExaminationResult")
 	public String addExaminationResult(@ModelAttribute ResultOfExaminationDTO resultOfExaminationDTO, Model model) {
 		resultsList.getResults().add(resultOfExaminationDTO);
 		model.addAttribute("resultsOfExaminationDTO", new ResultOfExaminationDTO());
@@ -171,7 +148,7 @@ public class ReportControler {
 		return "reports/add_report/addVisualResults";
 	}
 
-	@RequestMapping("/saveVisualCertificate")
+	@GetMapping("/saveVisualCertificate")
 	public String saveReport(@ModelAttribute ResultOfExaminationDTO resultOfExaminationDTO, Model model) {
 
 		reportService.saveVisualReport();

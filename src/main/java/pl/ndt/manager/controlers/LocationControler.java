@@ -9,12 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import pl.ndt.manager.components.LocationsList;
 import pl.ndt.manager.dto.LocationDTO;
@@ -37,7 +32,7 @@ public class LocationControler {
 	 *            Holder for attributes
 	 * @return showNdtLocation view
 	 */
-	@RequestMapping("/showLocations")
+	@GetMapping("/showLocations")
 	public String showAllLocations(Model model) {
 		List<LocationDTO> locations = locationService.getLocations();
 		locationsList.setLocations(locations);
@@ -55,7 +50,7 @@ public class LocationControler {
 	 * @return addLocation view
 	 */
 
-	@RequestMapping("/addLocation")
+	@GetMapping("/addLocation")
 	public String addLocation(Model model) {
 		model.addAttribute("locationDTO", new LocationDTO());
 		return "locations/add_location/addLocation";
@@ -101,7 +96,7 @@ public class LocationControler {
 
 	@GetMapping("/editLocation")
 	public String editLocation(@RequestParam("id") Long id, Model model) {
-		
+
 		List<LocationDTO> locations = locationsList.getLocations();
 		Optional<LocationDTO> optionalLocationDTO = locations.stream().filter(a -> (a.getId() == id)).findAny();
 		LocationDTO locationDTO = (LocationDTO) optionalLocationDTO.get();
@@ -125,7 +120,7 @@ public class LocationControler {
 	 * @return editLocation view
 	 */
 
-	@RequestMapping("/updateLocation")
+	@PostMapping("/updateLocation")
 	public String updateLocation(@Valid @ModelAttribute LocationDTO locationDTO, BindingResult result,
 			@RequestParam("id") Long id, Model model) {
 		if (!result.hasErrors()) {

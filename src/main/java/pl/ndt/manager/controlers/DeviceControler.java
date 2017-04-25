@@ -9,29 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import pl.ndt.manager.components.ChemicalsList;
-import pl.ndt.manager.components.DevicesList;
-import pl.ndt.manager.components.EmployeeList;
-import pl.ndt.manager.components.LocationsList;
-import pl.ndt.manager.components.VerificationsList;
-import pl.ndt.manager.dto.DeviceDTO;
+import pl.ndt.manager.components.*;
 
-import pl.ndt.manager.dto.LocationDTO;
-import pl.ndt.manager.dto.MeasuringEquipmentDTO;
-import pl.ndt.manager.dto.ProbeDTO;
-import pl.ndt.manager.dto.VerificationDTO;
-import pl.ndt.manager.services.ChemicalsService;
-import pl.ndt.manager.services.DeviceService;
-import pl.ndt.manager.services.EmployeeService;
-import pl.ndt.manager.services.LocationService;
-import pl.ndt.manager.services.VerificationService;
+import pl.ndt.manager.dto.*;
+import pl.ndt.manager.model.enums.Objects;
+import pl.ndt.manager.services.*;
 
 @Controller
 @SessionAttributes({ "employess", "locations" })
@@ -49,8 +33,9 @@ public class DeviceControler {
 	private VerificationsList verificationsList;
 	@Autowired
 	private VerificationService verificationService;
+	@Autowired
+	private AlertComponent alertComponent;
 
-  
 	/**
 	 * Shows list of Measuring Devices
 	 * 
@@ -58,7 +43,7 @@ public class DeviceControler {
 	 *            Holder for attributes
 	 * @return showMeasuringEquipment view
 	 */
-	@RequestMapping("/showMeasuringDevices")
+	@GetMapping("/showMeasuringDevices")
 	public String showAllDevices(Model model) {
 
 		List<DeviceDTO> devices = deviceService.getMeasuringEqupiment();
@@ -76,7 +61,7 @@ public class DeviceControler {
 	 * 
 	 * @return addMeasuringEquipment view
 	 */
-	@RequestMapping("/adddMeasuringDevice")
+	@GetMapping("/adddMeasuringDevice")
 	public String addDevice(Model model) {
 
 		List<LocationDTO> locationsDTO = locationService.getLocations();
@@ -97,7 +82,7 @@ public class DeviceControler {
 	 *            Holder for attributes
 	 * @return addMeasuringEquipmen view
 	 */
-	@RequestMapping("/saveMeasuringDevice")
+	@PostMapping("/saveMeasuringDevice")
 	public String saveDevice(@Valid @ModelAttribute MeasuringEquipmentDTO measuringEquipmentDTO, BindingResult result,
 			Model model) {
 
@@ -106,11 +91,11 @@ public class DeviceControler {
 			try {
 				deviceService.saveDevice(measuringEquipmentDTO);
 			} catch (Exception e) {
-				alert = "Something was wrong. Device wasn't saved successfully";
+				alert= alertComponent.savedUnsucesfully(Objects.DEVICE);
 				model.addAttribute("alert", alert);
 				return "devices/add_device/addMeasuringEquipment";
 			}
-			alert = "Device was saved successfully";
+			alert = alertComponent.savedSucesfully(Objects.DEVICE);
 			model.addAttribute("alert", alert);
 		}
 		return "devices/add_device/addMeasuringEquipment";
@@ -124,7 +109,7 @@ public class DeviceControler {
 	 *            Holder for attributes
 	 * @return showMeasuringEquipment view
 	 */
-	@RequestMapping("/showProbes")
+	@GetMapping("/showProbes")
 	public String showAllProbes(Model model) {
 
 		List<DeviceDTO> devices = deviceService.getProbes();
@@ -143,7 +128,7 @@ public class DeviceControler {
 	 * @return addProbe view
 	 */
 
-	@RequestMapping("/addProbe")
+	@GetMapping("/addProbe")
 	public String addLocation(Model model) {
 		List<LocationDTO> locationsDTO = locationService.getLocations();
 		locationsList.setLocations(locationsDTO);
@@ -152,7 +137,7 @@ public class DeviceControler {
 		return "devices/add_device/addProbe";
 	}
 
-	@RequestMapping("/saveProbe")
+	@PostMapping("/saveProbe")
 	public String saveProbe(@Valid @ModelAttribute ProbeDTO probeDTO, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
 
@@ -160,11 +145,11 @@ public class DeviceControler {
 			try {
 				deviceService.saveProbe(probeDTO);
 			} catch (Exception e) {
-				alert = "Something was wrong. Probe wasn't saved successfully";
+				alert= alertComponent.savedUnsucesfully(Objects.PROBE);
 				model.addAttribute("alert", alert);
 				return "devices/add_device/addProbe";
 			}
-			alert = "Probe was saved successfully";
+			alert = alertComponent.savedSucesfully(Objects.PROBE);
 			model.addAttribute("alert", alert);
 		}
 		return "devices/add_device/addProbe";
@@ -210,7 +195,7 @@ public class DeviceControler {
 	 * @return editProbe view
 	 */
 
-	@RequestMapping("/updateProbe")
+	@PostMapping("/updateProbe")
 	public String updateProbe(@Valid @ModelAttribute ProbeDTO probeDTO, BindingResult result,
 			@RequestParam("id") Long id, Model model) {
 		if (!result.hasErrors()) {
@@ -219,11 +204,11 @@ public class DeviceControler {
 			try {
 				deviceService.saveProbe(probeDTO);
 			} catch (Exception e) {
-				alert = "Something was wrong. Probe wasn't updated successfully";
+				alert = alertComponent.updatedUnsucesfully(Objects.PROBE);
 				model.addAttribute("alert", alert);
 				return "devices/edit_device/editProbe";
 			}
-			alert = "Probe was updated successfully";
+			alert = alertComponent.updateSucesfully(Objects.PROBE);
 			model.addAttribute("alert", alert);
 		}
 		return "devices/edit_device/editProbe";
@@ -238,14 +223,13 @@ public class DeviceControler {
 	 *            Holder for attributes
 	 * @return showMeasuringEquipmentDetails
 	 */
-	@RequestMapping("/showDevice")
+	@GetMapping("/showDevice")
 	public String showDevice(@RequestParam("id") Long id, Model model) {
 		List<DeviceDTO> devices = devicesList.getDevices();
 		Optional<DeviceDTO> optionalMeasuringDeviceDTO = devices.stream().filter(a -> (a.getId() == id)).findAny();
 		MeasuringEquipmentDTO measuringEquipmentDTO = (MeasuringEquipmentDTO) optionalMeasuringDeviceDTO.get();
 
 		List<VerificationDTO> verifications = verificationService.getVerifications(id);
-		System.out.println("Verifications" + verifications);
 		verificationsList.setVerifications(verifications);
 		model.addAttribute("measuringEquipmentDTO", measuringEquipmentDTO);
 		model.addAttribute("verifications", verificationsList);
@@ -264,7 +248,7 @@ public class DeviceControler {
 	 * @return addVerification view
 	 */
 
-	@RequestMapping("/addVerification")
+	@GetMapping("/addVerification")
 	public String addVerification(@RequestParam("id") Long id, Model model) {
 		List<DeviceDTO> devices = devicesList.getDevices();
 		Optional<DeviceDTO> optionalMeasuringDeviceDTO = devices.stream().filter(a -> (a.getId() == id)).findAny();
@@ -288,7 +272,7 @@ public class DeviceControler {
 	 * @return addVerification
 	 */
 
-	@RequestMapping("/saveVerification")
+	@PostMapping("/saveVerification")
 	public String saveVerification(@Valid @ModelAttribute("verifcationDTO") VerificationDTO verificationDTO,
 			BindingResult result, Model model) {
 
@@ -298,11 +282,11 @@ public class DeviceControler {
 			try {
 				verificationService.saveVerification(measuringEquipmentDTO.getId(), verificationDTO);
 			} catch (Exception e) {
-				alert = "Something was wrong. Verification wasn't saved successfully";
+				alert = alertComponent.savedUnsucesfully(Objects.VERIFICATION);
 				model.addAttribute("alert", alert);
 				return "verifications/add_verification/addVerification";
 			}
-			alert = "Verification was saved successfully";
+			alert = alertComponent.savedSucesfully(Objects.VERIFICATION);
 			model.addAttribute("alert", alert);
 		}
 		return "verifications/add_verification/addVerification";
@@ -351,7 +335,7 @@ public class DeviceControler {
 	 *            Holder for attributes
 	 * @return editVerification
 	 */
-	@RequestMapping("/updateVerification")
+	@PostMapping("/updateVerification")
 	public String updateVerification(@Valid @ModelAttribute VerificationDTO verificationDTO, BindingResult result,
 			@RequestParam("id") Long id, Model model) {
 		if (!result.hasErrors()) {
@@ -362,11 +346,11 @@ public class DeviceControler {
 			try {
 				verificationService.saveVerification(measuringEquipmentDTO.getId(), verificationDTO);
 			} catch (Exception e) {
-				alert = "Something was wrong. Verification wasn't updated successfully";
+				alert = alertComponent.updatedUnsucesfully(Objects.VERIFICATION);
 				model.addAttribute("alert", alert);
 				return "verifications/edit_verification/editVerification";
 			}
-			alert = "Verification was updated successfully";
+			alert =  alertComponent.updateSucesfully(Objects.VERIFICATION);
 			model.addAttribute("alert", alert);
 		}
 		return "verifications/edit_verification/editVerification";

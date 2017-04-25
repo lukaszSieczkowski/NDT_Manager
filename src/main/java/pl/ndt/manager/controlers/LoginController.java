@@ -1,23 +1,16 @@
 package pl.ndt.manager.controlers;
 
-import java.util.List;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
-import pl.ndt.manager.components.LocationsList;
-import pl.ndt.manager.dto.LocationDTO;
 import pl.ndt.manager.dto.UserDTO;
 import pl.ndt.manager.exampleData.ExampleDataBase;
-import pl.ndt.manager.services.LocationService;
 import pl.ndt.manager.services.UserService;
 
 @Controller
@@ -26,9 +19,10 @@ public class LoginController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ExampleDataBase exampleDataBase;
+
 	/**
 	 * Shows login page
 	 * 
@@ -36,8 +30,6 @@ public class LoginController {
 	 */
 	@RequestMapping("/")
 	public String showLoginPage() {
-		
-		
 		return "index";
 	}
 
@@ -53,16 +45,16 @@ public class LoginController {
 	 * @return index or main view
 	 */
 	@PostMapping("/login")
-	public String login(Model model, @RequestParam String email, @RequestParam String password ) {
-		
-		//********* Example Database***********//
-		
+	public String login(Model model, @RequestParam String email, @RequestParam String password) {
+
+		// ********* Example Database***********//
+
 		// exampleDataBase.prepareDataBase();
-		
-		//*********************************************//
-		
+
+		// *********************************************//
+
 		UserDTO userDTO = null;
-		String decryptedPassword=DigestUtils.sha256Hex(password);
+		String decryptedPassword = DigestUtils.sha256Hex(password);
 		try {
 			userDTO = userService.createUser(email, decryptedPassword);
 		} catch (NullPointerException e) {
@@ -70,10 +62,7 @@ public class LoginController {
 			model.addAttribute("message", message);
 			return "index";
 		}
-		
 		model.addAttribute("logedEmployee", userDTO);
-		
-	
 		return "main";
 	}
 

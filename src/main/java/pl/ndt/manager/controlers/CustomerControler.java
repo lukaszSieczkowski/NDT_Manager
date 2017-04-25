@@ -9,17 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
+import pl.ndt.manager.components.AlertComponent;
 import pl.ndt.manager.components.CustomersList;
-
 import pl.ndt.manager.dto.CustomerDTO;
-
+import pl.ndt.manager.model.enums.Objects;
 import pl.ndt.manager.services.CustomerService;
 
 @Controller
@@ -30,6 +25,8 @@ public class CustomerControler {
 	private CustomersList customersList;
 	@Autowired
 	private CustomerService customerService;
+	@Autowired
+	private AlertComponent alertComponent;
 
 	/**
 	 * Shows list of all Customers saved in system
@@ -38,7 +35,7 @@ public class CustomerControler {
 	 *            Holder for attributes
 	 * @return showCustomers view
 	 */
-	@RequestMapping("/showCustomers")
+	@GetMapping("/showCustomers")
 	public String showAllCustomers(Model model) {
 		List<CustomerDTO> customers = customerService.getCustomers();
 		customersList.setCustomers(customers);
@@ -55,7 +52,7 @@ public class CustomerControler {
 	 * 
 	 * @return addCustomer view
 	 */
-	@RequestMapping("/addCustomer")
+	@GetMapping("/addCustomer")
 	public String addCustomer(Model model) {
 		model.addAttribute("customerDTO", new CustomerDTO());
 		return "customers/add_customer/addCustomer";
@@ -79,11 +76,11 @@ public class CustomerControler {
 			try {
 				customerService.saveCustomer(customerDTO);
 			} catch (Exception e) {
-				alert = "Something went wrong. Customer wasn't saved successfully";
+				alert = alertComponent.savedUnsucesfully(Objects.CUSTOMER);
 				model.addAttribute("alert", alert);
 				return "customers/add_customer/addCustomer";
 			}
-			alert = "Customer was saved successfully";
+			alert = alertComponent.savedSucesfully(Objects.CUSTOMER);
 			model.addAttribute("alert", alert);
 		}
 		return "customers/add_customer/addCustomer";
@@ -124,7 +121,7 @@ public class CustomerControler {
 	 * @return editCustomer view
 	 */
 
-	@RequestMapping("/updateCustomer")
+	@PostMapping("/updateCustomer")
 	public String updateCustomer(@Valid @ModelAttribute CustomerDTO customerDTO, BindingResult result,
 			@RequestParam("id") Long id, Model model) {
 		if (!result.hasErrors()) {
@@ -133,11 +130,11 @@ public class CustomerControler {
 			try {
 				customerService.saveCustomer(customerDTO);
 			} catch (Exception e) {
-				alert = "Something went wrong. Customer wasn't updated successfully";
+				alert= alertComponent.updatedUnsucesfully(Objects.CUSTOMER);
 				model.addAttribute("alert", alert);
 				return "customers/edit_customer/editCustomer";
 			}
-			alert = "Customer was updated successfully";
+			alert =  alertComponent.updateSucesfully(Objects.CUSTOMER);
 			model.addAttribute("alert", alert);
 		}
 		return "customers/edit_customer/editCustomer";

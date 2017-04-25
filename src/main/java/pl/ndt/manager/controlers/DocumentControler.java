@@ -10,21 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import pl.ndt.manager.components.DocumentList;
 import pl.ndt.manager.components.EmployeeList;
-import pl.ndt.manager.dto.DocumentDTO;
-import pl.ndt.manager.dto.JaegerTestDTO;
-import pl.ndt.manager.dto.MedicalExaminationDTO;
-import pl.ndt.manager.dto.NdtCertificateDTO;
-import pl.ndt.manager.dto.PersonalDocumentDTO;
-import pl.ndt.manager.dto.TechnicalDocumentDTO;
-import pl.ndt.manager.dto.VcaCertificateDTO;
+import pl.ndt.manager.dto.*;
 
 import pl.ndt.manager.model.enums.DocumentIsValid;
 import pl.ndt.manager.services.DocumentService;
@@ -52,12 +42,13 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return showNdtCertificates view
 	 */
-	@RequestMapping("/showAllNdtCertificates")
+	@GetMapping("/showAllNdtCertificates")
 	public String showAllNdtCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getNdtCertificates();
 		documents = documents.stream()
-				.sorted((a,b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
-				.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
+				.sorted((a,
+						b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
+								.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -71,12 +62,13 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return showVcaCertificates view
 	 */
-	@RequestMapping("/showAllVcaCertificates")
+	@GetMapping("/showAllVcaCertificates")
 	public String showAllVcaCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getVcaCertificates();
 		documents = documents.stream()
-				.sorted((a,b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
-				.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
+				.sorted((a,
+						b) -> (((PersonalDocumentDTO) a).getDocumentIsValid()
+								.compareTo(((PersonalDocumentDTO) b).getDocumentIsValid())))
 				.collect(Collectors.toList());
 		documentList.setDocuments(documents);
 		model.addAttribute("documents", documentList);
@@ -91,7 +83,7 @@ public class DocumentControler {
 	 * @return showJaegerTests view
 	 */
 
-	@RequestMapping("/showAllJaegerTests")
+	@GetMapping("/showAllJaegerTests")
 	public String showAllJaegerTests(Model model) {
 		List<DocumentDTO> documents = documentService.getJaegerTests();
 		documents = documents.stream().sorted((a, b) -> (((PersonalDocumentDTO) a).getDocumentIsValid())
@@ -108,7 +100,7 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return showMedicalExaminations view
 	 */
-	@RequestMapping("showAllMedicalExaminations")
+	@GetMapping("showAllMedicalExaminations")
 	public String showMedicalExamination(Model model) {
 		List<DocumentDTO> documents = documentService.getMedicalExaminations();
 		documents = documents.stream()
@@ -129,7 +121,7 @@ public class DocumentControler {
 	 * @return showJaegerTests view
 	 */
 
-	@RequestMapping("/showValidJaegerTests")
+	@GetMapping("/showValidJaegerTests")
 	public String showValidJaegerTests(Model model) {
 		List<DocumentDTO> documents = documentService.getJaegerTests();
 		documents = documents.stream()
@@ -148,7 +140,7 @@ public class DocumentControler {
 	 * @return showMedicalExaminations view
 	 */
 
-	@RequestMapping("/showValidMedicalExaminations")
+	@GetMapping("/showValidMedicalExaminations")
 	public String showValidMedicalExaminations(Model model) {
 		List<DocumentDTO> documents = documentService.getMedicalExaminations();
 		documents = documents.stream()
@@ -167,7 +159,7 @@ public class DocumentControler {
 	 * @return showVcaCertificate view
 	 */
 
-	@RequestMapping("/showValidVcaCertificates")
+	@GetMapping("/showValidVcaCertificates")
 	public String showValidVcaCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getVcaCertificates();
 		documents = documents.stream()
@@ -185,7 +177,7 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return showNdtCertificates view
 	 */
-	@RequestMapping("/showValidNdtCertificates")
+	@GetMapping("/showValidNdtCertificates")
 	public String showValidNdtCertificates(Model model) {
 		List<DocumentDTO> documents = documentService.getNdtCertificates();
 		documents = documents.stream()
@@ -204,7 +196,7 @@ public class DocumentControler {
 	 * @return addNdtCertificate view
 	 */
 
-	@RequestMapping("/adddNdtCertificate")
+	@GetMapping("/adddNdtCertificate")
 	public String addNdtCertificate(Model model) {
 		model.addAttribute("ndtCertificateDTO", new NdtCertificateDTO());
 		employeeList.setEmployees(employeeService.getAllEmployees());
@@ -219,7 +211,7 @@ public class DocumentControler {
 	 *            Holed for attributes
 	 * @return addNdtCertificate view
 	 */
-	@RequestMapping("/addJaegerTest")
+	@GetMapping("/addJaegerTest")
 	public String addJaegerTest(Model model) {
 		model.addAttribute("jaegerTestDTO", new JaegerTestDTO());
 		employeeList.setEmployees(employeeService.getAllEmployees());
@@ -235,7 +227,7 @@ public class DocumentControler {
 	 * @return addVcaCertificate view
 	 */
 
-	@RequestMapping("/addVcaCertificate")
+	@GetMapping("/addVcaCertificate")
 	public String addVcaCertificate(Model model) {
 		model.addAttribute("vcaCertificateDTO", new VcaCertificateDTO());
 		employeeList.setEmployees(employeeService.getAllEmployees());
@@ -251,7 +243,7 @@ public class DocumentControler {
 	 * @return addMedicalEcamination view
 	 */
 
-	@RequestMapping("/addMedicalExamination")
+	@GetMapping("/addMedicalExamination")
 	public String addVMedicalExamination(Model model) {
 		model.addAttribute("medicalExaminationDTO", new MedicalExaminationDTO());
 		employeeList.setEmployees(employeeService.getAllEmployees());
@@ -380,7 +372,7 @@ public class DocumentControler {
 	 * @return editNdtCertificate view
 	 */
 
-	@RequestMapping("/editNdtCertificate")
+	@GetMapping("/editNdtCertificate")
 	public String editNdtCertificate(@RequestParam("id") Long id, Model model) {
 		List<DocumentDTO> documents = documentList.getDocuments();
 		Optional<DocumentDTO> optionalNdtCertificateDTO = documents.stream().filter(a -> (a.getId() == id)).findAny();
@@ -405,7 +397,7 @@ public class DocumentControler {
 	 * @return editNdtCertificate view
 	 */
 
-	@RequestMapping("/updateNdtCertificate")
+	@PostMapping("/updateNdtCertificate")
 	public String updateNdtCartificate(@Valid @ModelAttribute NdtCertificateDTO ndtCertificateDTO, BindingResult result,
 			@RequestParam("id") Long id, Model model) {
 		if (!result.hasErrors()) {
@@ -433,9 +425,9 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return editJaegerTest view
 	 */
-	@RequestMapping("/editJaegerTest")
+	@GetMapping("/editJaegerTest")
 	public String editJaegerTest(@RequestParam("id") Long id, Model model) {
-		
+
 		List<DocumentDTO> documents = documentList.getDocuments();
 		Optional<DocumentDTO> optionalJaegerTestDTO = documents.stream().filter(a -> (a.getId() == id)).findAny();
 		JaegerTestDTO jaegerTestDTO = (JaegerTestDTO) optionalJaegerTestDTO.get();
@@ -458,7 +450,7 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return editJaegerTest view
 	 */
-	@RequestMapping("/updateJaegerTest")
+	@PostMapping("/updateJaegerTest")
 	public String updateJaegerTest(@Valid @ModelAttribute JaegerTestDTO jaegerTestDTO, BindingResult result,
 			@RequestParam("id") Long id, Model model) {
 
@@ -488,9 +480,9 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return editVcaCertificate view
 	 */
-	@RequestMapping("/editVcaCertificate")
+	@GetMapping("/editVcaCertificate")
 	public String editVcaCertificate(@RequestParam("id") Long id, Model model) {
-		
+
 		List<DocumentDTO> documents = documentList.getDocuments();
 		Optional<DocumentDTO> optionalVcaCertificateDTO = documents.stream().filter(a -> (a.getId() == id)).findAny();
 		VcaCertificateDTO vcaCertificateDTO = (VcaCertificateDTO) optionalVcaCertificateDTO.get();
@@ -514,7 +506,7 @@ public class DocumentControler {
 	 * @return editVcaCertificate view
 	 */
 
-	@RequestMapping("/updateVcaCertificate")
+	@PostMapping("/updateVcaCertificate")
 	public String updateVcaCertificate(@Valid @ModelAttribute VcaCertificateDTO vcaCertificateDTO, BindingResult result,
 			@RequestParam("id") Long id, Model model) {
 
@@ -545,9 +537,9 @@ public class DocumentControler {
 	 * @return editMedicalExaminationview
 	 */
 
-	@RequestMapping("/editMedicalExamination")
+	@GetMapping("/editMedicalExamination")
 	public String editMedicalExamination(@RequestParam("id") Long id, Model model) {
-		
+
 		List<DocumentDTO> documents = documentList.getDocuments();
 		Optional<DocumentDTO> optionalMedicalExaminationDTO = documents.stream().filter(a -> (a.getId() == id))
 				.findAny();
@@ -572,7 +564,7 @@ public class DocumentControler {
 	 * @return editVcaCertificate view
 	 */
 
-	@RequestMapping("/updateMedicalExamination")
+	@PostMapping("/updateMedicalExamination")
 	public String updateMedicalExamination(@Valid @ModelAttribute MedicalExaminationDTO medicalExaminationDTO,
 			BindingResult result, @RequestParam("id") Long id, Model model) {
 
@@ -600,12 +592,12 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return showNorms view
 	 */
-	@RequestMapping("/showNorms")
+	@GetMapping("/showNorms")
 	public String showAllNorms(Model model) {
 		List<DocumentDTO> documents = documentService.getTechnicalDocuments();
 
 		documentList.setDocuments(documents);
-		
+
 		model.addAttribute("documents", documentList);
 		return "technical_docs/show_norm/showNorms";
 	}
@@ -617,7 +609,7 @@ public class DocumentControler {
 	 *            Holed for attributes
 	 * @return addNormview
 	 */
-	@RequestMapping("/addNorm")
+	@GetMapping("/addNorm")
 	public String addNorm(Model model) {
 		model.addAttribute("technicalDocumentDTO", new TechnicalDocumentDTO());
 		return "technical_docs/add_norm/addNorm";
@@ -659,7 +651,7 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return editNorm
 	 */
-	@RequestMapping("/editNorm")
+	@GetMapping("/editNorm")
 	public String editTechnicalDocumen(@RequestParam("id") Long id, Model model) {
 
 		List<DocumentDTO> documents = documentService.getTechnicalDocuments();
@@ -685,7 +677,7 @@ public class DocumentControler {
 	 * @return editNorm view
 	 */
 
-	@RequestMapping("/updateNorm")
+	@PostMapping("/updateNorm")
 	public String updateTechnicalDocument(@Valid @ModelAttribute TechnicalDocumentDTO technicalDocumentDTO,
 			BindingResult result, @RequestParam("id") Long id, Model model) {
 
@@ -713,7 +705,7 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return deleteNorm
 	 */
-	@RequestMapping("/removeNorm")
+	@GetMapping("/removeNorm")
 	public String remove(Model model) {
 		List<DocumentDTO> documents = documentService.getTechnicalDocuments();
 
@@ -731,7 +723,7 @@ public class DocumentControler {
 	 *            Holder for attributes
 	 * @return showNorms
 	 */
-	@RequestMapping("/deleteNorm")
+	@GetMapping("/deleteNorm")
 	public String editTDeleteNorm(@RequestParam("id") Long id, Model model) {
 		String alert = null;
 		documentService.deleteTechnicalDocument(id);

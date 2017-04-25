@@ -30,7 +30,4 @@ public class ResultsList {
 		this.results = reults;
 	}
 
-
-	
-	
 }

@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import pl.ndt.manager.components.AlertComponent;
 import pl.ndt.manager.components.ChemicalsList;
 import pl.ndt.manager.model.Chemical;
+import pl.ndt.manager.model.enums.Objects;
 import pl.ndt.manager.services.ChemicalsService;
 
 @Controller
@@ -25,6 +24,8 @@ public class ChemicalControler {
 	private ChemicalsService chemicalsService;
 	@Autowired
 	private ChemicalsList chemicalsList;
+	@Autowired
+	private AlertComponent alertComponent;
 
 	/**
 	 * Shows list of all Chemicals saved in system
@@ -33,7 +34,7 @@ public class ChemicalControler {
 	 *            Holder for attributes
 	 * @return showChemicalss view
 	 */
-	@RequestMapping("/showChemicals")
+	@GetMapping("/showChemicals")
 	public String showAllChemicals(Model model) {
 
 		List<Chemical> chemicals = chemicalsService.getChemicals();
@@ -51,7 +52,7 @@ public class ChemicalControler {
 	 * 
 	 * @return addChemical view
 	 */
-	@RequestMapping("/addChemical")
+	@GetMapping("/addChemical")
 	public String addChemical(Model model) {
 
 		model.addAttribute("chemical", new Chemical());
@@ -70,7 +71,7 @@ public class ChemicalControler {
 	 * @return addChemical view
 	 */
 
-	@RequestMapping("/saveChemical")
+	@PostMapping("/saveChemical")
 	public String saveVerification(@Valid @ModelAttribute Chemical chemical, BindingResult result, Model model) {
 
 		if (!result.hasErrors()) {
@@ -79,11 +80,11 @@ public class ChemicalControler {
 			try {
 				chemicalsService.saveChemical(chemical);
 			} catch (Exception e) {
-				alert = "Something was wrong. Chemicals wasn't saved successfully";
+				alert = alertComponent.savedUnsucesfully(Objects.CHEMICALS);
 				model.addAttribute("alert", alert);
 				return "devices/add_device/addChemical";
 			}
-			alert = "Chemicals was saved successfully";
+			alert= alertComponent.savedSucesfully(Objects.CHEMICALS);
 			model.addAttribute("alert", alert);
 		}
 		return "devices/add_device/addChemical";
@@ -123,7 +124,7 @@ public class ChemicalControler {
 	 *            Holder for attributes
 	 * @return editChemical view
 	 */
-	@RequestMapping("/updateChemical")
+	@PostMapping("/updateChemical")
 	public String updateChemicals(@Valid @ModelAttribute Chemical chemical, BindingResult result,
 			@RequestParam("id") Long id, Model model) {
 		if (!result.hasErrors()) {
@@ -132,11 +133,11 @@ public class ChemicalControler {
 			try {
 				chemicalsService.saveChemical(chemical);
 			} catch (Exception e) {
-				alert = "Something was wrong. Chmicals wasn't updated successfully";
+				alert = alertComponent.updatedUnsucesfully(Objects.CHEMICALS);
 				model.addAttribute("alert", alert);
 				return "devices/edit_device/editChemical";
 			}
-			alert = "Chemicals was updated successfully";
+			alert = alertComponent.updatedUnsucesfully(Objects.CHEMICALS);
 			model.addAttribute("alert", alert);
 		}
 		return "devices/edit_device/editChemical";

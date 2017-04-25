@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import pl.ndt.manager.components.EmployeeList;
 import pl.ndt.manager.components.LocationsList;
@@ -42,7 +39,7 @@ public class EmployeeController {
 	 *            Holder for attributes
 	 * @return showEmployees view
 	 */
-	@RequestMapping("/showEmployees")
+	@GetMapping("/showEmployees")
 	public String showAllEmployees(Model model) {
 		ArrayList<EmployeeDTO> employees = (ArrayList<EmployeeDTO>) employeeService.getAllEmployees();
 
@@ -60,7 +57,7 @@ public class EmployeeController {
 	 * @return addEmployee view
 	 */
 
-	@RequestMapping("/addEmployee")
+	@GetMapping("/addEmployee")
 	public String addEmployee(Model model) {
 
 		List<LocationDTO> locationsDTO = locationService.getLocations();
@@ -81,7 +78,7 @@ public class EmployeeController {
 	 * @return addEmployee view
 	 */
 
-	@RequestMapping("/saveEmployee")
+	@PostMapping("/saveEmployee")
 	public String saveEmployee(@Valid @ModelAttribute EmployeeDTO employeeDTO, BindingResult result, Model model) {
 		String alert;
 		if (!result.hasErrors()) {
@@ -93,7 +90,7 @@ public class EmployeeController {
 				try {
 					employeeService.saveEmployee(employeeDTO);
 				} catch (Exception e) {
-				alert = "Something went wrong. Employee wasn't saved successfully";
+					alert = "Something went wrong. Employee wasn't saved successfully";
 					model.addAttribute("alert", alert);
 					return "personel/add_employee/addEmployee";
 				}
@@ -116,9 +113,9 @@ public class EmployeeController {
 	 *            Holder for attributes
 	 * @return editEmployee view
 	 */
-	@RequestMapping("/editEmployee")
+	@GetMapping("/editEmployee")
 	public String editEmployee(@RequestParam("id") Long id, Model model) {
-		
+
 		List<EmployeeDTO> employees = employeeList.getEmployees();
 		Optional<EmployeeDTO> optionalEmployeeDTO = employees.stream().filter(a -> (a.getId() == id)).findAny();
 		EmployeeDTO employeeDTO = (EmployeeDTO) optionalEmployeeDTO.get();
@@ -144,7 +141,7 @@ public class EmployeeController {
 	 *            Holder for attributes
 	 * @return editEmployee view
 	 */
-	@RequestMapping("/updateEmployee")
+	@PostMapping("/updateEmployee")
 	public String updateEmployee(@Valid @ModelAttribute EmployeeDTO employeeDTO, BindingResult result,
 			@RequestParam("id") Long id, Model model) {
 		System.out.println("Update" + employeeDTO);
