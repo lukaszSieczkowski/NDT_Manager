@@ -1,6 +1,7 @@
 NDT Manager is an application to support Non Destructive Testing company in daily B2B activities.
 
 Application helps to manage:
+
 * employees,
 * equipment,
 * technical standards,
