@@ -9,7 +9,8 @@ Application helps to manage:
 * business locations,
 * inspections reports,
  
-Technologies
+Technologies:
+
 •Java
 •JPA
 •MySQL
