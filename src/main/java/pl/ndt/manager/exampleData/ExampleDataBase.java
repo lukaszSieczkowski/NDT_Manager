@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.ndt.manager.model.Address;
+import pl.ndt.manager.model.Chemical;
 import pl.ndt.manager.model.Customer;
 
 import pl.ndt.manager.model.Employee;
@@ -28,6 +29,7 @@ import pl.ndt.manager.model.TechnicalDocument;
 import pl.ndt.manager.model.User;
 import pl.ndt.manager.model.VTReport;
 import pl.ndt.manager.model.VcaCertificate;
+import pl.ndt.manager.model.enums.ChemicalType;
 import pl.ndt.manager.model.enums.CorerctlyEyeCondition;
 import pl.ndt.manager.model.enums.EmployeePositon;
 import pl.ndt.manager.model.enums.ExaminationResult;
@@ -37,6 +39,7 @@ import pl.ndt.manager.model.enums.Sector;
 import pl.ndt.manager.model.enums.TypeOfControl;
 import pl.ndt.manager.model.enums.TypeOfTesting;
 import pl.ndt.manager.model.enums.UserRole;
+import pl.ndt.manager.repository.ChemicalsRepository;
 import pl.ndt.manager.repository.CustomerRepository;
 
 import pl.ndt.manager.repository.EmployeeRepository;
@@ -61,8 +64,6 @@ public class ExampleDataBase {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private EmployeeRepository employeeRepository;
-	@Autowired
 	private NdtCertificateRepository ndtCertificateRepository;
 	@Autowired
 	private JaegerTestRepository jaegerTestRepository;
@@ -86,6 +87,9 @@ public class ExampleDataBase {
 	private ResultOfExaminationRepository resultOfExaminationRepository;
 	@Autowired
 	private VerificationRepository verificationRepository;
+	@Autowired
+	private ChemicalsRepository chemicalsRepository;
+	
 
 	public void prepareDataBase() {
 		List<PersonalDocument> documentsList1 = new ArrayList<>();
@@ -912,6 +916,62 @@ public class ExampleDataBase {
 		resultsOfExaminationtsList2.add(resultsOfExamination4);
 		resultsOfExaminationtsList2.add(resultsOfExamination5);
 		resultsOfExaminationtsList2.add(resultsOfExamination6);
+		
+		Chemical chemical1 = new Chemical();
+		chemical1.setName("MR-75");
+		chemical1.setProducer("Producer1");
+		chemical1.setBatch("2017/23/12");
+		chemical1.setChemicalType(ChemicalType.BLACK_POWDER);
+		chemical1.setTypeOfTesting(TypeOfTesting.MT);
+		
+		Chemical chemical2 = new Chemical();
+		chemical2.setName("MR-76");
+		chemical2.setProducer("Producer1");
+		chemical2.setBatch("2016/23/12");
+		chemical2.setChemicalType(ChemicalType.CLEANER);
+		chemical2.setTypeOfTesting(TypeOfTesting.MT);
+		
+		Chemical chemical3 = new Chemical();
+		chemical3.setName("MR-77");
+		chemical3.setProducer("Producer1");
+		chemical3.setBatch("2017/33/12");
+		chemical3.setChemicalType(ChemicalType.WHITE_CONTRAST);
+		chemical3.setTypeOfTesting(TypeOfTesting.MT);
+
+		Chemical chemical4 = new Chemical();
+		chemical4.setName("MR-78");
+		chemical4.setProducer("Producer1");
+		chemical4.setBatch("2017/23/01");
+		chemical4.setChemicalType(ChemicalType.FLUORSCENT_POWDER);
+		chemical4.setTypeOfTesting(TypeOfTesting.MT);
+
+		Chemical chemical5 = new Chemical();
+		chemical5.setName("MR-45");
+		chemical5.setProducer("Producer1");
+		chemical5.setBatch("2013/13/12");
+		chemical5.setChemicalType(ChemicalType.CLEANER);
+		chemical5.setTypeOfTesting(TypeOfTesting.PT);
+		
+		Chemical chemical6 = new Chemical();
+		chemical6.setName("MR-46");
+		chemical6.setProducer("Producer1");
+		chemical6.setBatch("2017/53/22");
+		chemical6.setChemicalType(ChemicalType.COLOR_FLUOROSCENT_PENETRANT);
+		chemical6.setTypeOfTesting(TypeOfTesting.PT);
+
+		Chemical chemical7 = new Chemical();
+		chemical7.setName("MR-47");
+		chemical7.setProducer("Producer1");
+		chemical7.setBatch("2017/23/12");
+		chemical7.setChemicalType(ChemicalType.COLOR_PENETRANT);
+		chemical7.setTypeOfTesting(TypeOfTesting.PT);
+		
+		Chemical chemical8 = new Chemical();
+		chemical8.setName("MR-49");
+		chemical8.setProducer("Producer1");
+		chemical8.setBatch("2016/23/12");
+		chemical8.setChemicalType(ChemicalType.FLUROSCENT_PENETRANT);
+		chemical8.setTypeOfTesting(TypeOfTesting.PT);
 
 		userRepository.save(user1);
 		userRepository.save(user2);
@@ -978,6 +1038,17 @@ public class ExampleDataBase {
 		probeRepository.save(probe3);
 		probeRepository.save(probe4);
 		probeRepository.save(probe5);
+		
+		chemicalsRepository.save(chemical1);
+		chemicalsRepository.save(chemical2);
+		chemicalsRepository.save(chemical3);
+		chemicalsRepository.save(chemical4);
+		chemicalsRepository.save(chemical5);
+		chemicalsRepository.save(chemical6);
+		chemicalsRepository.save(chemical7);
+		chemicalsRepository.save(chemical8);
+
+
 
 	}
 }

@@ -17,8 +17,7 @@ public class VisualReportDetailsDTO {
 	private String measuringEquipment;
 	@NotEmpty(message = "Select standard")
 	private String technicalDocument;
-	@NotEmpty(message = "Select employeer")
-	private String performerEmail;
+
 	@NotEmpty(message = "Select employee")
 	private String aproverEmail;
 	@DecimalMin(value = "0",message="Incorrect value")
@@ -49,12 +48,7 @@ public class VisualReportDetailsDTO {
 	public void setTechnicalDocument(String technicalDocument) {
 		this.technicalDocument = technicalDocument;
 	}
-	public String getPerformerEmail() {
-		return performerEmail;
-	}
-	public void setPerformerEmail(String performerEmail) {
-		this.performerEmail = performerEmail;
-	}
+	
 	public String getAproverEmail() {
 		return aproverEmail;
 	}
@@ -66,6 +60,12 @@ public class VisualReportDetailsDTO {
 	}
 	public void setLighting(String lighting) {
 		this.lighting = lighting;
+	}
+	@Override
+	public String toString() {
+		return "VisualReportDetailsDTO [examinatedObject=" + examinatedObject + ", measuringEquipment="
+				+ measuringEquipment + ", technicalDocument=" + technicalDocument 
+				+ ", aproverEmail=" + aproverEmail + ", lighting=" + lighting + "]";
 	}
 	
 	
