@@ -11,10 +11,10 @@ Application helps to manage:
  
 Technologies:
 
-•Java
-•JPA
-•MySQL
-•Spring(MVC, Data)
-•Thymeleaf
+* Java
+* JPA
+* MySQL
+* Spring(MVC, Data)
+* Thymeleaf
 
 Developing still in progress !!!
