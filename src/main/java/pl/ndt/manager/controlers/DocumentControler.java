@@ -12,11 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import pl.ndt.manager.components.AlertComponent;
 import pl.ndt.manager.components.DocumentList;
 import pl.ndt.manager.components.EmployeeList;
 import pl.ndt.manager.dto.*;
 
 import pl.ndt.manager.model.enums.DocumentIsValid;
+import pl.ndt.manager.model.enums.Objects;
 import pl.ndt.manager.services.DocumentService;
 import pl.ndt.manager.services.EmployeeService;
 
@@ -34,6 +36,8 @@ public class DocumentControler {
 
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private AlertComponent alertComponent;
 
 	/**
 	 * Shows list of all NDT Certificates saved in system
@@ -268,11 +272,11 @@ public class DocumentControler {
 		try {
 			documentService.saveNdtCertificate(ndtCertificateDTO);
 		} catch (Exception e) {
-			alert = "Something went wrong. NDT Certificate wasn't saved successfully";
+			alert = alertComponent.savedUnsucesfully(Objects.NDT_CERTIFICATE);
 			model.addAttribute("alert", alert);
 			return "personel/add_docs/addNdtCertificate";
 		}
-		alert = "NDT Certificate was saved successfully";
+		alert = alertComponent.savedSucesfully(Objects.NDT_CERTIFICATE);
 		model.addAttribute("alert", alert);
 
 		return "personel/add_docs/addNdtCertificate";
@@ -296,11 +300,11 @@ public class DocumentControler {
 		try {
 			documentService.saveJaegerTest(jaegerTestDTO);
 		} catch (Exception e) {
-			alert = "Something went wrong. Jaeger Test wasn't saved successfully";
+			alert = alertComponent.savedUnsucesfully(Objects.JAEGER_TEST);
 			model.addAttribute("alert", alert);
 			return "personel/add_docs/addJaegerTest";
 		}
-		alert = "Jaeger Test was saved successfully";
+		alert = alertComponent.savedSucesfully(Objects.JAEGER_TEST);
 		model.addAttribute("alert", alert);
 		return "personel/add_docs/addJaegerTest";
 	}
@@ -323,11 +327,11 @@ public class DocumentControler {
 		try {
 			documentService.saveVcaCertificate(vcaCertificateDTO);
 		} catch (Exception e) {
-			alert = "Something went wrong. VCA Certificate wasn't saved successfully";
+			alert = alertComponent.savedUnsucesfully(Objects.VCA_CERTIFICATE);
 			model.addAttribute("alert", alert);
 			return "personel/add_docs/addVcaCertificate";
 		}
-		alert = "VCA Certificate was saved successfully";
+		alert = alertComponent.savedSucesfully(Objects.VCA_CERTIFICATE);
 		model.addAttribute("alert", alert);
 
 		return "personel/add_docs/addVcaCertificate";
@@ -352,11 +356,11 @@ public class DocumentControler {
 		try {
 			documentService.saveMedicalExamination(medicalExaminationDTO);
 		} catch (Exception e) {
-			alert = "Something went wrong. Medical Examination wasn't saved successfully";
+			alert = alertComponent.savedUnsucesfully(Objects.MEDICAL_EXAMINATION);
 			model.addAttribute("alert", alert);
 			return "personel/add_docs/addMedicalExamination";
 		}
-		alert = "Medical Examination was saved successfully";
+		alert = alertComponent.savedSucesfully(Objects.MEDICAL_EXAMINATION);
 		model.addAttribute("alert", alert);
 
 		return "personel/add_docs/addMedicalExamination";
@@ -406,11 +410,11 @@ public class DocumentControler {
 			try {
 				documentService.updateNdtCertificate(ndtCertificateDTO);
 			} catch (Exception e) {
-				alert = "Something went wrong. Location wasn't updated successfully";
+				alert = alertComponent.updatedUnsucesfully(Objects.NDT_CERTIFICATE);
 				model.addAttribute("alert", alert);
 				return "personel/edit_docs/editNdtCertificate";
 			}
-			alert = "Location was updated successfully";
+			alert = alertComponent.updateSucesfully(Objects.NDT_CERTIFICATE);
 			model.addAttribute("alert", alert);
 		}
 		return "personel/edit_docs/editNdtCertificate";
@@ -460,11 +464,11 @@ public class DocumentControler {
 			try {
 				documentService.updateJaegerTest(jaegerTestDTO);
 			} catch (Exception e) {
-				alert = "Something went wrong. Jaeger Test wasn't updated successfully";
+				alert = alertComponent.updatedUnsucesfully(Objects.JAEGER_TEST);
 				model.addAttribute("alert", alert);
 				return "personel/edit_docs/editJaegerTest";
 			}
-			alert = "Jaeger Test was updated successfully";
+			alert = alertComponent.updateSucesfully(Objects.JAEGER_TEST);
 			model.addAttribute("alert", alert);
 		}
 
@@ -516,11 +520,11 @@ public class DocumentControler {
 			try {
 				documentService.updateVcaCertificate(vcaCertificateDTO);
 			} catch (Exception e) {
-				alert = "Something went wrong. VCA Certificate wasn't updated successfully";
+				alert = alertComponent.updatedUnsucesfully(Objects.VCA_CERTIFICATE);
 				model.addAttribute("alert", alert);
 				return "personel/edit_docs/editVcaCertificate";
 			}
-			alert = "VCA Certificate was updated successfully";
+			alert = alertComponent.updateSucesfully(Objects.VCA_CERTIFICATE);
 			model.addAttribute("alert", alert);
 		}
 
@@ -575,11 +579,11 @@ public class DocumentControler {
 			try {
 				documentService.updateMedicalExamination(medicalExaminationDTO);
 			} catch (Exception e) {
-				alert = "Something went wrong. Medical Examination wasn't updated successfully";
+				alert = alertComponent.updatedUnsucesfully(Objects.MEDICAL_EXAMINATION);
 				model.addAttribute("alert", alert);
 				return "personel/edit_docs/editMedicalExamination";
 			}
-			alert = "Medical Examination was updated successfully";
+			alert = alertComponent.updateSucesfully(Objects.MEDICAL_EXAMINATION);
 			model.addAttribute("alert", alert);
 		}
 		return "personel/edit_docs/editMedicalExamination";
@@ -633,11 +637,11 @@ public class DocumentControler {
 		try {
 			documentService.saveTechnicalDocument(technicalDocumentDTO);
 		} catch (Exception e) {
-			alert = "Something went wrong. Standard wasn't saved successfully";
+			alert = alertComponent.savedUnsucesfully(Objects.STANDARD);
 			model.addAttribute("alert", alert);
 			return "technical_docs/add_norm/addNorm";
 		}
-		alert = "Standard was saved successfully";
+		alert = alertComponent.savedSucesfully(Objects.STANDARD);
 		model.addAttribute("alert", alert);
 		return "technical_docs/add_norm/addNorm";
 	}
@@ -688,11 +692,11 @@ public class DocumentControler {
 			try {
 				documentService.updateTechnicalDocument(technicalDocumentDTO);
 			} catch (Exception e) {
-				alert = "Something went wrong. Standard wasn't updated successfully";
+				alert = alertComponent.updatedUnsucesfully(Objects.STANDARD);
 				model.addAttribute("alert", alert);
 				return "technical_docs/edit_norm/editNorm";
 			}
-			alert = "Standard was updated successfully";
+			alert = alertComponent.updateSucesfully(Objects.STANDARD);
 			model.addAttribute("alert", alert);
 		}
 		return "technical_docs/edit_norm/editNorm";
@@ -725,12 +729,12 @@ public class DocumentControler {
 	 */
 	@GetMapping("/deleteNorm")
 	public String editTDeleteNorm(@RequestParam("id") Long id, Model model) {
+		
 		String alert = null;
 		documentService.deleteTechnicalDocument(id);
 		List<DocumentDTO> documents = documentService.getTechnicalDocuments();
 		documentList.setDocuments(documents);
-
-		alert = "Standard was deleted successfully";
+		alert = alertComponent.deleteSucesfully(Objects.STANDARD);
 		model.addAttribute("alert", alert);
 		model.addAttribute("documents", documentList);
 

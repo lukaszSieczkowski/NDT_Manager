@@ -44,7 +44,9 @@ public class ReportControler {
 	private EmployeeService employeeService;
 	@Autowired
 	private ResultsList resultsList;
-
+	@Autowired
+	private AlertComponent AlertComponent;
+	
 	/**
 	 * Shows list of all Reports saved in system
 	 * 

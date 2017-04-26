@@ -346,6 +346,7 @@ public class DeviceControler {
 			try {
 				verificationService.saveVerification(measuringEquipmentDTO.getId(), verificationDTO);
 			} catch (Exception e) {
+				
 				alert = alertComponent.updatedUnsucesfully(Objects.VERIFICATION);
 				model.addAttribute("alert", alert);
 				return "verifications/edit_verification/editVerification";

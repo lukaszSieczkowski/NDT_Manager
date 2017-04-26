@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import pl.ndt.manager.components.AlertComponent;
 import pl.ndt.manager.components.LocationsList;
 import pl.ndt.manager.dto.LocationDTO;
+import pl.ndt.manager.model.enums.Objects;
 import pl.ndt.manager.services.LocationService;
 
 @Controller
@@ -24,6 +26,9 @@ public class LocationControler {
 
 	@Autowired
 	private LocationsList locationsList;
+	
+	@Autowired
+	private AlertComponent alertComponent;
 
 	/**
 	 * Shows list of all Business locations saved in system
@@ -33,10 +38,12 @@ public class LocationControler {
 	 * @return showNdtLocation view
 	 */
 	@GetMapping("/showLocations")
-	public String showAllLocations(Model model) {
+	public String showAllLocations(Model model) { 
+		
 		List<LocationDTO> locations = locationService.getLocations();
 		locationsList.setLocations(locations);
 		model.addAttribute("locations", locationsList);
+		
 		return "locations/show_location/showLocation";
 
 	}
@@ -52,7 +59,9 @@ public class LocationControler {
 
 	@GetMapping("/addLocation")
 	public String addLocation(Model model) {
+		
 		model.addAttribute("locationDTO", new LocationDTO());
+		
 		return "locations/add_location/addLocation";
 	}
 
@@ -74,11 +83,11 @@ public class LocationControler {
 			try {
 				locationService.saveLocation(locationDTO);
 			} catch (Exception e) {
-				alert = "Something went wrong. Location wasn't saved successfully";
+				alert = alertComponent.savedSucesfully(Objects.LOCATION);
 				model.addAttribute("alert", alert);
 				return "locations/add_location/addLocation";
 			}
-			alert = "Location was saved successfully";
+			alert =  alertComponent.savedSucesfully(Objects.LOCATION);
 			model.addAttribute("alert", alert);
 		}
 		return "locations/add_location/addLocation";
@@ -129,11 +138,11 @@ public class LocationControler {
 			try {
 				locationService.saveLocation(locationDTO);
 			} catch (Exception e) {
-				alert = "Something went wrong. Location wasn't updated successfully";
+				alert = alertComponent.savedUnsucesfully(Objects.LOCATION);
 				model.addAttribute("alert", alert);
 				return "locations/edit_location/editLocation";
 			}
-			alert = "Location was updated successfully";
+			alert = alertComponent.updateSucesfully(Objects.LOCATION);
 			model.addAttribute("alert", alert);
 		}
 		return "locations/edit_location/editLocation";

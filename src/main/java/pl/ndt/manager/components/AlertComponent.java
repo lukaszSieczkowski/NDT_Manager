@@ -51,4 +51,37 @@ public class AlertComponent {
 	public String updatedUnsucesfully(Objects object) {
 		return "Something was wrong. " + object.getValue() + " wasn't updated successfully";
 	}
+
+	/**
+	 * Prints message "Deleted Successfully"
+	 * 
+	 * @param object
+	 *            Deleted object;
+	 * @return message
+	 */
+	public String deleteSucesfully(Objects object) {
+		return object.getValue() + " was deleted successfully";
+	}
+
+	/**
+	 * Prints message "Deleted Unsuccessfully"
+	 * 
+	 * @param object
+	 *            Deleted object;
+	 * @return message
+	 */
+	public String deleteUnsucesfully(Objects object) {
+		return object.getValue() + " wasn't deleted successfully";
+	}
+
+	/**
+	 * Prints message "Exist"
+	 * 
+	 * @param object
+	 *            Deleted object;
+	 * @return message
+	 */
+	public String exist(Objects object) {
+		return object.getValue() + " already exist. Change email address";
+	}
 }
